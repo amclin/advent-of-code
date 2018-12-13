@@ -10,7 +10,7 @@ describe('--- Day 1: Chronal Calibration ---', () => {
     expect(actual).to.equal(expected)
   })
 
-  it('should add a list frequency values', () => {
+  it('should subtract a list frequency values', () => {
     const sequence = '-1, -2, -3'
     const expected = -6
     let actual = chronalCalibrator(sequence)
