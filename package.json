@@ -1,0 +1,24 @@
+{
+  "name": "advent-of-code",
+  "version": "0.0.1",
+  "description": "Solutions for Advent of Code challenge",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amclin/advent-of-code.git"
+  },
+  "keywords": [
+    "advent-of-code",
+    "advent-of-code-2018"
+  ],
+  "author": "Anthony McLin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/amclin/advent-of-code/issues"
+  },
+  "homepage": "https://github.com/amclin/advent-of-code#readme"
+}
