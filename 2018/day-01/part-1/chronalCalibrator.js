@@ -1,13 +1,14 @@
+const parseData = require('../../inputParser').parseData
+
+/**
+ * Calculates a frequency from a list of values
+ * @param {String} input list of values
+ */
 const chronalCalibrator = (input) => {
-  let frequency = 0
-  // Split string into array of integers. Split by whitespace or comma
-  let adjustments = input.split(/[\s,]+/).map((item) => {
-    return parseInt(item) || 0
-  })
-  adjustments.forEach((adjustment) => {
-    frequency += parseInt(adjustment)
-  })
-  return frequency
+  let adjustments = parseData(input)
+  return adjustments.reduce(
+    (total, current) => total + current
+  )
 }
 
 module.exports = chronalCalibrator

@@ -1,17 +1,4 @@
-
-/**
- * Takes an input string and parses it into an array of integers
- * @param {String} input list of values
- */
-function parseData (input) {
-  // convert into an array of integers
-  const dataList = input.split(/[\s,]+/).map((item) => {
-    return parseInt(item) || 0
-  })
-  // drop the entries created by whitespace
-  const result = dataList.filter((item) => item !== 0)
-  return result
-}
+const parseData = require('../../inputParser').parseData
 
 /**
  * Calculates a frequency from a list of values
