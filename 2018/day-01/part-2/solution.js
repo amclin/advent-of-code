@@ -5,6 +5,6 @@ const filePath = path.join(__dirname, '../input.txt')
 
 fs.readFile(filePath, { encoding: 'utf8' }, (err, data) => {
   if (err) throw err
-  let answer = chronalCalibrator(data)
+  let answer = chronalCalibrator.getFirstMatch(data)
   console.log(`Answer: ${answer}`)
 })
