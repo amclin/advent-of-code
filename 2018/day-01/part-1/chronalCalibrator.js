@@ -1,9 +1,8 @@
 const chronalCalibrator = (input) => {
   let frequency = 0
-  input = input.replace(/\s+/g, '') // Strip whitespace
-  // Convert string to array of int
-  let adjustments = input.split(',').map((item) => {
-    return parseInt(item)
+  // Split string into array of integers. Split by whitespace or comma
+  let adjustments = input.split(/[\s,]+/).map((item) => {
+    return parseInt(item) || 0
   })
   adjustments.forEach((adjustment) => {
     frequency += parseInt(adjustment)

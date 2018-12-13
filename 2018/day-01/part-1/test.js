@@ -23,4 +23,14 @@ describe('--- Day 1: Chronal Calibration ---', () => {
     let actual = chronalCalibrator(sequence)
     expect(actual).to.equal(expected)
   })
+
+  it('supports line-separated lists', () => {
+    const sequence = `
+      +1
+      +1
+      -2`
+    const expected = 0
+    let actual = chronalCalibrator(sequence)
+    expect(actual).to.equal(expected)
+  })
 })
