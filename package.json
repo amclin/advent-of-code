@@ -5,7 +5,9 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "test": "test"
+    "pretest": "npm run lint",
+    "test": "mocha 2018/**/test.js",
+    "lint": "standard"
   },
   "repository": {
     "type": "git",
@@ -20,5 +22,10 @@
   "bugs": {
     "url": "https://github.com/amclin/advent-of-code/issues"
   },
-  "homepage": "https://github.com/amclin/advent-of-code#readme"
+  "homepage": "https://github.com/amclin/advent-of-code#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "standard": "^12.0.1"
+  }
 }
