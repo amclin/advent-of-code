@@ -21,14 +21,6 @@ describe('--- Day 2: Inventory Management System ---', () => {
       })
     })
 
-    describe('getDataFromList', () => {
-      it('Converts the input data into an array', () => {
-        const expected = ['abcdef', 'bababc', 'abbcde', 'abcccd', 'aabcdd', 'abcdee', 'ababab']
-        const actual = boxes.getListFromData(ids)
-        expect(actual).to.deep.equal(expected)
-      })
-    })
-
     describe('hasNRepatedChars(haystack, N)', () => {
       it('does not count matches if no letters are repeated', () => {
         const test = 'abcdef'

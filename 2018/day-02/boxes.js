@@ -1,10 +1,4 @@
-
-function getListFromData (input) {
-  // convert into an array of integers
-  const dataList = input.split(/[\s,]+/)
-  // Filter out empty strings
-  return dataList.filter((el) => el !== '')
-}
+const inputToArray = require('../inputParser').inputToArray
 
 /**
  * Filters out a list of unique values in an array
@@ -26,7 +20,7 @@ const hasNRepeatedChars = (haystack, n) => {
 }
 
 function getChecksum (input) {
-  const ids = getListFromData(input)
+  const ids = inputToArray(input)
   let count2 = 0
   let count3 = 0
   ids.forEach((id) => {
@@ -102,7 +96,6 @@ const findSimilarIDs = (ids, threshold) => {
 module.exports = {
   findSimilarIDs,
   getCommonLetters,
-  getListFromData,
   getChecksum,
   hasNRepeatedChars,
   scoreIDs
