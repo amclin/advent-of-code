@@ -1,13 +1,5 @@
 const inputToArray = require('../inputParser').inputToArray
-
-/**
- * Filters out a list of unique values in an array
- * @param {Array} a list of items
- * @returns {Array} list of unique results
- */
-const unique = (a) => {
-  return Array.from(new Set(a))
-}
+const unique = require('../helpers').unique
 
 const hasNRepeatedChars = (haystack, n) => {
   let chars = unique(haystack.split(''))
