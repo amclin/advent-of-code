@@ -4,6 +4,7 @@ var {
   _cloth,
   countConflicts,
   findNonOverlappingClaim,
+  getClaimedList,
   isClaimed,
   makeClaim,
   resetState,
@@ -63,6 +64,14 @@ describe('--- Day 3: No Matter How You Slice It ---', () => {
         expect(result[2][3]).to.deep.equal([1])
         expect(result[3][3]).to.deep.equal([1, 2])
         expect(result[5][5]).to.deep.equal([3])
+      })
+
+      it('logs the claim ID', () => {
+        claims.forEach((claim) => {
+          makeClaim(parseClaim(claim))
+        })
+        const actual = getClaimedList()
+        expect(actual).to.deep.equal([123, 1, 2, 3])
       })
     })
 

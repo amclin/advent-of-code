@@ -74,6 +74,9 @@ const makeClaim = (claim) => {
     }
   }
 
+  // Log claim
+  _claims.push(claim.id)
+
   return _cloth
 }
 
@@ -101,14 +104,16 @@ const parseClaim = (str) => {
   return claim
 }
 
+const getClaimedList = () => { return _claims }
+
 resetState()
 
 module.exports = {
   _conflicts,
-  _claims,
   _cloth,
   countConflicts,
   findNonOverlappingClaim,
+  getClaimedList,
   isClaimed,
   makeClaim,
   parseClaim,
