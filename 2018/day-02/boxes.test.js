@@ -78,7 +78,9 @@ describe('--- Day 2: Inventory Management System ---', () => {
         expect(actual2).to.equal(true)
       })
     })
+  })
 
+  describe('Part 2', () => {
     describe('scoreIDs(id, id)', () => {
       it('compares 2 input strings and outputs the number of characters that differ', () => {
         const id1 = 'abcde'
