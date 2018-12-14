@@ -39,9 +39,9 @@ describe('--- Day 4: Repose Record ---', () => {
       it('parses the log file contents into consumable records', () => {
         const expected = { // Last entry in log
           date: '1518-11-05',
-          id: undefined,
+          guard: undefined,
           minute: 55,
-          activity: 'wake'
+          activity: 'wakes up'
         }
         const parsedLog = parseLog(testInput)
         const actual = parsedLog[parsedLog.length - 1] // Get the last record

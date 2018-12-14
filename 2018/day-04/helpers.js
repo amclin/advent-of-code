@@ -1,12 +1,18 @@
+const linesToArray = require('../inputParser').linesToArray
 
 const loadInput = () => {
   let data = ''
   return data
 }
 
+/**
+ * Parses log and generates a structured list of log entries
+ * @param {String} log multiline data to parse
+ * @returns {Array} parsed results as an array of objects
+ */
 const parseLog = (log) => {
-  let data = []
-  return data
+  const lines = linesToArray(log)
+  return lines.map(parseLogEntry)
 }
 
 /**
