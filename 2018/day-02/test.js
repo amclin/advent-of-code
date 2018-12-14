@@ -78,5 +78,18 @@ describe('--- Day 2: Inventory Management System ---', () => {
         expect(actual2).to.equal(true)
       })
     })
+
+    describe('scoreIDs(id, id)', () => {
+      it('compares 2 input strings and outputs the number of characters that differ', () => {
+        const id1 = 'abcde'
+        const id2 = 'axcye'
+        expect(boxes.scoreIDs(id1, id2)).to.equal(2)
+      })
+      it('compares 2 input strings and outputs the number of characters that differ', () => {
+        const id1 = 'fghij'
+        const id2 = 'fguij'
+        expect(boxes.scoreIDs(id1, id2)).to.equal(1)
+      })
+    })
   })
 })

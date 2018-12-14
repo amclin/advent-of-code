@@ -37,8 +37,24 @@ function getChecksum (input) {
   return count2 * count3
 }
 
+/**
+ * Compares two stings and counts how many letters differ between them
+ * @param {String} id1 the first string
+ * @param {String} id2 the second string
+ */
+const scoreIDs = (str1, str2) => {
+  const chars1 = str1.split('')
+  const chars2 = str2.split('')
+  let score = chars1.length
+  chars1.forEach((chr, idx) => {
+    if (chars1[idx] === chars2[idx]) { score += -1 }
+  })
+  return score
+}
+
 module.exports = {
   getListFromData,
   getChecksum,
-  hasNRepeatedChars
+  hasNRepeatedChars,
+  scoreIDs
 }
