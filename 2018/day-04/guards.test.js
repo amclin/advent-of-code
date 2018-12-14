@@ -1,5 +1,9 @@
 /* eslint-env mocha */
 const expect = require('chai').expect
+const {
+  findLaziestGuard,
+  findTimesGuardLikleyAsleep
+} = require('./guards')
 
 describe('--- Day 4: Repose Record ---', () => {
   describe('Part 1', () => {
@@ -14,7 +18,7 @@ describe('--- Day 4: Repose Record ---', () => {
 
       })
     })
-    
+
     describe('findLaziestGuard()', () => {
       it('locates the guard who sleeps the most minutes', () => {
         const expected = 10
@@ -30,6 +34,5 @@ describe('--- Day 4: Repose Record ---', () => {
         expect(actual).to.equal(expected)
       })
     })
-
   })
 })
