@@ -1,17 +1,13 @@
 /* eslint-env mocha */
 const expect = require('chai').expect
-let {
-  _conflicts,
-  _claims,
+var {
+  _cloth,
+  countConflicts,
   isClaimed,
-  logConflict,
   makeClaim,
+  resetState,
   parseClaim
 } = require('./claims')
-
-function _randomInt (min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min
-}
 
 describe('--- Day 3: No Matter How You Slice It ---', () => {
   const claims = [
@@ -20,6 +16,14 @@ describe('--- Day 3: No Matter How You Slice It ---', () => {
     '#2 @ 3,1: 4x4',
     '#3 @ 5,5: 2x2'
   ]
+
+  beforeEach(() => {
+    resetState()
+  })
+
+  afterEach(() => {
+    resetState()
+  })
 
   describe('parseClaim()', () => {
     it('converts a claim into a readable object', () => {
@@ -37,29 +41,27 @@ describe('--- Day 3: No Matter How You Slice It ---', () => {
   })
 
   describe('makeClaim(claim)', () => {
-    it('claims a piece of cloth for the specified elf', () => {
+    it('marks the points on the cloth with the claim ID', () => {
       const claim = parseClaim(claims[0])
-      makeClaim(claim)
-      const actual = _claims.find((el) => el.x === claim.x && el.y === claim.y)
-      expect(actual).to.deep.equal(claim)
+      let result = makeClaim(claim)
+      expect(result[1][1]).to.equal(undefined)
+      expect(result[3][2]).to.deep.equal([123])
+      expect(result[7][5]).to.deep.equal([123])
     })
 
-    it('logs an overlap when one is encountered', () => {
-      const claim1 = claims[1]
-      const claim2 = claims[2]
-      makeClaim(claim1)
-      makeClaim(claim2)
-      expect(_conflicts)
-    })
+    it('marks the points that are overlapped', () => {
+      let testClaims = claims.map(parseClaim)
+      let result = _cloth
+      for (let x = 1; x < claims.length; x++) {
+        result = makeClaim(testClaims[x])
+      }
 
-    // it('does not claim points outside the region', () => {
-    //   const claim = parseClaim(claims[0])
-    //   makeClaim(claim)
-    //   expect(_cloth.length).to.equal(claim.width)
-    //   _cloth.forEach((col) => {
-    //     expect(col.length).to.equal(claim.height)
-    //   })
-    // })
+      expect(result[0][0]).to.equal(undefined)
+      expect(result[3][1]).to.deep.equal([2])
+      expect(result[2][3]).to.deep.equal([1])
+      expect(result[3][3]).to.deep.equal([1, 2])
+      expect(result[5][5]).to.deep.equal([3])
+    })
   })
 
   describe('isClaimed(x,y)', () => {
@@ -76,19 +78,15 @@ describe('--- Day 3: No Matter How You Slice It ---', () => {
     })
   })
 
-  describe('logConflict(x,y,claims)', () => {
-    it('records claim conflicts', () => {
-      const x = _randomInt(0, 500)
-      const y = _randomInt(0, 500)
-      const id = _randomInt(0, 500)
-      const expected = {
-        x: x,
-        y: y,
-        claims: [id]
+  describe('countConflicts()', () => {
+    it('counts the number of points with conflicting claims', () => {
+      let testClaims = claims.map(parseClaim)
+      for (let x = 1; x < claims.length; x++) {
+        makeClaim(testClaims[x])
       }
-      logConflict(x, y, [id])
-      const actual = _conflicts.find((c) => c.x === x && c.y === y)
-      expect(actual).to.deep.equal(expected)
+      const expected = 4
+      const actual = countConflicts()
+      expect(actual).to.equal(expected)
     })
   })
 })

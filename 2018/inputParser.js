@@ -10,6 +10,14 @@ function inputToArray (input) {
   return list
 }
 
+function linesToArray (input) {
+  // convert list into array of strings split by lines
+  let list = input.split(/[\n]+/)
+  // drop the empty entries created by extraneous whitespace
+  list = list.filter((item) => item !== '')
+  return list
+}
+
 /**
  * Takes an input string and parses it into an array of integers
  * list can be newline or comma delineated
@@ -28,5 +36,6 @@ function parseData (input) {
 
 module.exports = {
   inputToArray,
+  linesToArray,
   parseData
 }

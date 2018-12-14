@@ -1,88 +1,75 @@
 var _conflicts = []
 var _claims = []
+var _cloth = []
 
 /**
- * Check if a value is within the designated range (inclusive)
- * @param {number} s1 start of first range
- * @param {number} e1 end of first range
- * @param {number} s2 start of first range
- * @param {number} e2 end of first range
+ * Generates an empty matrix of X columns and Y rows
  */
-const _isOverlap = (s1, e1, s2, e2) => {
-  return Math.max(s1, e1) <= Math.min(s2, e2)
+const emptyMatrix = (x, y) => {
+  return Array(x).fill().map(() => Array(y).fill())
+}
+
+const resetState = () => {
+  _cloth = emptyMatrix(1000, 1000)
+  _conflicts = []
+  _claims = []
 }
 
 /**
- * Compares claims to see if they overlap
- * @param {Object} c1 claim to compare
- * @param {Object*} c2 claim to compare
+ * Iterates through the cloth and tallies the conflicing points
  */
-const _isOverlappingClaim = (c1, c2) => {
-  // x range overlaps
-  const x = _isOverlap(
-    c1.x,
-    c1.x + c1.width,
-    c2.x,
-    c2.x + c2.width
-  )
-  // y range overlaps
-  const y = _isOverlap(
-    c1.y,
-    c1.y + c1.height,
-    c2.y,
-    c2.y + c2.height
-  )
-  return (x && y)
+const countConflicts = () => {
+  let conflicts = 0
+  for (let x = 0; x < _cloth.length; x++) {
+    for (let y = 0; y < _cloth[x].length; y++) {
+      if (isConflict(x, y)) {
+        conflicts += 1
+      }
+    }
+  }
+  return conflicts
 }
 
 /**
- * Iterates through the list of claims and checks to see if any cover the specified point
+ * Checks a point in the cloth to see if it's already claimed
  * @param {number} x point x value
  * @param {number} y point y value
  * @returns {Boolean}
  */
 const isClaimed = (x, y) => {
-  const matches = _claims.filter((claim) =>
-    x >= claim.x &&
-    x <= claim.x + claim.width &&
-    y >= claim.y &&
-    y <= claim.y + claim.height
-  )
-  return (matches.length > 0)
+  return (typeof _cloth[x][y] === 'object' && _cloth[x][y].length > 0)
+}
+
+const isConflict = (x, y) => {
+  return (isClaimed(x, y) && _cloth[x][y].length > 1)
+}
+
+const claimPoint = (x, y, id) => {
+  // Point doesn't have a claim yet
+  if (typeof _cloth[x][y] === 'undefined') {
+    _cloth[x][y] = [id]
+    return
+  }
+  // Point has claims already
+  if (typeof _cloth[x][y] === 'object') {
+    _cloth[x][y].push(id)
+    return
+  }
+  throw new Error('Tried to set a point with an unknown type')
 }
 
 /**
- * Logs a conflict about multiple claims for a singel point
- * @param {number} x
- * @param {number} y
- * @param {Array} claims list of claim IDs
+ * Marks claimed points on the cloth
+ * @param {Object} claim
  */
-const logConflict = (x, y, claims) => {
-  let existing = _conflicts.find((c) => c.x === x && c.y === y)
-  if (existing) {
-    // Append new claims to existing list for this coordiante
-    existing.claims = existing.claims.concat(claims)
-  } else {
-    // Record a new claim conflict
-    _conflicts.push({ x: x, y: y, claims: claims })
-  }
-}
-
 const makeClaim = (claim) => {
-  // Check if there's any overlap with an exisiting claim
-  const overlaps = _claims.filter((existing) => _isOverlappingClaim(existing, claim))
-  if (overlaps.length > 0) {
-    console.log(`Claim ${claim.id} overlaps ${overlaps.length} already existing claims.`)
-    // step through individual points to log conflicts
-    for (let x = claim.x; x < claim.x + claim.width; x++) {
-      for (let y = claim.y; y < claim.y + claim.height; y++) {
-        if (isClaimed(x, y)) {
-          logConflict(x, y, [claim.id])
-        }
-      }
+  for (let x = claim.x; x < claim.x + claim.width; x++) {
+    for (let y = claim.y; y < claim.y + claim.height; y++) {
+      claimPoint(x, y, claim.id)
     }
   }
-  _claims.push(claim)
+
+  return _cloth
 }
 
 /**
@@ -109,11 +96,15 @@ const parseClaim = (str) => {
   return claim
 }
 
+resetState()
+
 module.exports = {
   _conflicts,
   _claims,
+  _cloth,
+  countConflicts,
   isClaimed,
-  logConflict,
   makeClaim,
-  parseClaim
+  parseClaim,
+  resetState
 }
