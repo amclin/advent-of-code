@@ -63,6 +63,9 @@ const parseLogEntry = (entry) => {
 
   data.date = res.shift()
     .replace('[', '') // strip brackets from date
+  data.hour = parseInt(
+    res[0].split(':')[0]
+  )
   data.minute = parseInt(
     res.shift()
       .replace(']', '') // strip brackets from time

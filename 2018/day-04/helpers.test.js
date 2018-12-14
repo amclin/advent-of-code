@@ -94,6 +94,7 @@ describe('--- Day 4: Repose Record ---', () => {
         const expected = { // Last entry in log
           date: '1518-11-05',
           guard: undefined,
+          hour: 0,
           minute: 55,
           activity: 'wakes up'
         }
@@ -110,6 +111,7 @@ describe('--- Day 4: Repose Record ---', () => {
           activity: 'begins shift',
           date: '1518-11-01',
           guard: 10,
+          hour: 0,
           minute: 0
         }
         const actual = parseLogEntry(input)
@@ -122,6 +124,7 @@ describe('--- Day 4: Repose Record ---', () => {
           activity: 'falls asleep',
           date: '1518-11-01',
           guard: undefined,
+          hour: 0,
           minute: 5
         }
         const actual = parseLogEntry(input)
@@ -134,6 +137,7 @@ describe('--- Day 4: Repose Record ---', () => {
           activity: 'wakes up',
           date: '1518-11-01',
           guard: undefined,
+          hour: 0,
           minute: 25
         }
         const actual = parseLogEntry(input)

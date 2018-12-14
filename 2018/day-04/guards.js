@@ -6,7 +6,7 @@ const findLaziestGuards = (data) => {
 }
 
 const sortActivities = (data) => {
-  return data.sort(helpers.dynamicSortMultiple('date', 'minute'))
+  return data.sort(helpers.dynamicSortMultiple('date', 'hour', 'minute'))
 }
 
 module.exports = {
