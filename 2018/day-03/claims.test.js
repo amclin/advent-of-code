@@ -1,12 +1,12 @@
 /* eslint-env mocha */
 const expect = require('chai').expect
-const { parseClaim } = require('./claims')
 let {
+  _conflicts,
   cloth,
-  conflicts,
   isClaimed,
   logConflict,
-  makeClaim
+  makeClaim,
+  parseClaim
 } = require('./claims')
 
 function _randomInt (min, max) {
@@ -84,7 +84,6 @@ describe('--- Day 3: No Matter How You Slice It ---', () => {
 
   describe('logConflict(x,y,claims)', () => {
     it('records claim conflicts', () => {
-      conflicts = {}
       const x = _randomInt(0, 500)
       const y = _randomInt(0, 500)
       const id = _randomInt(0, 500)
@@ -94,7 +93,7 @@ describe('--- Day 3: No Matter How You Slice It ---', () => {
         claims: [id]
       }
       logConflict(x, y, [id])
-      const actual = conflicts[0]
+      const actual = _conflicts.find((c) => c.x === x && c.y === y)
       expect(actual).to.deep.equal(expected)
     })
   })
