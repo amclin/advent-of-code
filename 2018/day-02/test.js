@@ -108,5 +108,21 @@ describe('--- Day 2: Inventory Management System ---', () => {
         expect(actual).to.equal(expected)
       })
     })
+
+    describe('findSimilarIDs(ids)', () => {
+      it('scans of list of IDs and finds the ones where only 1 letter is different', () => {
+        const test = [
+          'abcde',
+          'fghij',
+          'klmno',
+          'pqrst',
+          'fguij',
+          'axcye',
+          'wvxyz']
+        const actual = boxes.findSimilarIDs(test)
+        expect(actual).to.contain('fghij')
+        expect(actual).to.contain('fguij')
+      })
+    })
   })
 })

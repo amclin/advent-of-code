@@ -63,7 +63,44 @@ const getCommonLetters = (str1, str2) => {
   }).join('')
 }
 
+/**
+ * Searches through a list of IDs, finding ones that only have 1 letter difference
+ * @param {Array} ids
+ * @param {Number} threshold of difference. Defaults to 1
+ * @returns {Array} list of similar IDs
+ */
+const findSimilarIDs = (ids, threshold) => {
+  let results = []
+  threshold = threshold || 1
+
+  let searchIdx = 0
+  do {
+    let needle = ids[searchIdx]
+    // Find matches that differ by only one letter
+    let matches = ids.filter((id, idx) => {
+      // Don't repeat comparisons and don't compare to self
+      if (searchIdx <= idx) {
+        return false
+      }
+      return (scoreIDs(needle, id) === threshold)
+    })
+
+    // Stop iterating through needles once there's a match
+    if (matches.length === threshold) {
+      results.push(needle)
+      results.push(matches[0])
+    }
+
+    // Check next term
+    searchIdx++
+  }
+  while (searchIdx < ids.length && results.length === 0)
+
+  return results
+}
+
 module.exports = {
+  findSimilarIDs,
   getCommonLetters,
   getListFromData,
   getChecksum,
