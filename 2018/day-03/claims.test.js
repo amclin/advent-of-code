@@ -3,7 +3,7 @@ const expect = require('chai').expect
 var {
   _cloth,
   countConflicts,
-  findNonOverlappingClaim,
+  findNonOverlappingClaims,
   getClaimedList,
   isClaimed,
   makeClaim,
@@ -103,15 +103,15 @@ describe('--- Day 3: No Matter How You Slice It ---', () => {
   })
 
   describe('Part 2', () => {
-    describe('findNonOverlappingClaim()', () => {
+    describe('findNonOverlappingClaims()', () => {
       it('locates the first claim that doesn\'t have overlapping claims', () => {
         let testClaims = claims.map(parseClaim)
         for (let x = 1; x < claims.length; x++) {
           makeClaim(testClaims[x])
         }
-        const expected = 3
-        const actual = findNonOverlappingClaim()
-        expect(actual).to.equal(expected)
+        const expected = [3]
+        const actual = findNonOverlappingClaims()
+        expect(actual).to.deep.equal(expected)
       })
     })
   })

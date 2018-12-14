@@ -10,7 +10,7 @@ fs.readFile(filePath, { encoding: 'utf8' }, (err, data) => {
   const claimsList = inputParser.linesToArray(data)
   claimsList.forEach((claim) => claims.makeClaim(claims.parseClaim(claim)))
   const answer = claims.countConflicts()
-  const answer2 = claims.findNonOverlappingClaim()
+  const answer2 = claims.findNonOverlappingClaims()
   console.log(`-- Part 1 --`)
   console.log(`Answer: ${answer}`)
   console.log(`-- Part 2 --`)

@@ -1,3 +1,5 @@
+const unique = require('../helpers').unique
+
 var _conflicts = []
 var _claims = []
 var _cloth = []
@@ -58,9 +60,21 @@ const claimPoint = (x, y, id) => {
   throw new Error('Tried to set a point with an unknown type')
 }
 
-const findNonOverlappingClaim = () => {
-  let claim = 0
-  return claim
+const findNonOverlappingClaims = () => {
+  // locate all claim IDs that exist in conflicts
+  let conflicts = []
+  for (let x = 0; x < _cloth.length; x++) {
+    for (let y = 0; y < _cloth[x].length; y++) {
+      if (isConflict(x, y)) {
+        conflicts = conflicts.concat(_cloth[x][y])
+      }
+    }
+  }
+  // Keep only one instance of each conflict ID
+  conflicts = unique(conflicts)
+
+  // Filter the list of claims to only those that aren't in the conflicts list
+  return _claims.filter((id) => conflicts.indexOf(id) < 0)
 }
 
 /**
@@ -112,7 +126,7 @@ module.exports = {
   _conflicts,
   _cloth,
   countConflicts,
-  findNonOverlappingClaim,
+  findNonOverlappingClaims,
   getClaimedList,
   isClaimed,
   makeClaim,
