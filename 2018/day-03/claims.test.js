@@ -2,7 +2,7 @@
 const expect = require('chai').expect
 let {
   _conflicts,
-  cloth,
+  _claims,
   isClaimed,
   logConflict,
   makeClaim,
@@ -37,35 +37,29 @@ describe('--- Day 3: No Matter How You Slice It ---', () => {
   })
 
   describe('makeClaim(claim)', () => {
-    beforeEach(() => {
-      // Clear the stateful claims
-      cloth = {}
-    })
-
-    afterEach(() => {
-      // Clear the stateful claims
-      cloth = {}
-    })
-
     it('claims a piece of cloth for the specified elf', () => {
       const claim = parseClaim(claims[0])
       makeClaim(claim)
-      const expected = claim.id
-      for (let x = claim.x; x < claim.x + claim.width; x++) {
-        for (let y = claim.y; x < claim.y + claim.height; y++) {
-          expect(cloth[x][y]).to.equal(expected)
-        }
-      }
+      const actual = _claims.find((el) => el.x === claim.x && el.y === claim.y)
+      expect(actual).to.deep.equal(claim)
     })
 
-    it('does not claim points outside the region', () => {
-      const claim = parseClaim(claims[0])
-      makeClaim(claim)
-      expect(cloth.length).to.equal(claim.width)
-      cloth.forEach((col) => {
-        expect(col.length).to.equal(claim.height)
-      })
+    it('logs an overlap when one is encountered', () => {
+      const claim1 = claims[1]
+      const claim2 = claims[2]
+      makeClaim(claim1)
+      makeClaim(claim2)
+      expect(_conflicts)
     })
+
+    // it('does not claim points outside the region', () => {
+    //   const claim = parseClaim(claims[0])
+    //   makeClaim(claim)
+    //   expect(_cloth.length).to.equal(claim.width)
+    //   _cloth.forEach((col) => {
+    //     expect(col.length).to.equal(claim.height)
+    //   })
+    // })
   })
 
   describe('isClaimed(x,y)', () => {
