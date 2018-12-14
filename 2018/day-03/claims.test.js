@@ -1,12 +1,12 @@
 /* eslint-env mocha */
 const expect = require('chai').expect
+const { parseClaim } = require('./claims')
 let {
   cloth,
   conflicts,
   isClaimed,
   logConflict,
-  makeClaim,
-  parseClaim
+  makeClaim
 } = require('./claims')
 
 function _randomInt (min, max) {
@@ -32,7 +32,7 @@ describe('--- Day 3: No Matter How You Slice It ---', () => {
         height: 4
       }
       const actual = parseClaim(claim)
-      expected(actual).to.deep.equal(expected)
+      expect(actual).to.deep.equal(expected)
     })
   })
 
