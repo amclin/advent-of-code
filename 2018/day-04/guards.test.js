@@ -8,13 +8,13 @@ const {
 describe('--- Day 4: Repose Record ---', () => {
   describe('Part 1', () => {
     describe('sortRecords()', () => {
-      it('sorts the sleep records by the timestamp', () => {
+      it.skip('sorts the sleep records by the timestamp', () => {
 
       })
     })
 
     describe('mapRecords()', () => {
-      it('converts the records into a parseable matrix, logging guards times', () => {
+      it.skip('converts the records into a parseable matrix, logging guards times', () => {
 
       })
     })

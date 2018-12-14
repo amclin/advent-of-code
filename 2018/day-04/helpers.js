@@ -6,6 +6,25 @@ const loadInput = () => {
 }
 
 /**
+ * Filter for use in Array.sort() that allows you to specify the key to sort on
+ * @param {String} property key to use for the sort
+ */
+const dynamicSort = (property) => {
+  let sortOrder = 1
+  // use - as prefix to indicate reverse sort
+  if (property[0] === '-') {
+    sortOrder = -1
+    property = property.substr(1)
+  }
+
+  return (a, b) => {
+    let result = 0
+    if (a[property] < b[property]) { result = -1 }
+    if (a[property] > b[property]) { result = 1 }
+    return result * sortOrder
+  }
+}
+/**
  * Parses log and generates a structured list of log entries
  * @param {String} log multiline data to parse
  * @returns {Array} parsed results as an array of objects
@@ -47,6 +66,7 @@ const parseLogEntry = (entry) => {
 }
 
 module.exports = {
+  dynamicSort,
   loadInput,
   parseLog,
   parseLogEntry

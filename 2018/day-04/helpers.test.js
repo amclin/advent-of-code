@@ -1,6 +1,7 @@
 /* eslint-env mocha */
 const expect = require('chai').expect
 const {
+  dynamicSort,
   loadInput,
   parseLog,
   parseLogEntry
@@ -29,6 +30,22 @@ const testInput = `
 
 describe('--- Day 4: Repose Record ---', () => {
   describe('helpers', () => {
+    describe('dynamicSort()', () => {
+      it('sorts an array of objects based on the values in the specified key', () => {
+        const test = [
+          { key: 'a' },
+          { key: 'z' },
+          { key: 'm' }
+        ]
+        const expected = {
+          first: 'a',
+          last: 'z'
+        }
+        const actual = test.sort(dynamicSort('key'))
+        expect(actual[0].key).to.equal(expected.first)
+        expect(actual[2].key).to.equal(expected.last)
+      })
+    })
     describe('loadInput()', () => {
       it.skip('loads the contents of the input file into a string', () => {
         expect(loadInput()).to.equal(testInput)
