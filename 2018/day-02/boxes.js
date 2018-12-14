@@ -41,18 +41,30 @@ function getChecksum (input) {
  * Compares two stings and counts how many letters differ between them
  * @param {String} id1 the first string
  * @param {String} id2 the second string
+ * @returns {number}
  */
 const scoreIDs = (str1, str2) => {
+  let common = getCommonLetters(str1, str2)
+  return str1.length - common.length
+}
+
+/**
+ * Compares two strings and returns the letters that they share
+ * @param {String} str1
+ * @param {String} str2
+ * @returns {String}
+ */
+const getCommonLetters = (str1, str2) => {
   const chars1 = str1.split('')
   const chars2 = str2.split('')
-  let score = chars1.length
-  chars1.forEach((chr, idx) => {
-    if (chars1[idx] === chars2[idx]) { score += -1 }
-  })
-  return score
+
+  return chars1.filter((chr, idx) => {
+    return (chars2[idx] === chr)
+  }).join('')
 }
 
 module.exports = {
+  getCommonLetters,
   getListFromData,
   getChecksum,
   hasNRepeatedChars,

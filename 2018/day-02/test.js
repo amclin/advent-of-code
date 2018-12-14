@@ -91,5 +91,22 @@ describe('--- Day 2: Inventory Management System ---', () => {
         expect(boxes.scoreIDs(id1, id2)).to.equal(1)
       })
     })
+
+    describe('getCommonLetters(id, id)', () => {
+      it('compares 2 strings and oupts the letters that are common between them', () => {
+        const id1 = 'abcde'
+        const id2 = 'axcye'
+        const expected = 'ace'
+        const actual = boxes.getCommonLetters(id1, id2)
+        expect(actual).to.equal(expected)
+      })
+      it('compares 2 strings and oupts the letters that are common between them', () => {
+        const id1 = 'fghij'
+        const id2 = 'fguij'
+        const expected = 'fgij'
+        const actual = boxes.getCommonLetters(id1, id2)
+        expect(actual).to.equal(expected)
+      })
+    })
   })
 })
