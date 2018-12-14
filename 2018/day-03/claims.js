@@ -58,6 +58,11 @@ const claimPoint = (x, y, id) => {
   throw new Error('Tried to set a point with an unknown type')
 }
 
+const findNonOverlappingClaim = () => {
+  let claim = 0
+  return claim
+}
+
 /**
  * Marks claimed points on the cloth
  * @param {Object} claim
@@ -103,6 +108,7 @@ module.exports = {
   _claims,
   _cloth,
   countConflicts,
+  findNonOverlappingClaim,
   isClaimed,
   makeClaim,
   parseClaim,
