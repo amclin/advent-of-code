@@ -2,6 +2,7 @@
 const expect = require('chai').expect
 const {
   dynamicSort,
+  dynamicSortMultiple,
   loadInput,
   parseLog,
   parseLogEntry
@@ -46,6 +47,42 @@ describe('--- Day 4: Repose Record ---', () => {
         expect(actual[2].key).to.equal(expected.last)
       })
     })
+
+    describe('dynamicSortMultiple()', () => {
+      it('sorts an array of objects based on the values in multiple specified keys', () => {
+        const test = [
+          { key1: 'a', key2: 4 },
+          { key1: 'z', key2: 3 },
+          { key1: 'z', key2: 1 },
+          { key1: 'm', key3: 2 }
+        ]
+        const expected = {
+          first: 'a',
+          last: 'z'
+        }
+        const actual = test.sort(dynamicSortMultiple('key1', 'key2'))
+        expect(actual[0].key1).to.equal(expected.first)
+        expect(actual[3].key1).to.equal(expected.last)
+        expect(actual[3].key2).to.equal(3)
+      })
+      it('prioritizes based on the order of the arguments', () => {
+        const test = [
+          { key1: 'a', key2: 4 },
+          { key1: 'z', key2: 3 },
+          { key1: 'z', key2: 1 },
+          { key1: 'm', key2: 2 }
+        ]
+        const expected = {
+          first: 'z',
+          last: 'a'
+        }
+        const actual = test.sort(dynamicSortMultiple('key2', 'key1'))
+        expect(actual[0].key1).to.equal(expected.first)
+        expect(actual[0].key2).to.equal(1)
+        expect(actual[3].key1).to.equal(expected.last)
+      })
+    })
+
     describe('loadInput()', () => {
       it.skip('loads the contents of the input file into a string', () => {
         expect(loadInput()).to.equal(testInput)

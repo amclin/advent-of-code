@@ -24,6 +24,24 @@ const dynamicSort = (property) => {
     return result * sortOrder
   }
 }
+
+/**
+ * Filter for use in Array.sort() that allows you to specify mutlipe keys to sort on
+ * @param {...String} property Two or more property names to sort by
+ */
+const dynamicSortMultiple = (...keys) => {
+  return (a, b) => {
+    let i = 0
+    let result = 0
+    let numberOfProperties = keys.length
+
+    while (result === 0 && i < numberOfProperties) {
+      result = dynamicSort(keys[i])(a, b)
+      i++
+    }
+    return result
+  }
+}
 /**
  * Parses log and generates a structured list of log entries
  * @param {String} log multiline data to parse
@@ -67,6 +85,7 @@ const parseLogEntry = (entry) => {
 
 module.exports = {
   dynamicSort,
+  dynamicSortMultiple,
   loadInput,
   parseLog,
   parseLogEntry
