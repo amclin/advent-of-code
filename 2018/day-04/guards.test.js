@@ -30,14 +30,23 @@ describe('--- Day 4: Repose Record ---', () => {
   describe('Part 1', () => {
     describe('sortActivities()', () => {
       it('sorts the activity records by the timestamp', () => {
-        const expected = {
-          activity: 'begins shift',
-          date: '1518-11-01',
-          guard: 10,
-          minute: 0
-        }
-        const actual = sortActivities(testActivities)[0]
-        expect(actual).to.deep.equal(expected)
+        const expected = [
+          {
+            activity: 'begins shift',
+            date: '1518-11-01',
+            guard: 10,
+            minute: 0
+          },
+          {
+            activity: 'wakes up',
+            date: '1518-11-05',
+            guard: undefined,
+            minute: 55
+          }
+        ]
+        const actual = sortActivities(testActivities)
+        expect(actual[0]).to.deep.equal(expected[0])
+        expect(actual[actual.length - 1]).to.deep.equal(expected[expected.length - 1])
       })
     })
 
