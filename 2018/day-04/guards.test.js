@@ -4,6 +4,7 @@ const helpers = require('./helpers')
 const {
   findLaziestGuard,
   findTimesGuardLikleyAsleep,
+  processActivities,
   sortActivities
 } = require('./guards')
 
@@ -52,9 +53,35 @@ describe('--- Day 4: Repose Record ---', () => {
       })
     })
 
-    describe('mapRecords()', () => {
-      it.skip('converts the records into a parseable matrix, logging guards times', () => {
-
+    describe('processActivities()', () => {
+      it('converts the records into day-based activities list, logging guards times awake and asleep in strings', () => {
+        const expected = [
+          {
+            date: '1518-11-01',
+            guard: 10,
+            activity: '.....####################.....#########################.....'
+          }, {
+            date: '1518-11-02',
+            guard: 99,
+            activity: '........................................##########..........'
+          }, {
+            date: '1518-11-03',
+            guard: 10,
+            activity: '........................#####...............................'
+          }, {
+            date: '1518-11-04',
+            guard: 99,
+            activity: '....................................##########..............'
+          }, {
+            date: '1518-11-05',
+            guard: 99,
+            activity: '.............................................##########.....'
+          }
+        ]
+        const actual = processActivities(
+          sortActivities(testActivities)
+        )
+        expect(actual).to.deep.equal(expected)
       })
     })
 
