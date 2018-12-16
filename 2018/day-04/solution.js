@@ -3,7 +3,7 @@ const helpers = require('./helpers')
 
 const data = helpers.loadInput((res) => helpers.parseLog())
 const laziestGuard = guards.getLaziestGuards(data)[0]
-const answer = guards.findPopularSleepTimeByGuard(laziestGuard)
+const answer = guards.findSleepiestTimes(laziestGuard)
 const answer2 = undefined
 
 console.log(`-- Part 1 --`)

@@ -97,10 +97,13 @@ describe('--- Day 4: Repose Record ---', () => {
       })
     })
 
-    describe('findTimesGuardLikleyAsleep(guard)', () => {
-      it.skip('gets a list of times guard is most commonly asleep, ranked with most likely first', () => {
+    describe('findSleepiestTimes(guard)', () => {
+      it('gets a list of times guard is most commonly asleep, ranked with most likely first', () => {
         const expected = 24
-        const actual = findTimesGuardLikleyAsleep(10)[0]
+        const data = processActivities(
+          sortActivities(testActivities)
+        )
+        const actual = findSleepiestTimes(10, data)[0].minute
         expect(actual).to.equal(expected)
       })
     })

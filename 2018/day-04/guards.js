@@ -29,6 +29,40 @@ const findLaziestGuards = (days) => {
   return guards.sort(helpers.dynamicSort('-asleep'))
 }
 
+/**
+ * Searches the list of daily activity to rank the times by when the specified guard is most likely asleep
+ * @param {number} guard ID of guard to check
+ * @param {Array} data List of day sleeping patterns as returned by processActivities()
+ */
+const findSleepiestTimes = (guard, data) => {
+  // Takes an activity string and returns a list of times the guard is asleep
+  const getTimesAsleep = (activity) => {
+    return activity.split('')
+      .map((state, idx) => {
+        return { id: idx, state: state } // parse the activity stream into data
+      }).filter((minute) => minute.state === '#') // get only the times the guard is asleep
+      .map((minute) => minute.id) // convert into a list of times
+  }
+
+  // console.log(data.filter((day) => day.guard === guard).map((day) => getTimesAsleep(day.activity)))
+
+  let times = data.filter((day) => day.guard === guard) // Find the days the guard is working
+    .map((day) => getTimesAsleep(day.activity)) // Convert activity streams into lists of times where guard is asleep
+    .reduce((acc, day) => {
+      let counter = acc || []
+      // Loop through the minutes of the day, and increment status in the acclumator if the guard is asleep
+      day.forEach((minute) => {
+        counter[minute] = (counter[minute]) ? counter[minute] + 1 : 1
+      })
+      return counter
+    }, []).map((cur, idx) => { // Convert back into a sortable object
+      return { minute: idx, qty: cur }
+    })
+
+  // Sort the times by popularity
+  return times.sort(helpers.dynamicSort('times'))
+}
+
 const processActivities = (data) => {
   // we'll store asleep as (#) and awake as (.)
   const statesMap = {
@@ -116,6 +150,7 @@ const sortActivities = (data) => {
 
 module.exports = {
   findLaziestGuards,
+  findSleepiestTimes,
   getData,
   processActivities,
   setData,
