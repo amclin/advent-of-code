@@ -1,5 +1,10 @@
 const helpers = require('./helpers')
 
+let _data = {}
+
+const getData = (key) => _data[key]
+const setData = (key) => _data[key]
+
 const findLaziestGuards = (data) => {
   let guards = []
   return guards
@@ -16,8 +21,6 @@ const processActivities = (data) => {
   // store variables iterated through the loop
   let store = data[0]
   store.state = statesMap[store.state]
-
-  // let idx = 0
 
   // Build up the results set
   let results = [{
@@ -89,6 +92,8 @@ const sortActivities = (data) => {
 
 module.exports = {
   findLaziestGuards,
+  getData,
   processActivities,
+  setData,
   sortActivities
 }
