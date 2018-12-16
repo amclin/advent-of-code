@@ -35,8 +35,13 @@ const processActivities = (data) => {
   }
 
   // store variables iterated through the loop
-  let store = data[0]
-  store.state = statesMap[store.state]
+  let store = {
+    date: data[0].date,
+    hour: data[0].hour,
+    minute: data[0].minute,
+    guard: data[0].guard,
+    state: statesMap[data[0].activity]
+  }
 
   // Build up the results set
   let results = [{
