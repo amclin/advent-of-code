@@ -11,6 +11,7 @@ const setData = (key) => _data[key]
  */
 const findLaziestGuards = (days) => {
   // Get a list of guards with their sleeping times
+  // returns { id: XX, asleep: YY }
   let guards = days.filter((day, idx, arr) => {
     return (arr.indexOf(day) === idx) // filters a list of unique guard IDs
   }).map((day) => {
@@ -18,7 +19,9 @@ const findLaziestGuards = (days) => {
   }).map((guard) => {
     guard.asleep = days.filter((day, idx, arr) => {
       return (day.guard === guard.id) // find the days this guard
-    }).reduce((acc, day) => acc + day.activity.count('#')) // count the time the guard was asleep
+    }).reduce((acc, day) => {
+      return acc + (day.activity.match(/#/g) || []).length // count the time the guard was asleep
+    })
     return guard
   })
 

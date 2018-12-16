@@ -2,8 +2,8 @@
 const expect = require('chai').expect
 const helpers = require('./helpers')
 const {
-  findLaziestGuard,
-  findTimesGuardLikleyAsleep,
+  findLaziestGuards,
+  findSleepiestTimes,
   processActivities,
   sortActivities
 } = require('./guards')
@@ -85,14 +85,14 @@ describe('--- Day 4: Repose Record ---', () => {
       })
     })
 
-    describe('findLaziestGuard()', () => {
-      it.skip('locates the guard who sleeps the most minutes', () => {
+    describe('findLaziestGuards(activities)', () => {
+      it('locates the guard who sleeps the most minutes', () => {
         const expected = 10
-        const actual = findLaziestGuard(
+        const actual = findLaziestGuards(
           processActivities(
             sortActivities(testActivities)
           )
-        )
+        )[0].id
         expect(actual).to.equal(expected)
       })
     })
