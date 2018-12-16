@@ -88,7 +88,11 @@ describe('--- Day 4: Repose Record ---', () => {
     describe('findLaziestGuard()', () => {
       it.skip('locates the guard who sleeps the most minutes', () => {
         const expected = 10
-        const actual = findLaziestGuard()
+        const actual = findLaziestGuard(
+          processActivities(
+            sortActivities(testActivities)
+          )
+        )
         expect(actual).to.equal(expected)
       })
     })

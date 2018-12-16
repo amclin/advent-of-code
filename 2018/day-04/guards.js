@@ -5,9 +5,25 @@ let _data = {}
 const getData = (key) => _data[key]
 const setData = (key) => _data[key]
 
-const findLaziestGuards = (data) => {
-  let guards = []
-  return guards
+/**
+ * Searches the list of daily activity to rank lazy guards
+ * @param {Array} days List of day sleeping patterns as returned by processActivities()
+ */
+const findLaziestGuards = (days) => {
+  // Get a list of guards with their sleeping times
+  let guards = days.filter((day, idx, arr) => {
+    return (arr.indexOf(day) === idx) // filters a list of unique guard IDs
+  }).map((day) => {
+    return { id: day.guard } // Makes a list of guard objects
+  }).map((guard) => {
+    guard.asleep = days.filter((day, idx, arr) => {
+      return (day.guard === guard.id) // find the days this guard
+    }).reduce((acc, day) => acc + day.activity.count('#')) // count the time the guard was asleep
+    return guard
+  })
+
+  // sort the list with the laziest guard first
+  return guards.sort(helpers.dynamicSort('-asleep'))
 }
 
 const processActivities = (data) => {
