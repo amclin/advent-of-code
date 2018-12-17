@@ -7,7 +7,7 @@ const {
 const {
   dynamicSort,
   loadInput,
-  parseLog,
+  parseLog
 } = require('./helpers')
 
 const init = (data) => {
