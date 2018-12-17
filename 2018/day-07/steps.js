@@ -6,8 +6,11 @@
  * @returns {Object} structured data
  */
 const parseEntry = (line, idx, arr) => {
-  let entry = {}
-  return entry
+  let data = line.split(' ')
+  return {
+    id: data[7],
+    dep: data[1]
+  }
 }
 
 /**

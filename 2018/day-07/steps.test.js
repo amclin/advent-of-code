@@ -16,14 +16,14 @@ Step F must be finished before step E can begin.`.split('\n')
 describe('--- Day 7: The Sum of Its Parts ---', () => {
   describe('Part 1:', () => {
     describe('parseEntry', () => {
-      it.skip('Parses a line of the log to create a structured data object representing the entry', () => {
+      it('Parses a line of the log to create a structured data object representing the entry', () => {
         const test = testData[4]
         const expected = {
           id: 'E',
           dep: 'B'
         }
         const actual = parseEntry(test)
-        expect(actual).to.equal(expected)
+        expect(actual).to.deep.equal(expected)
       })
     })
     describe('sortInstructions()', () => {
