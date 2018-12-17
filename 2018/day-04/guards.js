@@ -21,9 +21,10 @@ const findLaziestGuards = (days) => {
       return (day.guard === guard.id) // find the days this guard
     }).reduce((acc, day) => {
       return acc + (day.activity.match(/#/g) || []).length // count the time the guard was asleep
-    })
+    }, 0)
     return guard
   })
+  // TODO: guards has repeats!!!
 
   // sort the list with the laziest guard first
   return guards.sort(helpers.dynamicSort('-asleep'))
@@ -43,8 +44,6 @@ const findSleepiestTimes = (guard, data) => {
       }).filter((minute) => minute.state === '#') // get only the times the guard is asleep
       .map((minute) => minute.id) // convert into a list of times
   }
-
-  // console.log(data.filter((day) => day.guard === guard).map((day) => getTimesAsleep(day.activity)))
 
   let times = data.filter((day) => day.guard === guard) // Find the days the guard is working
     .map((day) => getTimesAsleep(day.activity)) // Convert activity streams into lists of times where guard is asleep
