@@ -23,11 +23,15 @@ const findLaziestGuards = (days) => {
       return acc + (day.activity.match(/#/g) || []).length // count the time the guard was asleep
     }, 0)
     return guard
-  })
-  // TODO: guards has repeats!!!
+  }).sort(helpers.dynamicSort('-asleep')) // sort the list with the laziest guard first
+    .reduce((acc, curr) => {
+      if (acc && acc.filter((el) => el.id === curr.id).length <= 0) { // remove duplicates
+        acc.push(curr)
+      }
+      return acc
+    }, [])
 
-  // sort the list with the laziest guard first
-  return guards.sort(helpers.dynamicSort('-asleep'))
+  return guards
 }
 
 /**
