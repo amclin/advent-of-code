@@ -15,6 +15,7 @@ const init = (data) => {
   data = processActivities(data)
   const laziestGuard = findLaziestGuards(data)[0].id
   const sleepiestTime = findSleepiestTimes(laziestGuard, data)[0].minute
+  console.log(findSleepiestTimes(laziestGuard, data))
   const answer = laziestGuard * sleepiestTime
   const answer2 = undefined
   console.log(`-- Part 1 --`)

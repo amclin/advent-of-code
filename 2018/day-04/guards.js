@@ -59,7 +59,7 @@ const findSleepiestTimes = (guard, data) => {
     })
 
   // Sort the times by popularity
-  return times.sort(helpers.dynamicSort('times'))
+  return times.sort(helpers.dynamicSort('-qty'))
 }
 
 const processActivities = (data) => {
