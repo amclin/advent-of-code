@@ -10,7 +10,6 @@ const {
 } = require('./coordinates')
 
 const init = (data) => {
-
   setAbsolutes(data)
   let grid = blankGrid()
 
