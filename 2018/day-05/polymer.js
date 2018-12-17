@@ -31,6 +31,18 @@ const reducePolymer = (input) => {
   }
 }
 
+/**
+ * Removes problem character and match from string
+ * @param {String} char letter to find and remove
+ * @param {String} char polymer to parse
+ * @returns {String}
+ */
+const cleanProblemUnits = (char, polymer) => {
+  const pattern = new RegExp('[' + char + ',' + toggleCase(char) + ']', 'g')
+  return polymer.replace(pattern, '')
+}
+
 module.exports = {
+  cleanProblemUnits,
   reducePolymer
 }
