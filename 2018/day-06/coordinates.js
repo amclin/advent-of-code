@@ -85,6 +85,17 @@ const blankGrid = () => {
 }
 
 /**
+ * Totals the distance to all registered points
+ * @param {Object} point The point being tested
+ * @param {Array} data List of known points to calculate distance to
+ */
+const distanceToAllPoints = (point, data) => {
+  return data.reduce((acc, target) => {
+    return acc + distance(point, target)
+  }, 0)
+}
+
+/**
  * Counts the number of coordinates in the grid that are closest to the specified point
  * @param {Number} pointId ID of the point being searched
  * @param {Array} grid The grid array, already populated with closest points
@@ -98,6 +109,7 @@ const getArea = (pointId, grid) => {
 module.exports = {
   blankGrid,
   distance,
+  distanceToAllPoints,
   findClosestPoint,
   getArea,
   isUnbounded,

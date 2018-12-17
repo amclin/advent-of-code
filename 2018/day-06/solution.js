@@ -3,6 +3,7 @@ const { dynamicSort } = require('../day-04/helpers')
 const {
   blankGrid,
   // distance,
+  distanceToAllPoints,
   findClosestPoint,
   getArea,
   isUnbounded,
@@ -13,10 +14,10 @@ const init = (data) => {
   setAbsolutes(data)
   let grid = blankGrid()
 
-  // Step through the grid and find the closest registered point for each coordinate
   grid = grid.map((row) => {
     return row.map((point) => {
-      point.closest = findClosestPoint(point, data)
+      point.closest = findClosestPoint(point, data) // find the closest registered point for each coordinate
+      point.totalDistance = distanceToAllPoints(point, data) // Total the distance to all registered points
       return point
     })
   })
@@ -38,10 +39,15 @@ const init = (data) => {
     }
     return point
   })
-  console.log(data)
+  console.log(grid[200][200])
 
   // The largest area
   const answer = data.filter((point) => point.area !== 'unbounded').sort(dynamicSort('-area'))[0].area
+
+  // Area with total distance to all registered points < 10000
+  const answer2 = grid.reduce((acc, xpoint) => {
+    return acc + xpoint.filter((ypoint) => ypoint.totalDistance < 10000).length
+  }, 0)
 
   // Determine the distance between every point
   // data = data.map((point) => {
@@ -55,7 +61,7 @@ const init = (data) => {
   console.log(`-- Part 1 --`)
   console.log(`Answer: ${answer}`)
   console.log(`-- Part 2 --`)
-  // console.log(`Answer: ${answer2}`)
+  console.log(`Answer: ${answer2}`)
 }
 
 loadInput(init)
