@@ -1,6 +1,7 @@
 /* eslint-env mocha */
 const expect = require('chai').expect
 const {
+  getDependencies,
   parseEntry,
   sortInstructions
 } = require('./steps')
@@ -27,6 +28,29 @@ describe('--- Day 7: The Sum of Its Parts ---', () => {
       })
     })
     describe('sortInstructions()', () => {
+      it('Builds a dependency tree', () => {
+        const expected = {
+          C: {
+            ids: ['A', 'F']
+          },
+          A: {
+            ids: ['B', 'D']
+          },
+          B: {
+            ids: ['E']
+          },
+          D: {
+            ids: ['E']
+          },
+          F: {
+            ids: ['E']
+          }
+        }
+        let test = testData.map(parseEntry)
+        sortInstructions(test)
+        const actual = getDependencies()
+        expect(actual).to.deep.equal(expected)
+      })
       it.skip('Puts the instructions in the necessary order', () => {
         const expected = 'CABDFE'
         let test = testData.map(parseEntry)
