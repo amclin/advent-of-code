@@ -7,7 +7,7 @@ const testInput = 'dabAcCaCBAcCcaDA'
 describe('--- Day 5: Alchemical Reduction ---', () => {
   describe('polymers', () => {
     describe('polymerReduce()', () => {
-      it.skip('recursively removes case-opposite letter pairs', () => {
+      it('recursively removes case-opposite letter pairs', () => {
         const expected = 'dabCBAcaDA'
         const actual = reducePolymer(testInput)
         expect(actual).to.equal(expected)
