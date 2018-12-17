@@ -1,9 +1,12 @@
 /* eslint-env mocha */
 const expect = require('chai').expect
 const {
+  findHasNoDependencies,
   getDependencies,
+  getInstructionIds,
   parseEntry,
-  sortInstructions
+  sortInstructions,
+  storeData
 } = require('./steps')
 
 const testData = `Step C must be finished before step A can begin.
@@ -27,8 +30,33 @@ describe('--- Day 7: The Sum of Its Parts ---', () => {
         expect(actual).to.deep.equal(expected)
       })
     })
+    describe('findHasNoDependencies()', () => {
+      it('Gets a list of IDs that can be executed since they have no dependencies', () => {
+        const expected = ['C']
+        let test = testData.map(parseEntry)
+        storeData(test)
+        const dependencies = getDependencies()
+        const actual = findHasNoDependencies(dependencies)
+        expect(actual).to.deep.equal(expected)
+      })
+    })
     describe('sortInstructions()', () => {
-      it('Builds a dependency tree', () => {
+      it('Puts the instructions in the necessary order', () => {
+        const expected = 'CABDFE'
+        let test = testData.map(parseEntry)
+        const actual = sortInstructions(test).join('')
+        expect(actual).to.equal(expected)
+      })
+    })
+    describe('storeData()', () => {
+      it('Builds and stores a list of identified IDs', () => {
+        const expected = ['A', 'B', 'C', 'D', 'E', 'F']
+        let test = testData.map(parseEntry)
+        storeData(test)
+        const actual = getInstructionIds()
+        expect(actual).to.deep.equal(expected)
+      })
+      it('Builds and stores a dependency tree', () => {
         const expected = {
           C: {
             ids: ['A', 'F']
@@ -47,15 +75,9 @@ describe('--- Day 7: The Sum of Its Parts ---', () => {
           }
         }
         let test = testData.map(parseEntry)
-        sortInstructions(test)
+        storeData(test)
         const actual = getDependencies()
         expect(actual).to.deep.equal(expected)
-      })
-      it.skip('Puts the instructions in the necessary order', () => {
-        const expected = 'CABDFE'
-        let test = testData.map(parseEntry)
-        const actual = sortInstructions(test).map((el) => el.id).join('')
-        expect(actual).to.equal(expected)
       })
     })
   })
