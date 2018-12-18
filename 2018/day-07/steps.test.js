@@ -85,7 +85,7 @@ describe('--- Day 7: The Sum of Its Parts ---', () => {
 
   describe('Part 2:', () => {
     describe('executeInstructions()', () => {
-      it.skip('calculatates how long it will take to execute the dependency tree with a given number of workers', () => {
+      it('calculatates how long it will take to execute the dependency tree with a given number of workers', () => {
         const expected = 15
         const testMin = 0
         const testWorkers = 2
