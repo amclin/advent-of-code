@@ -35,6 +35,16 @@ const addInstructionId = (rule) => {
 }
 
 /**
+ * Steps through the provided dependency tree, tallying up the total time to execute the instructions
+ * @param {*} tree Dependency tree
+ * @param {*} workers Number of workers available for parallel tasks
+ * @param {*} minDuration Minimum time it takes for each step A = min+1, B = min+2, etc.
+ */
+const executeInstructions = (tree, workers, minDuration) => {
+
+}
+
+/**
  * Sorts through a dependency tree to find any IDs with no dependencies
  * @param {Object} dependencies structured dependency tree
  * @returns {Array} An alphabetically sorted list of IDs with no dependencies
@@ -132,6 +142,7 @@ const sortInstructions = (entries) => {
 }
 
 module.exports = {
+  executeInstructions,
   findHasNoDependencies,
   flushStates,
   getDependencies,

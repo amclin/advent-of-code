@@ -1,6 +1,7 @@
 /* eslint-env mocha */
 const expect = require('chai').expect
 const {
+  executeInstructions,
   findHasNoDependencies,
   getDependencies,
   getInstructionIds,
@@ -78,6 +79,21 @@ describe('--- Day 7: The Sum of Its Parts ---', () => {
         storeData(test)
         const actual = getDependencies()
         expect(actual).to.deep.equal(expected)
+      })
+    })
+  })
+
+  describe('Part 2:', () => {
+    describe('executeInstructions()', () => {
+      it.skip('calculatates how long it will take to execute the dependency tree with a given number of workers', () => {
+        const expected = 15
+        const testMin = 0
+        const testWorkers = 2
+        const test = testData.map(parseEntry)
+        storeData(test)
+        const testTree = getDependencies()
+        const actual = executeInstructions(testTree, testWorkers, testMin)
+        expect(actual).to.equal(expected)
       })
     })
   })
