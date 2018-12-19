@@ -7,7 +7,7 @@ const {
 describe('--- Day 11: Chronal Charge ---', () => {
   describe('Part 1:', () => {
     describe('new Rack()', () => {
-      it.skip('creates a Rack object with the specified Rack ID', () => {
+      it('creates a Rack object with the specified Rack ID', () => {
         const testSerial = 8
         const expected = testSerial
         const actual = new Rack(testSerial).serial
@@ -15,7 +15,7 @@ describe('--- Day 11: Chronal Charge ---', () => {
       })
     })
     describe('getRackID(coordinates)', () => {
-      it.skip('caclulcates the rack ID of the cell at specified x,y coordinate', () => {
+      it('caclulcates the rack ID of the cell at specified x,y coordinate', () => {
         let test = [3, 5]
         let testSerial = 8
         const expected = 13
@@ -24,30 +24,30 @@ describe('--- Day 11: Chronal Charge ---', () => {
       })
     })
     describe('getPowerLevel(coordinates)', () => {
-      it.skip('caclulcates the power level of the cell at specified x,y coordinate', () => {
+      it('caclulcates the power level of the cell at specified x,y coordinate', () => {
         let test = [3, 5]
         const testSerial = 8
         const expected = 4
         let actual = new Rack(testSerial).getPowerLevel(test, testSerial)
         expect(actual).to.equal(expected)
       })
-      it.skip('can generate a negative power level', () => {
+      it('can generate a negative power level', () => {
         let test = [122, 79]
-        const testSerial = 8
+        const testSerial = 57
         const expected = -5
         let actual = new Rack(testSerial).getPowerLevel(test, testSerial)
         expect(actual).to.equal(expected)
       })
-      it.skip('can generate a power level of 0', () => {
+      it('can generate a power level of 0', () => {
         let test = [217, 196]
-        const testSerial = 8
+        const testSerial = 39
         const expected = 0
         let actual = new Rack(testSerial).getPowerLevel(test, testSerial)
         expect(actual).to.equal(expected)
       })
-      it.skip('can generate a positive power level', () => {
+      it('can generate a positive power level', () => {
         let test = [101, 153]
-        const testSerial = 8
+        const testSerial = 71
         const expected = 4
         let actual = new Rack(testSerial).getPowerLevel(test, testSerial)
         expect(actual).to.equal(expected)

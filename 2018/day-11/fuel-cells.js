@@ -9,8 +9,7 @@ class Rack {
    * @returns {Number}
    */
   getRackId (coords) {
-    let rackId = 0
-    return rackId
+    return coords[0] + 10
   }
 
   /**
@@ -19,8 +18,14 @@ class Rack {
    * @returns {Number}
    */
   getPowerLevel (coords) {
-    let rackId = 0
-    return rackId
+    const rackId = this.getRackId(coords)
+    const serial = this.serial
+    let power = rackId * coords[1]
+    power += serial
+    power = power * rackId
+    power = parseInt(power.toString().substr(-3, 1)) || 0 // Extract the hundreds didget, using 0 if there isn't one
+    power = power - 5
+    return power
   }
 }
 
