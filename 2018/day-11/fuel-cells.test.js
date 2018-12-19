@@ -76,4 +76,26 @@ describe('--- Day 11: Chronal Charge ---', () => {
       expect(actual).to.equal(expected)
     })
   })
+  describe('getCellsByPower()', () => {
+    it('sorts the cells by their available square power, skipping ones that go off the edge of the rack', () => {
+      const expected = [33, 45]
+      const serial = 18
+      const gridSize = [300, 300]
+      const squareSize = [3, 3]
+      const grid = new Rack(serial, gridSize)
+      grid.tallySquares(squareSize)
+      const actual = grid.getCellsByPower(squareSize)[0].coords
+      expect(actual).to.deep.equal(expected)
+    })
+    it('sorts the cells by their available square power, skipping ones that go off the edge of the rack', () => {
+      const expected = [21, 61]
+      const serial = 42
+      const gridSize = [300, 300]
+      const squareSize = [3, 3]
+      const grid = new Rack(serial, gridSize)
+      grid.tallySquares(squareSize)
+      const actual = grid.getCellsByPower(squareSize)[0].coords
+      expect(actual).to.deep.equal(expected)
+    })
+  })
 })

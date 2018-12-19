@@ -1,3 +1,5 @@
+const { dynamicSort } = require('../day-04/helpers')
+
 class Rack {
   /**
    * Initializes a new power rack
@@ -30,6 +32,10 @@ class Rack {
     }
   }
 
+  getCellsByPower () {
+    return this.cells.sort(dynamicSort('-squareTotal'))
+  }
+
   /**
    * Calculates the Rack ID at the specified coordinate
    * @param {Array} coords [x,y]
@@ -57,14 +63,18 @@ class Rack {
 
   _tallySquare (idx, size) {
     let power = 0
+    let valid = true
     for (let x = 0; x < size[0]; x++) {
       for (let y = 0; y < size[0]; y++) {
         let pointer = idx + x + (y * this.size[0])
         let dest = this.cells[pointer]
+        valid = (dest) ? valid : false // flag invalid results from cells off the grid
         power += (dest) ? dest.power : 0
       }
     }
-    return power
+
+    // Discard value if square exceeds the grid
+    return (valid) ? power : null
   }
 
   tallySquares (size) {
