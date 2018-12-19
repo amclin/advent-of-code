@@ -7,7 +7,7 @@ const {
 const init = (data) => {
   data = parseData(data)
   const answer = sumMetadata(data)
-  const answer2 = ''
+  const answer2 = data.value
   console.log(`-- Part 1 --`)
   console.log(`Answer: ${answer}`)
   console.log(`-- Part 2 --`)

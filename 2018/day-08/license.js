@@ -24,6 +24,22 @@ const findChildren = (input, expected) => {
       }
     }
 
+    // Calculate the value of the node (Part 2)
+    result.value = 0
+    if (result.children.length < 1) {
+      // No children, total the metadata
+      result.value = result.metadata.reduce((acc, curr) => { return acc + curr }, 0)
+    } else {
+      // Has children, use the metadata as off-by-one keys to total children's values
+      // metadata = 0 means no child, 1 is first child, 2 is second, etc
+      // We iterate instead of map() because metadata keys can be repeated
+      result.metadata.forEach((key) => {
+        if (typeof result.children[key - 1] !== 'undefined') {
+          result.value += result.children[key - 1].value
+        }
+      })
+    }
+
     results.push(result)
   }
 

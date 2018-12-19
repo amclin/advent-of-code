@@ -18,18 +18,22 @@ describe('--- Day 8: Memory Maneuver ---', () => {
           children: [
             {
               children: [],
-              metadata: [10, 11, 12]
+              metadata: [10, 11, 12],
+              value: 33
             }, {
               children: [
                 {
                   children: [],
-                  metadata: [99]
+                  metadata: [99],
+                  value: 99
                 }
               ],
-              metadata: [2]
+              metadata: [2],
+              value: 0
             }
           ],
-          metadata: [1, 1, 2]
+          metadata: [1, 1, 2],
+          value: 66
         }
         const actual = parseData(testData)
         expect(actual).to.deep.equal(expected)
@@ -42,5 +46,8 @@ describe('--- Day 8: Memory Maneuver ---', () => {
         expect(actual).to.equal(expected)
       })
     })
+  })
+  describe('Part 2:', () => {
+    describe('values on each node covered in data parsing in Part 1. Nothing additional to test.', () => {})
   })
 })
