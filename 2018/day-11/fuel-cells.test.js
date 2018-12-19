@@ -54,4 +54,26 @@ describe('--- Day 11: Chronal Charge ---', () => {
       })
     })
   })
+  describe('tallySquares(size)', () => {
+    it('generates total power for a square of [size] anchored at the top left coordinates', () => {
+      const expected = 29
+      const serial = 18
+      const gridSize = [300, 300]
+      const squareSize = [3, 3]
+      const grid = new Rack(serial, gridSize)
+      grid.tallySquares(squareSize)
+      const actual = grid.cells.find((c) => c.coords[0] === 33 && c.coords[1] === 45).squareTotal
+      expect(actual).to.equal(expected)
+    })
+    it('generates total power for a square of [size] anchored at the top left coordinates', () => {
+      const expected = 30
+      const serial = 42
+      const gridSize = [300, 300]
+      const squareSize = [3, 3]
+      const grid = new Rack(serial, gridSize)
+      grid.tallySquares(squareSize)
+      const actual = grid.cells.find((c) => c.coords[0] === 21 && c.coords[1] === 61).squareTotal
+      expect(actual).to.equal(expected)
+    })
+  })
 })
