@@ -63,7 +63,7 @@ position=<14,  7> velocity=<-2,  0>
 position=<-3,  6> velocity=< 2, -1>`.split('\n').map(parseLine)
 
         const beaconTracker = new Beacon(testData)
-        const actual = show(beaconTracker.getFrame(3), [22, 16], [-6, -4])
+        const actual = show(beaconTracker.getFrame(3), [21, 15], [-6, -4])
         expect(actual).to.equal(expected)
       })
     })

@@ -1,3 +1,19 @@
+/**
+ * Aggregates the min/max x,y coordinats from a list
+ * @private
+ * @param {*} acc Accumulated data
+ * @param {*} cur The list item being evlauted
+ * @returns acc
+ */
+const _aggMinMaxCoords = (acc, cur) => {
+  return {
+    maxX: Math.max(acc.maxX, cur.x),
+    maxY: Math.max(acc.maxY, cur.y),
+    minX: Math.min(acc.minX, cur.x),
+    minY: Math.min(acc.minX, cur.x)
+  }
+}
+
 class Beacon {
   constructor (start) {
     this.start = start
@@ -27,7 +43,8 @@ class Beacon {
     } else {
       // cache metadata for this frame if we haven't already
       let meta = {
-        focus: this._getFocus(data.contents)
+        focus: this._getFocus(data.contents),
+        dims: this._getContentDimensions(data.contents)
       }
       this.frameMeta[frame] = meta
       data.meta = this.frameMeta[frame]
@@ -40,19 +57,31 @@ class Beacon {
    * Calculates the area occupied by the points in a given frame.
    * The mimimum area in an animation should indicate the frame
    * that is most in focus.
+   * @private
+   * @param {Array} points list of coordinates
+   * @return {Number}
    */
   _getFocus (points) {
     // Find min/max values
-    let ranges = points.reduce((acc, cur) => {
-      return {
-        maxX: Math.max(acc.maxX, cur.x),
-        maxY: Math.max(acc.maxY, cur.y),
-        minX: Math.min(acc.minX, cur.x),
-        minY: Math.min(acc.minX, cur.x)
-      }
-    }, { maxX: 0, maxY: 0, minX: 0, minY: 0 })
-
+    let ranges = points.reduce(_aggMinMaxCoords, { maxX: 0, maxY: 0, minX: 0, minY: 0 })
+    // Focus is the area
     return (ranges.maxX - ranges.minX) * (ranges.maxY - ranges.minY)
+  }
+
+  /**
+   * Calculates the origin and dimensions of the contents in the specified list
+   * @private
+   * @param {Array} points list of coordinates
+   * @return {Object}
+   */
+  _getContentDimensions (points) {
+    // Find min/max values
+    let ranges = points.reduce(_aggMinMaxCoords, { maxX: 0, maxY: 0, minX: 0, minY: 0 })
+
+    return {
+      origin: [ranges.minX, ranges.minY],
+      dim: [ranges.maxX - ranges.minX, ranges.maxY - ranges.minY]
+    }
   }
 }
 

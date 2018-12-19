@@ -6,12 +6,15 @@ const {
 
 const init = (data) => {
   const beaconTracker = new Beacon(data)
+  beaconTracker.getFrame(0)
   const start = 0
-  const end = 4
+  const end = 9
 
   // Play the animation and interpret the frames
-  for (let x = 0; x < 5; x++) {
-    display.show(beaconTracker.getFrame(x), [22, 16], [-6, -4])
+  for (let x = start; x < end; x++) {
+    let frame = beaconTracker.getFrame(x)
+    let dims = beaconTracker.frameMeta[0].dims
+    display.show(frame, dims.dim, dims.origin)
   }
 
   // Find the frame with the best focus
