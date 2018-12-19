@@ -121,13 +121,13 @@ describe('--- Day 10: The Stars Align ---', () => {
         expect(actual).to.deep.equal(expected)
       })
       it('Calculates the focus value for the frame', () => {
-        const expected = 756
+        const expected = 728
         const beaconTracker = new Beacon(testData)
         const actual = beaconTracker.getFrame(8).meta.focus
         expect(actual).to.equal(expected)
       })
       it('Calculates the dimensions of the region containing content in the specified frame', () => {
-        const expected = { origin: [ -10, -10 ], dim: [ 28, 27 ] }
+        const expected = { origin: [ -10, -9 ], dim: [ 28, 26 ] }
         const beaconTracker = new Beacon(testData)
         const actual = beaconTracker.getFrame(8).meta.dims
         expect(actual).to.deep.equal(expected)

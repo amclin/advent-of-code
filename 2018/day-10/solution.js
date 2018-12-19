@@ -7,23 +7,24 @@ const {
 const init = (data) => {
   const beaconTracker = new Beacon(data)
   beaconTracker.getFrame(0)
+
   const start = 0
-  const end = 9
+  const end = 50000
 
   // Play the animation and interpret the frames
   for (let x = start; x < end; x++) {
     let frame = beaconTracker.getFrame(x)
-    let dims = beaconTracker.frameMeta[0].dims
-    display.show(frame, dims.dim, dims.origin)
+    console.log(`Analyzing frame ${x}. Focus: ${frame.meta.focus}`)
   }
 
   // Find the frame with the best focus
   const best = beaconTracker.frameMeta.reduce((acc, curr, idx) => {
     return (curr.focus < acc.focus) ? {
       idx: idx,
-      focus: curr.focus
+      focus: curr.focus,
+      dims: curr.dims
     } : acc
-  }, { idx: 0, focus: beaconTracker.frameMeta[0].focus })
+  }, { idx: 0, focus: beaconTracker.frameMeta[0].focus, dims: { dim: [0, 0], origin: [0, 0] } })
 
   // const answer = sumMetadata(data)
   // const answer2 = data.value
@@ -32,7 +33,7 @@ const init = (data) => {
   console.log(`The best frame appears to be ${best.idx} with a focus value of ${best.focus}`)
   console.log(`Here's what the frame looks like:`)
   console.log(`---------------------------------`)
-  display.show(beaconTracker.getFrame(best.idx), [22, 16], [-6, -4])
+  display.show(beaconTracker.getFrame(best.idx), best.dims.dim, best.dims.origin)
   console.log(`---------------------------------`)
 
   // console.log(`Answer: ${answer}`)

@@ -10,7 +10,7 @@ const _aggMinMaxCoords = (acc, cur) => {
     maxX: Math.max(acc.maxX, cur.x),
     maxY: Math.max(acc.maxY, cur.y),
     minX: Math.min(acc.minX, cur.x),
-    minY: Math.min(acc.minX, cur.x)
+    minY: Math.min(acc.minY, cur.y)
   }
 }
 
@@ -63,7 +63,7 @@ class Beacon {
    */
   _getFocus (points) {
     // Find min/max values
-    let ranges = points.reduce(_aggMinMaxCoords, { maxX: 0, maxY: 0, minX: 0, minY: 0 })
+    let ranges = points.reduce(_aggMinMaxCoords, { maxX: points[0].x, maxY: points[0].y, minX: points[0].x, minY: points[0].y })
     // Focus is the area
     return (ranges.maxX - ranges.minX) * (ranges.maxY - ranges.minY)
   }
@@ -76,7 +76,7 @@ class Beacon {
    */
   _getContentDimensions (points) {
     // Find min/max values
-    let ranges = points.reduce(_aggMinMaxCoords, { maxX: 0, maxY: 0, minX: 0, minY: 0 })
+    let ranges = points.reduce(_aggMinMaxCoords, { maxX: points[0].x, maxY: points[0].y, minX: points[0].x, minY: points[0].y })
 
     return {
       origin: [ranges.minX, ranges.minY],
