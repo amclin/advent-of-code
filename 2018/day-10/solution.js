@@ -35,6 +35,8 @@ const init = (data) => {
   console.log(`---------------------------------`)
   display.show(beaconTracker.getFrame(best.idx), best.dims.dim, best.dims.origin)
   console.log(`---------------------------------`)
+  console.log(`-- Part 2 --`)
+  console.log(`Answer: ${best.idx}`)
 
   // console.log(`Answer: ${answer}`)
   // console.log(`-- Part 2 --`)
