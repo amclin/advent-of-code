@@ -5,9 +5,12 @@ const {
   sumMetadata
 } = require('./license')
 
-const testData = `2 3 0 3 10 11 12 1 1 0 1 99 2 1 1 2`.split(' ').map(Number)
+let testData
 
 describe('--- Day 8: Memory Maneuver ---', () => {
+  beforeEach(() => {
+    testData = `2 3 0 3 10 11 12 1 1 0 1 99 2 1 1 2`.split(' ').map(Number)
+  })
   describe('Part 1:', () => {
     describe('parseData', () => {
       it('Parses the license data to generate a usable object', () => {
@@ -33,7 +36,7 @@ describe('--- Day 8: Memory Maneuver ---', () => {
       })
     })
     describe('totalMetadata', () => {
-      it.skip('totals the values of all the metadata entries', () => {
+      it('totals the values of all the metadata entries', () => {
         const expected = 138
         const actual = sumMetadata(parseData(testData))
         expect(actual).to.equal(expected)

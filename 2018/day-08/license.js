@@ -44,12 +44,13 @@ const parseData = (input) => {
 
 /**
  * Totals the values of all the metadata entries in the provided data object
- * @param {Object} data object
+ * @param {Object} node object
  * @returns {Number} total of all nested metadata
  */
-const sumMetadata = (data) => {
-  let sum = data.length
-  return sum
+const sumMetadata = (node) => {
+  let count = node.metadata.reduce((acc, curr) => { return acc + curr }, 0)
+  count += node.children.reduce((acc, curr) => { return acc + sumMetadata(curr) }, 0)
+  return count
 }
 
 module.exports = {
