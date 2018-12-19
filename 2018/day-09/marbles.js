@@ -27,14 +27,10 @@ const playGame = (playerCount, highMarble, showBoard) => {
   }
 
   // tally the results
-  let results = {}
-  results.players = players.map((player) => {
-    player.score = player.marbles.reduce((acc, curr) => {
-      return acc + curr
-    }, 0)
-    return player
-  })
-  results.highScore = Math.max.apply(null, results.players.map((p) => p.score))
+  let results = {
+    players: players,
+    highScore: players.sort((a, b) => b - a)[0]
+  }
 
   return results
 }
@@ -46,30 +42,15 @@ const playGame = (playerCount, highMarble, showBoard) => {
 const resetGame = (count) => {
   marbles = [0]
   currentMarble = marbles.indexOf(0)
-  players = []
+  players = Array(count).fill(0)
   currentPlayer = -1
-
-  // Setup the players
-  for (let x = 0; x < count; x++) {
-    players.push({
-      marbles: []
-    })
-  }
 }
 
 /**
- * Find the marble that is n places clockwise from the current marble
+ * Find the index for the spot at n (looping through the array)
  */
 const findClockwiseIdx = (n) => {
-  let target = currentMarble + n
-  // special case for first marble since it loops around the circle N times
-  if (marbles.length === 1) {
-    return 1
-  }
-  if (target === marbles.length) {
-    return target
-  }
-  return target % marbles.length
+  return (n === marbles.length) ? n : n % marbles.length
 }
 
 /**
@@ -91,9 +72,9 @@ const findCounterClockwiseIdx = (n) => {
 const placeClockwise = (marble, player) => {
   // console.log(`Player ${player} played marble ${marble}`)
   // find location
-  let clockwise = findClockwiseIdx(2)
-  marbles.splice(clockwise, 0, marble)
-  currentMarble = marbles.indexOf(marble)
+  let nextSpot = findClockwiseIdx(currentMarble + 2)
+  marbles.splice(nextSpot, 0, marble)
+  currentMarble = nextSpot
 }
 
 /**
@@ -103,14 +84,14 @@ const placeClockwise = (marble, player) => {
 const placeSpecial = (marble, player) => {
   // Player keeps the marble instead of playing it
   // console.log(`Player ${player} drew marble ${marble}`)
-  players[player].marbles.push(marble)
+  players[player] += marble
   // Player takes the marble off the board 7 spaces counter-clockwise from currrent
   let target = findCounterClockwiseIdx(7)
   let marbleNext = marbles[target + 1]
   let earnedMarble = marbles.splice(target, 1)[0]
   // console.log(`Player ${player} picked up marble ${earnedMarble} from spot ${target}`)
   // console.log(`The new current marble is ${marbleNext} at spot ${marbles.indexOf(marbleNext)}`)
-  players[player].marbles.push(earnedMarble)
+  players[player] += earnedMarble
   // Marble immediately clockwise of the one removed becomes the new current marble
   // (in other words, occupies the same position the removed marble was in)
   currentMarble = marbles.indexOf(marbleNext)
