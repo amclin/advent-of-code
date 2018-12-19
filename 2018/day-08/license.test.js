@@ -5,12 +5,12 @@ const {
   sumMetadata
 } = require('./license')
 
-const testData = `2 3 0 3 10 11 12 1 1 0 1 99 2 1 1 2`.split(' ')
+const testData = `2 3 0 3 10 11 12 1 1 0 1 99 2 1 1 2`.split(' ').map(Number)
 
 describe('--- Day 8: Memory Maneuver ---', () => {
   describe('Part 1:', () => {
     describe('parseData', () => {
-      it.skip('Parses the license data to generate a usable object', () => {
+      it('Parses the license data to generate a usable object', () => {
         const expected = {
           children: [
             {

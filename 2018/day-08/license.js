@@ -1,10 +1,45 @@
 /**
+ * Splits the array of data into lists of the number of children
+ * @param {Array} input list of data values from license input
+ * @param {Number} expected Number of children in the data
+ * @returns {Object} { children: [node], remainder: [data values]}
+ */
+const findChildren = (input, expected) => {
+  let results = []
+
+  while (results.length < expected) {
+    let result = {
+      children: [],
+      metadata: []
+    }
+    let childCount = input.shift()
+    let metaCount = input.shift()
+    let childSearchResults = findChildren(input, childCount)
+
+    result.children = childSearchResults.children
+    input = childSearchResults.remainder
+    if (metaCount > 0) {
+      for (let r = 0; r < metaCount; r++) {
+        result.metadata.push(input.shift())
+      }
+    }
+
+    results.push(result)
+  }
+
+  return {
+    children: results,
+    remainder: input
+  }
+}
+
+/**
  * Parses the data stream to generate a structured data object
- * @param {Array} data list of data valeus from license input
+ * @param {Array} input list of data valeus from license input
  * @returns {Object} the structured data nodes
  */
-const parseData = (data) => {
-  return data
+const parseData = (input) => {
+  return findChildren(input, 1).children[0]
 }
 
 /**
