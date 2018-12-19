@@ -3,6 +3,10 @@ let currentMarble = 0
 let players = []
 let currentPlayer = -1
 
+// Wrap around arrays with negative remainders
+// https://stackoverflow.com/a/17323608/2859367
+const mod = (n, m) => ((n % m) + m) % m
+
 const nextPlayer = () => {
   currentPlayer = (currentPlayer + 1 >= players.length) ? 0 : currentPlayer + 1
   return currentPlayer
@@ -54,18 +58,6 @@ const findClockwiseIdx = (n) => {
 }
 
 /**
- * Find the marble that is n places counter-clockwise from the current marble
- */
-const findCounterClockwiseIdx = (n) => {
-  let target = currentMarble - n
-  if (target < 0) {
-    // wrap around
-    return marbles.length + target
-  }
-  return target
-}
-
-/**
  * Normal move is to place a marble 2 spaces clockwise of current, shifting the circle
  * @param {Number} marble
  */
@@ -86,15 +78,11 @@ const placeSpecial = (marble, player) => {
   // console.log(`Player ${player} drew marble ${marble}`)
   players[player] += marble
   // Player takes the marble off the board 7 spaces counter-clockwise from currrent
-  let target = findCounterClockwiseIdx(7)
-  let marbleNext = marbles[target + 1]
-  let earnedMarble = marbles.splice(target, 1)[0]
-  // console.log(`Player ${player} picked up marble ${earnedMarble} from spot ${target}`)
-  // console.log(`The new current marble is ${marbleNext} at spot ${marbles.indexOf(marbleNext)}`)
-  players[player] += earnedMarble
+  let target = mod(currentMarble - 7, marbles.length)
+  players[player] += marbles.splice(target, 1)[0]
   // Marble immediately clockwise of the one removed becomes the new current marble
   // (in other words, occupies the same position the removed marble was in)
-  currentMarble = marbles.indexOf(marbleNext)
+  currentMarble = target
 }
 
 module.exports = {
