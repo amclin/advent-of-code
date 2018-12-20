@@ -63,14 +63,23 @@ class Rack {
 
   _tallySquare (idx, size) {
     let power = 0
+    // Check if square will be off the panel by calculating the max index
+    let maxIdx = idx + (size[0] - 1) + ((size[1] - 1) * this.size[0])
+    if (maxIdx > this.cells.length) {
+      return null
+    }
+
     for (let x = 0; x < size[0]; x++) {
       for (let y = 0; y < size[1]; y++) {
         let pointer = idx + x + (y * this.size[0])
-        let dest = this.cells[pointer]
-        if (!dest) {
+        if (pointer > this.cells.length) {
           x = size[0]
           y = size[1]
           return null // break for speed on invalid squares
+        }
+        let dest = this.cells[pointer]
+        if (!dest) {
+
         }
         power += (dest) ? dest.power : 0
       }

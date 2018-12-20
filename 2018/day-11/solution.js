@@ -9,7 +9,8 @@ powerBank.tallySquares(squareSize)
 const answer = powerBank.getCellsByPower(squareSize)[0].coords
 
 const anySizeSquares = []
-for (let dial = 1; dial <= 5; dial++) {
+for (let dial = 1; dial <= 300; dial++) {
+  console.log(`Measuring power with dial at ${dial}`)
   powerBank.tallySquares([dial, dial])
   let bestOfSizeX = powerBank.getCellsByPower(squareSize)[0]
   anySizeSquares.push({
