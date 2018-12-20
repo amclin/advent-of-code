@@ -44,6 +44,7 @@ const parseLine = (input) => {
 }
 
 module.exports = {
+  listToProps: _listToProps,
   loadInput,
   parseLine
 }
