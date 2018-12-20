@@ -98,4 +98,15 @@ describe('--- Day 11: Chronal Charge ---', () => {
       expect(actual).to.deep.equal(expected)
     })
   })
+  describe('findMaxSquare(size)', () => {
+    it('locates the top left corner of the square (of specified size) that has the maximum power in the grid', () => {
+      const expected = [21, 61]
+      const serial = 42
+      const gridSize = [300, 300]
+      const squareSize = [3, 3]
+      const grid = new Rack(serial, gridSize)
+      const actual = grid.cells[grid.findMaxSquare(squareSize).idx].coords
+      expect(actual).to.deep.equal(expected)
+    })
+  })
 })

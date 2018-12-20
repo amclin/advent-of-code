@@ -12,6 +12,7 @@ class Rack {
     if (typeof size === 'object' && size.length === 2) {
       this._allocateGrid(size)
     }
+    this.maxSquare = null
   }
 
   /**
@@ -89,9 +90,16 @@ class Rack {
 
   tallySquares (size) {
     this.cells = this.cells.map((cell, idx) => {
-      cell.squareTotal = this._tallySquare(idx, size)
+      cell.squareTotal = this._tallySquare(idx, size) || null
       return cell
     })
+  }
+
+  findMaxSquare (size) {
+    return this.cells.reduce((acc, cell, idx) => {
+      let squarePower = this._tallySquare(idx, size)
+      return (squarePower !== null && squarePower > acc.power) ? { power: squarePower, idx: idx } : acc
+    }, { power: -99999, idx: -1 })
   }
 }
 
