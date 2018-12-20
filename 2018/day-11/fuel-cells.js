@@ -63,18 +63,19 @@ class Rack {
 
   _tallySquare (idx, size) {
     let power = 0
-    let valid = true
     for (let x = 0; x < size[0]; x++) {
-      for (let y = 0; y < size[0]; y++) {
+      for (let y = 0; y < size[1]; y++) {
         let pointer = idx + x + (y * this.size[0])
         let dest = this.cells[pointer]
-        valid = (dest) ? valid : false // flag invalid results from cells off the grid
+        if (!dest) {
+          x = size[0]
+          y = size[1]
+          return null // break for speed on invalid squares
+        }
         power += (dest) ? dest.power : 0
       }
     }
-
-    // Discard value if square exceeds the grid
-    return (valid) ? power : null
+    return power
   }
 
   tallySquares (size) {
