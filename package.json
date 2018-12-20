@@ -6,9 +6,10 @@
   "private": true,
   "scripts": {
     "pretest": "npm run lint",
-    "test": "mocha \"./20*/**/*.test.js\"",
+    "test": "nyc mocha \"./20*/**/*.test.js\"",
     "lint": "standard",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
   "repository": {
     "type": "git",
@@ -29,8 +30,8 @@
     "@semantic-release/github": "^5.2.6",
     "chai": "^4.2.0",
     "codecov": "^3.1.0",
-    "istanbul": "^0.4.5",
     "mocha": "^5.2.0",
+    "nyc": "^13.1.0",
     "semantic-release": "^15.13.1",
     "standard": "^12.0.1"
   }
