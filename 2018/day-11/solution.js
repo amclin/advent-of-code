@@ -14,8 +14,8 @@ console.log(`-- Part 1 --`)
 console.log(`Answer: ${answer}`)
 
 const anySizeSquares = []
+let negativeCounter = 0
 for (let dial = 1; dial <= 300; dial++) {
-  console.log(`Measuring power with dial at ${dial}`)
   // powerBank.tallySquares([dial, dial])
   // let bestOfSizeX = powerBank.getCellsByPower(squareSize)[0]
   // anySizeSquares.push({
@@ -24,11 +24,21 @@ for (let dial = 1; dial <= 300; dial++) {
   //   size: dial
   // })
   const max = powerBank.findMaxSquare([dial, dial])
+  console.log(`Max power whith dial at ${dial} is ${max.power}`)
+
   anySizeSquares.push({
     coords: powerBank.cells[max.idx].coords,
     power: max.power,
     size: dial
   })
+
+  // Watching the log, the power seems to go up as the grid size goes up, but reaches
+  // a limit at which point it drops of forever. Therefore, let's cap it when 5 sizes in
+  // a row have negative power outputs
+  if (max.power < 0) { negativeCounter++ }
+  if (negativeCounter >= 5) {
+    break
+  }
 }
 
 const bestOfAnySize = anySizeSquares.sort(dynamicSort('-power'))[0]
