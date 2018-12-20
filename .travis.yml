@@ -1,6 +1,9 @@
 language: node_js
 node_js:
   - "stable"
+script:
+  - npm test
+  - npm run report-coverage
 jobs:
   include:
     # Define the release stage that runs semantic-release
