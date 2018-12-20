@@ -153,5 +153,27 @@ describe('--- Day 12: Subterranean Sustainability ---', () => {
         expect(actual).to.equal(expected)
       })
     })
+    describe('getPlantTotal', () => {
+      it('sums the total number of plants in all generations', () => {
+        const expected = 264
+        const plantTracker = new Plants(initialState, rules)
+        for (let gen = 1; gen <= 20; gen++) {
+          plantTracker.advance()
+        }
+        const actual = plantTracker.getPlantTotal()
+        expect(actual).to.equal(expected)
+      })
+    })
+    describe('getCheckSum(generation)', () => {
+      it('generates a checksum tallied by summing the positions of all pots containing plants', () => {
+        const expected = 325
+        const plantTracker = new Plants(initialState, rules)
+        for (let gen = 1; gen <= 20; gen++) {
+          plantTracker.advance()
+        }
+        const actual = plantTracker.getCheckSum(20)
+        expect(actual).to.equal(expected)
+      })
+    })
   })
 })

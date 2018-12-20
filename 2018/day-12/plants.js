@@ -122,6 +122,25 @@ class Plants {
     })
     return output.trim()
   }
+
+  /**
+   * Sums the number of plants present in all generations
+   */
+  getPlantTotal () {
+    return this.generations.reduce((gacc, g) => {
+      return gacc + g.filter((p) => p.state === '#').length
+    }, 0)
+  }
+
+  /**
+   * Generates a checksum calculated by summing the positions of all pots containing plants
+   * in a specified generation
+   * @param {Number} generation to generate checksum for
+   */
+  getCheckSum (generation) {
+    return this.generations[generation].filter((p) => p.state === '#')
+      .reduce((pacc, p) => pacc + p.position, 0)
+  }
 }
 
 module.exports = {
