@@ -1,6 +1,7 @@
 class Plants {
   constructor (initial, rules) {
     this.generations = []
+    this.boundaryBuffers = [0, 0]
     this.rules = {}
     this._setInitialGeneration(initial)
     if (rules && rules.length > 0) {
@@ -8,6 +9,7 @@ class Plants {
         this.addRule(rule)
       })
     }
+    this.boundaryBuffers = this.getBoundaryBuffers()
   }
 
   _setInitialGeneration (initial) {
@@ -63,11 +65,14 @@ class Plants {
         state: state
       }
     })
-    // Add 2 pots at the beginning and end to support future generation
-    for (let x = 1; x <= 2; x++) {
+
+    // Padd the list to support future generation
+    for (let x = 1; x <= this.boundaryBuffers[0]; x++) {
       const first = nextGen[0].position
-      const last = nextGen[nextGen.length - 1].position
       nextGen.splice(0, 0, { position: first - 1, state: '.' })
+    }
+    for (let x = 1; x <= this.boundaryBuffers[1]; x++) {
+      const last = nextGen[nextGen.length - 1].position
       nextGen.push({ position: last + 1, state: '.' })
     }
 
@@ -98,6 +103,40 @@ class Plants {
         acc[1] < pots[pots.length - 1].postion ? acc[1] : pots[pots.length - 1].position
       ]
     }, [0, 0])
+  }
+
+  /**
+   * Rules need empty pots lef/right of row for verification. Figures out the number of pots we need
+   * to add to the left/right of a row
+   * @returns {Array} [left, right] necessary buffer size of first and last pots
+   */
+  getBoundaryBuffers () {
+    let buffers = [0, 0]
+    Object.keys(this.rules).filter((rule) => this.rules[rule] === '#').forEach((rule) => {
+      // For left edge
+      for (let x = 0; x < rule.length; x++) {
+        if (rule.substr(x, 1) === '.') {
+          let y = x + 1
+          buffers[0] = Math.max(buffers[0], y)
+        } else {
+          // break the loop when we encounter a #
+          x = rule.length
+          break
+        }
+      }
+
+      for (let x = rule.length - 1; x >= 0; x--) {
+        if (rule.substr(x, 1) === '.') {
+          let y = rule.length - x
+          buffers[1] = Math.max(buffers[1], y)
+        } else {
+          // break the loop when we encounter a #
+          x = -1
+          break
+        }
+      }
+    })
+    return buffers
   }
 
   /**

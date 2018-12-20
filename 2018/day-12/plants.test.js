@@ -62,6 +62,7 @@ describe('--- Day 12: Subterranean Sustainability ---', () => {
     describe('advance()', () => {
       it('advances the next generation', () => {
         const expected = [
+          { position: -3, state: '.' },
           { position: -2, state: '.' },
           { position: -1, state: '.' },
           { position: 0, state: '#' },
@@ -90,7 +91,8 @@ describe('--- Day 12: Subterranean Sustainability ---', () => {
           { position: 23, state: '.' },
           { position: 24, state: '#' },
           { position: 25, state: '.' },
-          { position: 26, state: '.' }
+          { position: 26, state: '.' },
+          { position: 27, state: '.' }
         ]
         let plantTracker = new Plants(initialState, rules)
         plantTracker.advance()
@@ -173,6 +175,14 @@ describe('--- Day 12: Subterranean Sustainability ---', () => {
         }
         const actual = plantTracker.getCheckSum(20)
         expect(actual).to.equal(expected)
+      })
+    })
+    describe('findBoundaryBuffers()', () => {
+      it('figures out how many buffer pots are needed at the ends each row based on the rules', () => {
+        const expected = [3, 3]
+        const plantTracker = new Plants(initialState, rules)
+        const actual = plantTracker.getBoundaryBuffers()
+        expect(actual).to.deep.equal(expected)
       })
     })
   })
