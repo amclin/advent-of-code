@@ -2,15 +2,18 @@ const {
   Track
 } = require('./tracks')
 
-/* eslint-disable */
 const data = `/->-\\
 |   |  /----\\
 | /-+--+-\\  |
 | | |  | v  |
 \\-+-/  \\-+--/
   \\------/   `
-/* eslint-enable */
 
-const mytrack = new Track(data)
-const actual = mytrack.display()
-console.log(actual)
+const track = new Track(data)
+while (track.collision === false) {
+  track.advance()
+}
+
+console.error(`Reached a collision at ${track.collision.x},${track.collision.y} on frame ${track.frame}`)
+console.log(`Track state:`)
+console.log(track.display())

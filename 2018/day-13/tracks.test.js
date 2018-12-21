@@ -22,11 +22,13 @@ describe('--- Day 13: Mine Cart Madness ---', () => {
         const expected = [{
           x: 2,
           y: 0,
-          direction: '>'
+          direction: '>',
+          lastIntersections: [0, 1]
         }, {
           x: 9,
           y: 3,
-          direction: 'v'
+          direction: 'v',
+          lastIntersections: [0, 1]
         }]
         const track = new Track(data)
         const actual = track.carts
@@ -35,22 +37,23 @@ describe('--- Day 13: Mine Cart Madness ---', () => {
     })
     describe('advance()', () => {
       it('moves forward all carts on the layout', () => {
-        const test = `/---v
+        const test = `/---\\
 |   |  /----\\
-| /-+--+-\\  |
-| | |  | |  |
-\\-+-/  \\-+>-/
+| /-+>-+-\\  |
+| | |  | |  ^
+\\-+-/  \\-+--/
   \\------/   `
-        const expected = `/---\
-|   v  /----\\
-| /-+--+-\\  |
+        const expected = `/---\\
+|   |  /----\\
+| /-+->+-\\  ^
 | | |  | |  |
-\\-+-/  \\-+->/
+\\-+-/  \\-+--/
   \\------/   `.trim()
         const track = new Track(test)
-        track.moveCart()
+        track.advance()
         const actual = track.display()
         expect(actual).to.equal(expected)
+        expect(track.frame).to.equal(1)
       })
     })
     describe('moveCart(cart)', () => {
@@ -124,19 +127,26 @@ describe('--- Day 13: Mine Cart Madness ---', () => {
         const actual = track.display()
         expect(actual).to.equal(expected)
       })
-      it('tracks the direction through multiple intersections following the sequential rotation rules: left, straight, right', () => {
-        const test = `
-   |
-  -+-+--
-   |
-->-+-`
-        const track = new Track(test)
+      it('tracks the direction through multiple intersections following the sequential rotation rules: left, straight, right, straight', () => {
         const expected = `
+       ^
+       |
+   +-+-+
    |
-  -+-+->
+   +
    |
----+-`.trim()
-        for (let i = 0; i < 8; i++) {
+---+`.trim()
+        const test = `
+       |
+       |
+   +-+-+
+   |
+   +
+   |
+->-+`
+        const track = new Track(test)
+
+        for (let i = 0; i < 12; i++) {
           track.moveCart(track.carts[0])
         }
         const actual = track.display()
@@ -154,18 +164,24 @@ describe('--- Day 13: Mine Cart Madness ---', () => {
       it('throws an error if the cart runs off the rails', () => {
         const test = `->- -`
         const track = new Track(test)
-        track.moveCart(track.carts[0])
-        expect(track.moveCart(track.carts[0])).to.be.an('error')
+        try {
+          track.moveCart(track.carts[0])
+        } catch (err) {
+          expect(err).to.be.an('error')
+        }
       })
       it('registers a collision', () => {
         const test = `->-<-`
         const expected = `---X-`
         const track = new Track(test)
-        track.moveCart(track.carts[0])
-        track.moveCart(track.carts[0])
-        const actual = track.display()
-        expect(actual).to.equal(expected)
-        expect(track.collision).to.deep.equal({ x: 3, y: 0 })
+        try {
+          track.moveCart(track.carts[0])
+          track.moveCart(track.carts[0])
+        } catch (err) {
+          const actual = track.display()
+          expect(actual).to.equal(expected)
+          expect(track.collision).to.deep.equal({ x: 3, y: 0 })
+        }
       })
     })
     describe('display()', () => {
@@ -176,11 +192,11 @@ describe('--- Day 13: Mine Cart Madness ---', () => {
         expect(actual).to.equal(expected)
       })
     })
-    describe('getSegmentType(x,y)', () => {
+    describe('getSegment(x,y)', () => {
       it('queries the type of segment at location x,y', () => {
         const expected = '-'
         const track = new Track(data)
-        const actual = track.getSegmentType(5, 2)
+        const actual = track.getSegment(5, 2)
         expect(actual).to.equal(expected)
       })
     })

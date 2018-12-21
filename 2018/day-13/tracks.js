@@ -1,12 +1,14 @@
+const { dynamicSortMultiple } = require('../day-04/helpers')
+
 class Track {
   constructor (track) {
     this.layout = []
     this.carts = []
     this.cartDirections = ['^', '>', 'v', '<']
-    this.trackTurns = ['\\', '/']
-    this.trackTypes = this.trackTurns.concat(['-', '|', '+'])
     this.collision = false
     this.frame = 0
+    this.trackTurns = ['\\', '/']
+    this.trackTypes = this.trackTurns.concat(['-', '|', '+'])
     this.setLayout(track)
   }
 
@@ -16,21 +18,18 @@ class Track {
 
   /**
    * Determines the next direction for a cart rotating at an intersection
-   * Order of rotations is left (counterclockwise), right (clockwise), straight
+   * Order of rotations is left (counterclockwise), straigh, right (clockwise), straight
    * @private
    * @param {Object} cart the cart being turned
    * @returns {String} value of new direction
    */
   _intersect (cart) {
-    let r = 0
-    if (typeof cart.lastIntersection === 'undefined') {
-      r = -1
-    }
-    if (cart.lastIntersection === -1) {
-      r = 1
-    }
+    let l = cart.lastIntersections
+    let r = (l[0] !== 0) ? 0 : l[1] * -1
+    // Track the intersections
+    cart.lastIntersections.pop()
+    cart.lastIntersections.splice(0, 0, r)
 
-    cart.lastIntersection = r
     return this.cartDirections[this._roationDirection(this.cartDirections.indexOf(cart.direction), r)]
   }
 
@@ -50,7 +49,6 @@ class Track {
       // (this.trackTurns.indexOf(s) === 0 && a === 'x') // horizontal turns counter-clockwise
       // (this.trackTurns.indexOf(s) === 1 && a === 'y') // vertical turns counter-clockwise
     ) ? 1 : -1
-    console.log(`${s} for ${a} is turning ${r}`)
     // Find the value of the new direction
     return this.cartDirections[this._roationDirection(d, r)]
   }
@@ -63,15 +61,28 @@ class Track {
    * @returns {Number} Index of new direction
    */
   _roationDirection (d, r) {
-    console.log(`rotating ${d}, ${r}`)
     if (d + r > this.cartDirections.length - 1) {
       return 0
     }
     if (d + r < 0) {
       return this.cartDirections.length - 1
     }
-    console.log(`new direction is ${d + r}`)
     return d + r
+  }
+
+  /**
+   * Advances the state of the entire layout
+   */
+  advance () {
+    this.frame++
+    this.carts.sort(dynamicSortMultiple('y', 'x')).forEach((c) => {
+      try {
+        this.moveCart(c)
+      } catch (err) {
+        console.error(`Problem moving cart in frame ${this.frame}`)
+        console.error(err)
+      }
+    })
   }
 
   /**
@@ -108,7 +119,8 @@ class Track {
           this.carts.push({
             x: idx,
             y: idy,
-            direction: x
+            direction: x,
+            lastIntersections: [0, 1] // Assume the first intersection the cart will turn left
           })
           // Replace the cart on the track with a track segment
           // (Assuming cart initial states aren't on instersections)
@@ -124,7 +136,7 @@ class Track {
    * @param {*} x Number
    * @param {*} y Number
    */
-  getSegmentType (x, y) {
+  getSegment (x, y) {
     return this.layout[y][x]
   }
 
@@ -139,22 +151,20 @@ class Track {
     const l = (d % 3 === 0) ? -1 : 1 // (+/-) distance of travel on the axis
     // move the cart
     cart[a] = cart[a] + l
-    const s = this.layout[cart.y][cart.x] // Segment of track the cart is now on
+    const s = this.getSegment(cart.x, cart.y) // Segment of track the cart is now on
 
     // Make sure cart hasn't run off the rails
     if (this.trackTypes.indexOf(this.layout[cart.y][cart.x]) < 0) {
-      return new Error(`cart ran off the track at ${cart.x}, ${cart.y}`)
+      throw new Error(`cart ran off the track at ${cart.x}, ${cart.y}`)
     }
     // Check for collision
     if (this._isCollision(cart.x, cart.y)) {
       this.collision = { x: cart.x, y: cart.y }
-      return new Error(`collision at ${cart.x}, ${cart.y}`) // Stop everything
+      throw new Error(`collision at ${cart.x}, ${cart.y}`) // Stop everything
     }
     // rotate the cart when entering a turn
     if (this._isTurn(s)) {
-      console.log(`Cart direction was ${cart.direction}`)
       cart.direction = this._rotate(s, a, d)
-      console.log(`Cart direction is ${cart.direction}`)
       return
     }
     // rotate (or not) the cart when entering an intersection
