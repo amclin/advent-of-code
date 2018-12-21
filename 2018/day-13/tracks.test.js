@@ -45,7 +45,7 @@ describe('--- Day 13: Mine Cart Madness ---', () => {
       })
     })
     describe('getSegmentType(x,y)', () => {
-      it.skip('queries the type of segment at location x,y', () => {
+      it('queries the type of segment at location x,y', () => {
         const expected = '-'
         const track = new Track(data)
         const actual = track.getSegmentType(5, 2)
