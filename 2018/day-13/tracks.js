@@ -7,6 +7,7 @@ class Track {
     this.cartDirections = ['^', '>', 'v', '<']
     this.collision = false
     this.frame = 0
+    this.interSectionOrder = [-1, 0, 1]
     this.trackTurns = ['\\', '/']
     this.trackTypes = this.trackTurns.concat(['-', '|', '+'])
     this.setLayout(track)
@@ -18,14 +19,19 @@ class Track {
 
   /**
    * Determines the next direction for a cart rotating at an intersection
-   * Order of rotations is left (counterclockwise), straigh, right (clockwise), straight
+   * Order of rotations is left (counterclockwise), straight, right (clockwise)
    * @private
    * @param {Object} cart the cart being turned
    * @returns {String} value of new direction
    */
   _intersect (cart) {
+    const i = this.interSectionOrder
     let l = cart.lastIntersections
-    let r = (l[0] !== 0) ? 0 : l[1] * -1
+
+    // Figure out the new rotation
+    let r = i.indexOf(l[0])
+    r = (r + 1 >= i.length) ? i[0] : i[r + 1]
+
     // Track the intersections
     cart.lastIntersections.pop()
     cart.lastIntersections.splice(0, 0, r)
@@ -105,7 +111,7 @@ class Track {
       output += '\n'
     })
 
-    return output.trim()
+    return output
   }
 
   /**
@@ -120,7 +126,7 @@ class Track {
             x: idx,
             y: idy,
             direction: x,
-            lastIntersections: [0, 1] // Assume the first intersection the cart will turn left
+            lastIntersections: [1, 0] // Assume the first ntersection the cart will turn left
           })
           // Replace the cart on the track with a track segment
           // (Assuming cart initial states aren't on instersections)

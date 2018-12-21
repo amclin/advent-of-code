@@ -23,12 +23,12 @@ describe('--- Day 13: Mine Cart Madness ---', () => {
           x: 2,
           y: 0,
           direction: '>',
-          lastIntersections: [0, 1]
+          lastIntersections: [1, 0]
         }, {
           x: 9,
           y: 3,
           direction: 'v',
-          lastIntersections: [0, 1]
+          lastIntersections: [1, 0]
         }]
         const track = new Track(data)
         const actual = track.carts
@@ -51,7 +51,7 @@ describe('--- Day 13: Mine Cart Madness ---', () => {
   \\------/   `.trim()
         const track = new Track(test)
         track.advance()
-        const actual = track.display()
+        const actual = track.display().trim()
         expect(actual).to.equal(expected)
         expect(track.frame).to.equal(1)
       })
@@ -62,7 +62,7 @@ describe('--- Day 13: Mine Cart Madness ---', () => {
         const track = new Track(test)
         const expected = `-->-`
         track.moveCart(track.carts[0])
-        const actual = track.display()
+        const actual = track.display().trim()
         expect(actual).to.equal(expected)
       })
       it('moves an individual cart left', () => {
@@ -70,7 +70,7 @@ describe('--- Day 13: Mine Cart Madness ---', () => {
         const track = new Track(test)
         const expected = `-<--`
         track.moveCart(track.carts[0])
-        const actual = track.display()
+        const actual = track.display().trim()
         expect(actual).to.equal(expected)
       })
       it('moves an individual cart down', () => {
@@ -78,7 +78,7 @@ describe('--- Day 13: Mine Cart Madness ---', () => {
         const track = new Track(test)
         const expected = `|\n|\nv\n|`
         track.moveCart(track.carts[0])
-        const actual = track.display()
+        const actual = track.display().trim()
         expect(actual).to.equal(expected)
       })
       it('moves an individual cart up', () => {
@@ -86,7 +86,7 @@ describe('--- Day 13: Mine Cart Madness ---', () => {
         const track = new Track(test)
         const expected = `|\n^\n|\n|`
         track.moveCart(track.carts[0])
-        const actual = track.display()
+        const actual = track.display().trim()
         expect(actual).to.equal(expected)
       })
       it('rotates a cart when it enters turns', () => {
@@ -114,7 +114,7 @@ describe('--- Day 13: Mine Cart Madness ---', () => {
           const track = new Track(test)
           track.moveCart(track.carts[0])
           track.moveCart(track.carts[0])
-          const actual = track.display()
+          const actual = track.display().trim()
           expect(actual).to.equal(expected[idx])
         })
       })
@@ -124,32 +124,32 @@ describe('--- Day 13: Mine Cart Madness ---', () => {
         const expected = `---^-`
         track.moveCart(track.carts[0])
         track.moveCart(track.carts[0])
-        const actual = track.display()
+        const actual = track.display().trim()
         expect(actual).to.equal(expected)
       })
-      it('tracks the direction through multiple intersections following the sequential rotation rules: left, straight, right, straight', () => {
+      it('tracks the direction through multiple intersections following the sequential rotation rules: left, straight, right', () => {
         const expected = `
-       ^
-       |
-   +-+-+
+     ^
+     |
+   +-+
    |
    +
    |
 ---+`.trim()
         const test = `
-       |
-       |
-   +-+-+
+     |
+     |
+   +-+
    |
    +
    |
 ->-+`
         const track = new Track(test)
 
-        for (let i = 0; i < 12; i++) {
+        for (let i = 0; i < 10; i++) {
           track.moveCart(track.carts[0])
         }
-        const actual = track.display()
+        const actual = track.display().trim()
         expect(actual).to.equal(expected)
       })
       it('only moves the specified cart', () => {
@@ -158,7 +158,7 @@ describe('--- Day 13: Mine Cart Madness ---', () => {
         const track = new Track(test)
         track.moveCart(track.carts[0])
         track.moveCart(track.carts[0])
-        const actual = track.display()
+        const actual = track.display().trim()
         expect(actual).to.equal(expected)
       })
       it('throws an error if the cart runs off the rails', () => {
@@ -178,7 +178,7 @@ describe('--- Day 13: Mine Cart Madness ---', () => {
           track.moveCart(track.carts[0])
           track.moveCart(track.carts[0])
         } catch (err) {
-          const actual = track.display()
+          const actual = track.display().trim()
           expect(actual).to.equal(expected)
           expect(track.collision).to.deep.equal({ x: 3, y: 0 })
         }
@@ -188,7 +188,7 @@ describe('--- Day 13: Mine Cart Madness ---', () => {
       it('renders the current track state', () => {
         const expected = data.trim()
         const track = new Track(data)
-        const actual = track.display()
+        const actual = track.display().trim()
         expect(actual).to.equal(expected)
       })
     })
