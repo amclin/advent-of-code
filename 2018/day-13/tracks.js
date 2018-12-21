@@ -7,10 +7,27 @@ class Track {
     this.setLayout(track)
   }
 
-  setLayout (track) {
-    this.layout = track.split('\n')
-    this.layout = this.layout.map((e) => { return e.split('') })
-    this.extractCarts()
+  /**
+   * Displays the current state of the track with the carts placed
+   */
+  display () {
+    let output = ''
+    const layout = JSON.parse(JSON.stringify(this.layout)) // Deep copy
+    // Include the carts
+    this.carts.forEach((cart) => {
+      // If another cart is at the spot, draw a collision instead
+      if (this.cartDirections.indexOf(layout[cart.y][cart.x]) >= 0) {
+        layout[cart.y][cart.x] = 'X'
+      } else {
+        layout[cart.y][cart.x] = cart.direction
+      }
+    })
+    layout.forEach((y) => {
+      output += y.join('')
+      output += '\n'
+    })
+
+    return output.trim()
   }
 
   /**
@@ -44,22 +61,10 @@ class Track {
     return this.layout[y][x]
   }
 
-  /**
-   * Displays the current state of the track
-   */
-  display () {
-    let output = ''
-    const layout = JSON.parse(JSON.stringify(this.layout)) // Deep copy
-    // Include the carts
-    this.carts.forEach((cart) => {
-      layout[cart.y][cart.x] = cart.direction
-    })
-    layout.forEach((y) => {
-      output += y.join('')
-      output += '\n'
-    })
-
-    return output.trim()
+  setLayout (track) {
+    this.layout = track.split('\n')
+    this.layout = this.layout.map((e) => { return e.split('') })
+    this.extractCarts()
   }
 }
 
