@@ -9,7 +9,7 @@ const data = `/->-\\
 | /-+--+-\\  |
 | | |  | v  |
 \\-+-/  \\-+--/
-  \\------/   `.trim()
+  \\------/   `
 
 describe('--- Day 13: Mine Cart Madness ---', () => {
   describe('Part 1:', () => {
@@ -34,11 +34,143 @@ describe('--- Day 13: Mine Cart Madness ---', () => {
       })
     })
     describe('advance()', () => {
-      it.skip('iterates the state of the track')
+      it('moves forward all carts on the layout', () => {
+        const test = `/---v
+|   |  /----\\
+| /-+--+-\\  |
+| | |  | |  |
+\\-+-/  \\-+>-/
+  \\------/   `
+        const expected = `/---\
+|   v  /----\\
+| /-+--+-\\  |
+| | |  | |  |
+\\-+-/  \\-+->/
+  \\------/   `.trim()
+        const track = new Track(test)
+        track.moveCart()
+        const actual = track.display()
+        expect(actual).to.equal(expected)
+      })
+    })
+    describe('moveCart(cart)', () => {
+      it('moves an individual cart right', () => {
+        const test = `->--`
+        const track = new Track(test)
+        const expected = `-->-`
+        track.moveCart(track.carts[0])
+        const actual = track.display()
+        expect(actual).to.equal(expected)
+      })
+      it('moves an individual cart left', () => {
+        const test = `--<-`
+        const track = new Track(test)
+        const expected = `-<--`
+        track.moveCart(track.carts[0])
+        const actual = track.display()
+        expect(actual).to.equal(expected)
+      })
+      it('moves an individual cart down', () => {
+        const test = `|\nv\n|\n|`
+        const track = new Track(test)
+        const expected = `|\n|\nv\n|`
+        track.moveCart(track.carts[0])
+        const actual = track.display()
+        expect(actual).to.equal(expected)
+      })
+      it('moves an individual cart up', () => {
+        const test = `|\n|\n^\n|`
+        const track = new Track(test)
+        const expected = `|\n^\n|\n|`
+        track.moveCart(track.carts[0])
+        const actual = track.display()
+        expect(actual).to.equal(expected)
+      })
+      it('rotates a cart when it enters turns', () => {
+        const tests = [
+          `->-\\-`,
+          `->-/-`,
+          `-/-<-`,
+          `-\\-<-`,
+          `|\nv\n|\n\\\n|`,
+          `|\nv\n|\n/\n|`,
+          `|\n/\n|\n^\n|`,
+          `|\n\\\n|\n^\n|`
+        ]
+        const expected = [
+          `---v-`,
+          `---^-`,
+          `-v---`,
+          `-^---`,
+          `|\n|\n|\n>\n|`,
+          `|\n|\n|\n<\n|`,
+          `|\n>\n|\n|\n|`,
+          `|\n<\n|\n|\n|`
+        ]
+        tests.forEach((test, idx) => {
+          const track = new Track(test)
+          track.moveCart(track.carts[0])
+          track.moveCart(track.carts[0])
+          const actual = track.display()
+          expect(actual).to.equal(expected[idx])
+        })
+      })
+      it('rotates a cart when it enters an intersection', () => {
+        const test = `->-+-`
+        const track = new Track(test)
+        const expected = `---^-`
+        track.moveCart(track.carts[0])
+        track.moveCart(track.carts[0])
+        const actual = track.display()
+        expect(actual).to.equal(expected)
+      })
+      it('tracks the direction through multiple intersections following the sequential rotation rules: left, straight, right', () => {
+        const test = `
+   |
+  -+-+--
+   |
+->-+-`
+        const track = new Track(test)
+        const expected = `
+   |
+  -+-+->
+   |
+---+-`.trim()
+        for (let i = 0; i < 8; i++) {
+          track.moveCart(track.carts[0])
+        }
+        const actual = track.display()
+        expect(actual).to.equal(expected)
+      })
+      it('only moves the specified cart', () => {
+        const test = `->--<-`
+        const expected = `---><-`
+        const track = new Track(test)
+        track.moveCart(track.carts[0])
+        track.moveCart(track.carts[0])
+        const actual = track.display()
+        expect(actual).to.equal(expected)
+      })
+      it('throws an error if the cart runs off the rails', () => {
+        const test = `->- -`
+        const track = new Track(test)
+        track.moveCart(track.carts[0])
+        expect(track.moveCart(track.carts[0])).to.be.an('error')
+      })
+      it('registers a collision', () => {
+        const test = `->-<-`
+        const expected = `---X-`
+        const track = new Track(test)
+        track.moveCart(track.carts[0])
+        track.moveCart(track.carts[0])
+        const actual = track.display()
+        expect(actual).to.equal(expected)
+        expect(track.collision).to.deep.equal({ x: 3, y: 0 })
+      })
     })
     describe('display()', () => {
       it('renders the current track state', () => {
-        const expected = data
+        const expected = data.trim()
         const track = new Track(data)
         const actual = track.display()
         expect(actual).to.equal(expected)
