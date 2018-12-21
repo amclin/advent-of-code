@@ -13,7 +13,18 @@ const init = (data) => {
   const answer = [track.collision.x, track.collision.y]
   // console.log(`Track state:`)
   // console.log(track.display())
-  const answer2 = ''
+
+  // Execute again, this time, removing crashed carts instead of stopping
+  const track2 = new Track(data, { removeCrashedCarts: true })
+  while (track2.carts.filter((c) => c.ghost !== true).length > 1 && track2.frame < 10) {
+    track2.advance()
+  }
+
+  console.log(`Only one cart remaining at frame ${track2.frame}`)
+  // console.log(track2.display())
+  const remaining = track2.carts.find((c) => c.ghost !== true)
+  const answer2 = [remaining.x, remaining.y]
+
   console.log(`-- Part 1 --`)
   console.log(`Answer: ${answer}`)
   console.log(`-- Part 2 --`)

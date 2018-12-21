@@ -1,19 +1,22 @@
 const { dynamicSortMultiple } = require('../day-04/helpers')
 
 class Track {
-  constructor (track) {
+  constructor (track, options) {
     this.layout = []
     this.carts = []
     this.cartDirections = ['^', '>', 'v', '<']
     this.collision = false
     this.frame = 0
     this.interSectionOrder = [-1, 0, 1]
+    this.options = options || {
+      removeCrashedCarts: false
+    }
     this.trackTurns = ['\\', '/']
     this.trackTypes = this.trackTurns.concat(['-', '|', '+'])
     this.setLayout(track)
   }
 
-  _isCollision (x, y) { return (this.carts.filter((c) => c.x === x && c.y === y).length > 1) }
+  _isCollision (x, y) { return (this.carts.filter((c) => c.x === x && c.y === y && c.ghost !== true).length > 1) }
   _isIntersection (s) { return s === '+' }
   _isTurn (s) { return this.trackTurns.indexOf(s) >= 0 }
 
@@ -98,7 +101,7 @@ class Track {
     let output = ''
     const layout = JSON.parse(JSON.stringify(this.layout)) // Deep copy
     // Include the carts
-    this.carts.forEach((cart) => {
+    this.carts.filter((c) => c.ghost !== true).forEach((cart) => {
       // If another cart is at the spot, draw a collision instead
       if (this.cartDirections.indexOf(layout[cart.y][cart.x]) >= 0) {
         layout[cart.y][cart.x] = 'X'
@@ -166,17 +169,26 @@ class Track {
     // Check for collision
     if (this._isCollision(cart.x, cart.y)) {
       this.collision = { x: cart.x, y: cart.y }
-      throw new Error(`collision at ${cart.x}, ${cart.y}`) // Stop everything
+
+      if (!this.options.removeCrashedCarts) {
+        throw new Error(`collision at ${cart.x}, ${cart.y}`) // Stop everything
+      }
+      this.carts.filter((c) => c.x === cart.x && c.y === cart.y).forEach((c) => {
+        c.ghost = true // Ghost carts are dead and no longer collide
+        // we leave them in the array so that it doesn't mess up the loops
+        // necessary to finish out each cycle tick
+      })
     }
     // rotate the cart when entering a turn
     if (this._isTurn(s)) {
       cart.direction = this._rotate(s, a, d)
-      return
+      return true
     }
     // rotate (or not) the cart when entering an intersection
     if (this._isIntersection(s)) {
       cart.direction = this._intersect(cart)
     }
+    return true
   }
 
   /**
