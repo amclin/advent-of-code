@@ -201,4 +201,33 @@ describe('--- Day 13: Mine Cart Madness ---', () => {
       })
     })
   })
+  describe('Part 2:', () => {
+    describe('new Track(layout, options)', () => {
+      it('removes crashed carts when enabled', () => {
+        const testData = `/>-<\\
+|   |
+| /<+-\\
+| | | v
+\\>+</ |
+  |   ^
+  \\<->/`
+        const expected = `/---\\
+|   |
+| /-+-\\
+| | | |
+\\-+-/ ^
+  |   |
+  \\---/`.trim()
+        const track = new Track(testData, { removeCrashedCarts: true })
+        while (track.carts.length > 1) {
+          track.advance()
+        }
+        const actual = track.display().trim()
+        expect(actual).to.equal(expected)
+        expect(track.carts[0].x).to.equal(6)
+        expect(track.carts[0].y).to.equal(4)
+        expect(track.frame).to.equal(3)
+      })
+    })
+  })
 })

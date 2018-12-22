@@ -16,7 +16,7 @@ class Track {
     this.setLayout(track)
   }
 
-  _isCollision (x, y) { return (this.carts.filter((c) => c.x === x && c.y === y && c.ghost !== true).length > 1) }
+  _isCollision (x, y) { return (this.carts.filter((c) => c.x === x && c.y === y).length > 1) }
   _isIntersection (s) { return s === '+' }
   _isTurn (s) { return this.trackTurns.indexOf(s) >= 0 }
 
@@ -84,14 +84,16 @@ class Track {
    */
   advance () {
     this.frame++
-    this.carts.sort(dynamicSortMultiple('y', 'x')).forEach((c) => {
-      try {
-        this.moveCart(c)
-      } catch (err) {
-        console.error(`Problem moving cart in frame ${this.frame}`)
-        console.error(err)
-      }
-    })
+    while (this.carts.filter((c) => c.moved === this.frame).length < this.carts.length) {
+      this.carts.filter((c) => c.moved !== this.frame).sort(dynamicSortMultiple('y', 'x')).forEach((c) => {
+        try {
+          this.moveCart(c)
+        } catch (err) {
+          console.error(`Problem moving cart in frame ${this.frame}`)
+          console.error(err)
+        }
+      })
+    }
   }
 
   /**
@@ -101,7 +103,7 @@ class Track {
     let output = ''
     const layout = JSON.parse(JSON.stringify(this.layout)) // Deep copy
     // Include the carts
-    this.carts.filter((c) => c.ghost !== true).forEach((cart) => {
+    this.carts.forEach((cart) => {
       // If another cart is at the spot, draw a collision instead
       if (this.cartDirections.indexOf(layout[cart.y][cart.x]) >= 0) {
         layout[cart.y][cart.x] = 'X'
@@ -160,6 +162,7 @@ class Track {
     const l = (d % 3 === 0) ? -1 : 1 // (+/-) distance of travel on the axis
     // move the cart
     cart[a] = cart[a] + l
+    cart.moved = this.frame
     const s = this.getSegment(cart.x, cart.y) // Segment of track the cart is now on
 
     // Make sure cart hasn't run off the rails
@@ -169,16 +172,18 @@ class Track {
     // Check for collision
     if (this._isCollision(cart.x, cart.y)) {
       this.collision = { x: cart.x, y: cart.y }
+      console.log(`Collision in frame ${this.frame}. removeCrashedCarts is ${this.options.removeCrashedCarts}`)
 
-      if (!this.options.removeCrashedCarts) {
+      // Handle crashed carts
+      if (this.options.removeCrashedCarts) {
+        this.carts.filter((c) => c.x === cart.x && c.y === cart.y).forEach((c) => {
+          this.carts.splice(this.carts.indexOf(c), 1)
+        })
+      } else {
         throw new Error(`collision at ${cart.x}, ${cart.y}`) // Stop everything
       }
-      this.carts.filter((c) => c.x === cart.x && c.y === cart.y).forEach((c) => {
-        c.ghost = true // Ghost carts are dead and no longer collide
-        // we leave them in the array so that it doesn't mess up the loops
-        // necessary to finish out each cycle tick
-      })
     }
+
     // rotate the cart when entering a turn
     if (this._isTurn(s)) {
       cart.direction = this._rotate(s, a, d)
