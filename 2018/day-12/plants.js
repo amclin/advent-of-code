@@ -3,13 +3,13 @@ class Plants {
     this.generations = []
     this.boundaryBuffers = [0, 0]
     this.rules = {}
-    this._setInitialGeneration(initial)
     if (rules && rules.length > 0) {
       rules.forEach((rule) => {
         this.addRule(rule)
       })
     }
     this.boundaryBuffers = this.getBoundaryBuffers()
+    this._setInitialGeneration(initial)
   }
 
   _setInitialGeneration (initial) {
@@ -21,6 +21,7 @@ class Plants {
         }
       })
     )
+    this.generations[0] = this.pad(this.generations[0])
   }
 
   /**
@@ -51,7 +52,7 @@ class Plants {
     const prevGen = this.generations[this.generations.length - 1]
 
     // Loop through all pots in the last generation to create a new generation
-    const nextGen = prevGen.map((pot) => {
+    let nextGen = prevGen.map((pot) => {
       // Assemble pattern for the given pot
       let pattern = ''
       for (let x = pot.position - 2; x <= pot.position + 2; x++) {
@@ -66,15 +67,7 @@ class Plants {
       }
     })
 
-    // Padd the list to support future generation
-    for (let x = 1; x <= this.boundaryBuffers[0]; x++) {
-      const first = nextGen[0].position
-      nextGen.splice(0, 0, { position: first - 1, state: '.' })
-    }
-    for (let x = 1; x <= this.boundaryBuffers[1]; x++) {
-      const last = nextGen[nextGen.length - 1].position
-      nextGen.push({ position: last + 1, state: '.' })
-    }
+    nextGen = this.pad(nextGen)
 
     // Store the new generation
     this.generations.push(nextGen)
@@ -179,6 +172,23 @@ class Plants {
   getCheckSum (generation) {
     return this.generations[generation].filter((p) => p.state === '#')
       .reduce((pacc, p) => pacc + p.position, 0)
+  }
+
+  /**
+   * Pads the generation to the left and right so the pots are present to support future generations
+   * @param {Array} generation List of pots representing a generation
+   * @returns generation list with extra pots
+   */
+  pad (generation) {
+    for (let x = 1; x <= this.boundaryBuffers[0]; x++) {
+      const first = generation[0].position
+      generation.splice(0, 0, { position: first - 1, state: '.' })
+    }
+    for (let x = 1; x <= this.boundaryBuffers[1]; x++) {
+      const last = generation[generation.length - 1].position
+      generation.push({ position: last + 1, state: '.' })
+    }
+    return generation
   }
 }
 

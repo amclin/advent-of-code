@@ -11,12 +11,13 @@ const initialState = '#...#...##..####..##.####.#...#...#.#.#.#......##....#....
 const init = (data) => {
   const rules = data
   const plantTracker = new Plants(initialState, rules)
-  for (let gen = 1; gen <= 20; gen++) {
+  const generations = 20
+  for (let gen = 1; gen <= generations; gen++) {
     plantTracker.advance()
   }
-  console.log('Generating 20 generations from the input looks like this:')
+  console.log(`Generating ${generations} generations from the input looks like this:`)
   plantTracker.display()
-  const answer = plantTracker.getCheckSum(20)
+  const answer = plantTracker.getCheckSum(generations)
   const answer2 = ''
 
   console.log(`-- Part 1 --`)
