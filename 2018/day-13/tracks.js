@@ -1,13 +1,16 @@
 const { dynamicSortMultiple } = require('../day-04/helpers')
 
 class Track {
-  constructor (track) {
+  constructor (track, options) {
     this.layout = []
     this.carts = []
     this.cartDirections = ['^', '>', 'v', '<']
     this.collision = false
     this.frame = 0
     this.interSectionOrder = [-1, 0, 1]
+    this.options = options || {
+      removeCrashedCarts: false
+    }
     this.trackTurns = ['\\', '/']
     this.trackTypes = this.trackTurns.concat(['-', '|', '+'])
     this.setLayout(track)
@@ -81,14 +84,16 @@ class Track {
    */
   advance () {
     this.frame++
-    this.carts.sort(dynamicSortMultiple('y', 'x')).forEach((c) => {
-      try {
-        this.moveCart(c)
-      } catch (err) {
-        console.error(`Problem moving cart in frame ${this.frame}`)
-        console.error(err)
-      }
-    })
+    while (this.carts.filter((c) => c.moved === this.frame).length < this.carts.length) {
+      this.carts.filter((c) => c.moved !== this.frame).sort(dynamicSortMultiple('y', 'x')).forEach((c) => {
+        try {
+          this.moveCart(c)
+        } catch (err) {
+          console.error(`Problem moving cart in frame ${this.frame}`)
+          console.error(err)
+        }
+      })
+    }
   }
 
   /**
@@ -157,6 +162,7 @@ class Track {
     const l = (d % 3 === 0) ? -1 : 1 // (+/-) distance of travel on the axis
     // move the cart
     cart[a] = cart[a] + l
+    cart.moved = this.frame
     const s = this.getSegment(cart.x, cart.y) // Segment of track the cart is now on
 
     // Make sure cart hasn't run off the rails
@@ -166,17 +172,28 @@ class Track {
     // Check for collision
     if (this._isCollision(cart.x, cart.y)) {
       this.collision = { x: cart.x, y: cart.y }
-      throw new Error(`collision at ${cart.x}, ${cart.y}`) // Stop everything
+      console.log(`Collision in frame ${this.frame}. removeCrashedCarts is ${this.options.removeCrashedCarts}`)
+
+      // Handle crashed carts
+      if (this.options.removeCrashedCarts) {
+        this.carts.filter((c) => c.x === cart.x && c.y === cart.y).forEach((c) => {
+          this.carts.splice(this.carts.indexOf(c), 1)
+        })
+      } else {
+        throw new Error(`collision at ${cart.x}, ${cart.y}`) // Stop everything
+      }
     }
+
     // rotate the cart when entering a turn
     if (this._isTurn(s)) {
       cart.direction = this._rotate(s, a, d)
-      return
+      return true
     }
     // rotate (or not) the cart when entering an intersection
     if (this._isIntersection(s)) {
       cart.direction = this._intersect(cart)
     }
+    return true
   }
 
   /**
