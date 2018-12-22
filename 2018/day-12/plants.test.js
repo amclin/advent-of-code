@@ -62,6 +62,9 @@ describe('--- Day 12: Subterranean Sustainability ---', () => {
     describe('advance()', () => {
       it('advances the next generation', () => {
         const expected = [
+          { position: -6, state: '.' },
+          { position: -5, state: '.' },
+          { position: -4, state: '.' },
           { position: -3, state: '.' },
           { position: -2, state: '.' },
           { position: -1, state: '.' },
@@ -92,7 +95,10 @@ describe('--- Day 12: Subterranean Sustainability ---', () => {
           { position: 24, state: '#' },
           { position: 25, state: '.' },
           { position: 26, state: '.' },
-          { position: 27, state: '.' }
+          { position: 27, state: '.' },
+          { position: 28, state: '.' },
+          { position: 29, state: '.' },
+          { position: 30, state: '.' }
         ]
         let plantTracker = new Plants(initialState, rules)
         plantTracker.advance()
