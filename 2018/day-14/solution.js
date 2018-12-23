@@ -6,12 +6,9 @@ const {
 
 const input = 540561
 
-let elves = [3, 7]
-let recipes = new Recipes(elves)
-elves[0] = recipes.tail
-elves[1] = recipes.head
+let recipes = new Recipes([3, 7])
 
-const answer = calculateXAfterY(10, input, recipes, elves)
+const answer = calculateXAfterY(10, input, recipes)
 
 console.log(`-- Part 1 --`)
 console.log(`Answer: ${answer}`)
