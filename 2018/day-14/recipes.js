@@ -144,7 +144,7 @@ const findPattern = (pattern, recipes, bufferSize) => {
   let overlapBuffer = ''
 
   while (matched !== true) {
-    console.log(`Checking for ${pattern} in segement starting at ${position}`)
+    // console.log(`Checking for ${pattern} in segement starting at ${position}`)
     let haystack = loopRecipesForElves(recipes, bufferSize)
 
     let offset = haystack.indexOf(pattern)
