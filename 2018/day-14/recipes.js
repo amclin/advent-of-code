@@ -111,21 +111,25 @@ const calculateXAfterY = (x, y, recipes, elves) => {
  * @param {String} pattern to search for
  * @param {LinkedList} recipes recipe list
  * @param {Array} elves doing the work
- * @param {Number} bufferSize bucket size to search. Higher sizes use more memory but go faster
+ * @param {Number} bufferSize bucket size to search. Tuning bucket size can improve speed but may risk missing match if the match crosses buckets.
  */
 const findPattern = (pattern, recipes, elves, bufferSize) => {
-  bufferSize = bufferSize || 10000
+  bufferSize = bufferSize || 101
   let matched = false
   let position = recipes.length
   while (matched !== true) {
     let haystack = loopRecipesForElves(elves, recipes, bufferSize)
-    if (haystack.indexOf(pattern) > -1) {
-      position += haystack.indexOf(pattern)
+    let offset = haystack.indexOf(pattern)
+    if (offset > -1) {
+      position += offset
+      console.log(`Found ${pattern} at ${haystack.substr(0, offset + pattern.length)}`)
       matched = true
     } else {
-      position += 1000
+      position += bufferSize
+      console.log(`Did not find ${pattern} before ${position}`)
     }
   }
+
   return position
 }
 
