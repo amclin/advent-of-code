@@ -72,12 +72,39 @@ const loopRecipesForElves = (elves, recipes, repeat) => {
       }
       elves[idx] = elf
     })
-
-    console.log(recipes.head.value)
   }
 }
 
+/**
+ * Determines the next X recipes after the elves have generated Y recipes
+ */
+const calculateXAfterY = (x, y, recipes, elves) => {
+  let iterator = recipes.head
+  while (recipes.length <= y) {
+    loopRecipesForElves(elves, recipes, 1)
+  }
+
+  if (recipes.length === y + 1) {
+    iterator = recipes.head
+  } else {
+    // In case multidigit recipe results created more than Y
+    iterator = recipes.head.prev
+  }
+
+  while (recipes.length < x + y) {
+    loopRecipesForElves(elves, recipes, 1)
+  }
+
+  let result = ''
+  while (result.length < x) {
+    result += iterator.value.toString()
+    iterator = iterator.next
+  }
+  return result
+}
+
 module.exports = {
+  calculateXAfterY,
   loopRecipesForElves,
   Recipes,
   totalDigitsInArray

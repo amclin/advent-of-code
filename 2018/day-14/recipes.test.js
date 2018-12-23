@@ -1,6 +1,7 @@
 /* eslint-env mocha */
 const expect = require('chai').expect
 const {
+  calculateXAfterY,
   loopRecipesForElves,
   Recipes,
   totalDigitsInArray
@@ -67,6 +68,72 @@ describe('--- Day 14: Chocolate Charts ---', () => {
         }
 
         expect(expected).to.equal(actual)
+      })
+    })
+    describe('calculateXAfterY(x, y, recipe, elves)', () => {
+      it('predicts the next X results after the elves have executed Y', () => {
+        const elves = [3, 7]
+        const recipes = new Recipes(elves[0])
+        let actual = ''
+
+        elves.forEach((elf, idx) => {
+          if (idx === 0) {
+            elves[0] = recipes.head
+          } else {
+            elves[idx] = recipes.addRecipe(elf)
+          }
+        })
+
+        actual = calculateXAfterY(10, 9, recipes, elves)
+        expect(actual).to.equal('5158916779')
+      })
+      it('predicts the next X results after the elves have executed Y', () => {
+        const elves = [3, 7]
+        const recipes = new Recipes(elves[0])
+        let actual = ''
+
+        elves.forEach((elf, idx) => {
+          if (idx === 0) {
+            elves[0] = recipes.head
+          } else {
+            elves[idx] = recipes.addRecipe(elf)
+          }
+        })
+
+        actual = calculateXAfterY(10, 5, recipes, elves)
+        expect(actual).to.equal('0124515891')
+      })
+      it('predicts the next X results after the elves have executed Y', () => {
+        const elves = [3, 7]
+        const recipes = new Recipes(elves[0])
+        let actual = ''
+
+        elves.forEach((elf, idx) => {
+          if (idx === 0) {
+            elves[0] = recipes.head
+          } else {
+            elves[idx] = recipes.addRecipe(elf)
+          }
+        })
+
+        actual = calculateXAfterY(10, 18, recipes, elves)
+        expect(actual).to.equal('9251071085')
+      })
+      it('predicts the next X results after the elves have executed Y', () => {
+        const elves = [3, 7]
+        const recipes = new Recipes(elves[0])
+        let actual = ''
+
+        elves.forEach((elf, idx) => {
+          if (idx === 0) {
+            elves[0] = recipes.head
+          } else {
+            elves[idx] = recipes.addRecipe(elf)
+          }
+        })
+
+        actual = calculateXAfterY(10, 2018, recipes, elves)
+        expect(actual).to.equal('5941429882')
       })
     })
   })
