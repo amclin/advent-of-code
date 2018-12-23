@@ -6,6 +6,7 @@ class Recipes {
     this.head = null
     this.tail = null
     this.length = 0
+    this.tracker = ''
     this.addFirst(recipe)
   }
 
@@ -15,6 +16,7 @@ class Recipes {
     newRecipe.prev = newRecipe
     this.head = newRecipe
     this.tail = newRecipe
+    this.tracker += recipe.toString()
     this.length++
     return this
   }
@@ -30,6 +32,7 @@ class Recipes {
     newRecipe.prev = this.head // link new recipe to old head
     this.head.next = newRecipe
     this.head = newRecipe // make new recipe the new head
+    this.tracker += recipe.toString() // Sore the sequence
     this.length++
     return this.head
   }
@@ -103,8 +106,25 @@ const calculateXAfterY = (x, y, recipes, elves) => {
   return result
 }
 
+/**
+ * Counts how many recipes are to the left of the specified pattern
+ * @param {String} pattern to search for
+ * @param {LinkedList} recipes recipe list
+ * @param {Array} elves doing the work
+ */
+const findPattern = (pattern, recipes, elves) => {
+  let position = -1
+  // Generate the sequence until the sequence exists
+  while (position < 0) {
+    loopRecipesForElves(elves, recipes, 1)
+    position = recipes.tracker.indexOf(pattern)
+  }
+  return position
+}
+
 module.exports = {
   calculateXAfterY,
+  findPattern,
   loopRecipesForElves,
   Recipes,
   totalDigitsInArray

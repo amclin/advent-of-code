@@ -2,6 +2,7 @@
 const expect = require('chai').expect
 const {
   calculateXAfterY,
+  findPattern,
   loopRecipesForElves,
   Recipes,
   totalDigitsInArray
@@ -134,6 +135,78 @@ describe('--- Day 14: Chocolate Charts ---', () => {
 
         actual = calculateXAfterY(10, 2018, recipes, elves)
         expect(actual).to.equal('5941429882')
+      })
+    })
+    describe('findPattern()', () => {
+      it('counts the number of recipes to the left of the specified pattern', () => {
+        const elves = [3, 7]
+        const recipes = new Recipes(elves[0])
+        let actual = ''
+
+        elves.forEach((elf, idx) => {
+          if (idx === 0) {
+            elves[0] = recipes.head
+          } else {
+            elves[idx] = recipes.addRecipe(elf)
+          }
+        })
+
+        actual = findPattern('51589', recipes, elves)
+        expect(actual).to.equal(9)
+      })
+    })
+    describe('findPattern()', () => {
+      it('counts the number of recipes to the left of the specified pattern', () => {
+        const elves = [3, 7]
+        const recipes = new Recipes(elves[0])
+        let actual = ''
+
+        elves.forEach((elf, idx) => {
+          if (idx === 0) {
+            elves[0] = recipes.head
+          } else {
+            elves[idx] = recipes.addRecipe(elf)
+          }
+        })
+
+        actual = findPattern('01245', recipes, elves)
+        expect(actual).to.equal(5)
+      })
+    })
+    describe('findPattern()', () => {
+      it('counts the number of recipes to the left of the specified pattern', () => {
+        const elves = [3, 7]
+        const recipes = new Recipes(elves[0])
+        let actual = ''
+
+        elves.forEach((elf, idx) => {
+          if (idx === 0) {
+            elves[0] = recipes.head
+          } else {
+            elves[idx] = recipes.addRecipe(elf)
+          }
+        })
+
+        actual = findPattern('92510', recipes, elves)
+        expect(actual).to.equal(18)
+      })
+    })
+    describe('findPattern()', () => {
+      it('counts the number of recipes to the left of the specified pattern', () => {
+        const elves = [3, 7]
+        const recipes = new Recipes(elves[0])
+        let actual = ''
+
+        elves.forEach((elf, idx) => {
+          if (idx === 0) {
+            elves[0] = recipes.head
+          } else {
+            elves[idx] = recipes.addRecipe(elf)
+          }
+        })
+
+        actual = findPattern('59414', recipes, elves)
+        expect(actual).to.equal(2018)
       })
     })
   })
