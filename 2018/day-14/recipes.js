@@ -2,11 +2,14 @@
  * Circular linked list of recipes
  */
 class Recipes {
-  constructor (recipe) {
+  constructor (recipes) {
     this.head = null
     this.tail = null
     this.length = 0
-    this.addFirst(recipe)
+    this.addFirst(recipes[0])
+    for (let x = 1; x < recipes.length; x++) {
+      this.addRecipe(recipes[x])
+    }
   }
 
   addFirst (recipe) {

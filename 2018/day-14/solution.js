@@ -7,15 +7,9 @@ const {
 const input = 540561
 
 let elves = [3, 7]
-let recipes = new Recipes(elves[0])
-
-elves.forEach((elf, idx) => {
-  if (idx === 0) {
-    elves[0] = recipes.head
-  } else {
-    elves[idx] = recipes.addRecipe(elf)
-  }
-})
+let recipes = new Recipes(elves)
+elves[0] = recipes.tail
+elves[1] = recipes.head
 
 const answer = calculateXAfterY(10, input, recipes, elves)
 
