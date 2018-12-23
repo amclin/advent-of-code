@@ -114,23 +114,19 @@ const calculateXAfterY = (x, y, recipes) => {
     loopRecipesForElves(recipes, 1)
     counter = recipes.length
   }
-  console.log(`${y} matches ${recipes.length}`)
 
-  if (recipes.length === y) {
-    iterator = recipes.head
-  } else if (recipes.length > y) {
     // In case multidigit recipe results created more than Y
-    iterator = recipes.head.prev
-  }
+  iterator = (recipes.length > y) ? recipes.head.prev : recipes.head
 
+  // Add enough recipes to cover X
   while (recipes.length < x + y) {
-    loopRecipesForElves(recipes, 1)
+    loopRecipesForElves(recipes, x + y - recipes.length)
   }
 
   let result = ''
   while (result.length < x) {
-    result += iterator.value.toString()
     iterator = iterator.next
+    result += iterator.value.toString()
   }
   return result
 }
