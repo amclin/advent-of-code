@@ -1,18 +1,37 @@
+class Elf {
+  constructor (location) {
+    this.location = location
+  }
+
+  move (distance) {
+    for (let x = 0; x < distance; x++) {
+      this.location = this.location.next
+    }
+  }
+}
+
 /**
  * Circular linked list of recipes
+ * @param {Array} recipes list of initial recipe values
  */
 class Recipes {
   constructor (recipes) {
     this.head = null
     this.tail = null
     this.length = 0
-    this.addFirst(recipes[0])
+    this.elves = []
+    this._addFirst(recipes[0])
     for (let x = 1; x < recipes.length; x++) {
       this.addRecipe(recipes[x])
     }
+    this.addElf(this.tail)
+    this.addElf(this.head)
   }
 
-  addFirst (recipe) {
+  /**
+   * @private
+   */
+  _addFirst (recipe) {
     const newRecipe = { value: recipe }
     newRecipe.next = newRecipe
     newRecipe.prev = newRecipe
@@ -20,6 +39,14 @@ class Recipes {
     this.tail = newRecipe
     this.length++
     return this
+  }
+
+  /**
+   * Adds an elf (location marker) to the linked list for easier iterative tracking
+   * @param {*} location Item on the linked list that the elf is positioned at
+   */
+  addElf (location) {
+    this.elves.push(new Elf(location))
   }
 
   /**
@@ -60,22 +87,18 @@ const totalDigitsInArray = (arr) => {
 
 /**
  * Loops the elves through the recipes list the specified number of times
- * @param {Array} elves list of elves
  * @param {LinkedList} recipes list of recipes
- * @param {Numbe} repeat count of desired iterations
+ * @param {Number} repeat count of desired iterations
  */
-const loopRecipesForElves = (elves, recipes, repeat) => {
+const loopRecipesForElves = (recipes, repeat) => {
   let result = ''
   for (let x = 1; x <= repeat; x++) {
-    const score = totalDigitsInArray(elves.map((elf) => elf.value))
+    const score = totalDigitsInArray(recipes.elves.map((elf) => elf.location.value))
     result += score.toString()
     recipes.scoreRecipes(score)
-    elves.forEach((elf, idx) => {
-      const distance = elf.value + 1
-      for (let x = 0; x < distance; x++) {
-        elf = elf.next
-      }
-      elves[idx] = elf
+    recipes.elves.forEach((elf, idx) => {
+      const distance = elf.location.value + 1
+      elf.move(distance)
     })
   }
   return result
@@ -84,21 +107,24 @@ const loopRecipesForElves = (elves, recipes, repeat) => {
 /**
  * Determines the next X recipes after the elves have generated Y recipes
  */
-const calculateXAfterY = (x, y, recipes, elves) => {
+const calculateXAfterY = (x, y, recipes) => {
   let iterator = recipes.head
-  while (recipes.length <= y) {
-    loopRecipesForElves(elves, recipes, 1)
+  let counter = recipes.length
+  while (counter < y) {
+    loopRecipesForElves(recipes, 1)
+    counter = recipes.length
   }
+  console.log(`${y} matches ${recipes.length}`)
 
-  if (recipes.length === y + 1) {
+  if (recipes.length === y) {
     iterator = recipes.head
-  } else {
+  } else if (recipes.length > y) {
     // In case multidigit recipe results created more than Y
     iterator = recipes.head.prev
   }
 
   while (recipes.length < x + y) {
-    loopRecipesForElves(elves, recipes, 1)
+    loopRecipesForElves(recipes, 1)
   }
 
   let result = ''
@@ -113,15 +139,14 @@ const calculateXAfterY = (x, y, recipes, elves) => {
  * Counts how many recipes are to the left of the specified pattern
  * @param {String} pattern to search for
  * @param {LinkedList} recipes recipe list
- * @param {Array} elves doing the work
  * @param {Number} bufferSize bucket size to search. Tuning bucket size can improve speed but may risk missing match if the match crosses buckets.
  */
-const findPattern = (pattern, recipes, elves, bufferSize) => {
+const findPattern = (pattern, recipes, bufferSize) => {
   bufferSize = bufferSize || 101
   let matched = false
   let position = recipes.length
   while (matched !== true) {
-    let haystack = loopRecipesForElves(elves, recipes, bufferSize)
+    let haystack = loopRecipesForElves(recipes, bufferSize)
     let offset = haystack.indexOf(pattern)
     if (offset > -1) {
       position += offset
