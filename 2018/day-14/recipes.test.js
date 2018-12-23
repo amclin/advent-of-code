@@ -61,6 +61,21 @@ describe('--- Day 14: Chocolate Charts ---', () => {
 
         expect(expected).to.equal(actual)
       })
+      it('handles when the score is multidigit', () => {
+        const expected = '3710101245158916'
+
+        loopRecipesForElves(recipes, 10)
+        // next should be multidigit
+        loopRecipesForElves(recipes, 1)
+        let actual = recipes.tail.value.toString()
+        let iterator = recipes.tail.next
+        while (iterator !== recipes.tail) {
+          actual += iterator.value.toString()
+          iterator = iterator.next
+        }
+        expect(recipes.length).to.equal(expected.length)
+        expect(expected).to.equal(actual)
+      })
     })
     describe('calculateXAfterY(x, y, recipe)', () => {
       it('predicts the next X results after the elves have executed Y', () => {
