@@ -7,9 +7,10 @@
   "scripts": {
     "pretest": "npm run lint",
     "test": "nyc mocha \"./20*/**/*.test.js\"",
+    "posttest": "nyc report --reporter=html --reporter=text-lcov > coverage.lcov",
     "lint": "standard",
     "semantic-release": "semantic-release",
-    "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
+    "report-coverage": "codecov"
   },
   "repository": {
     "type": "git",

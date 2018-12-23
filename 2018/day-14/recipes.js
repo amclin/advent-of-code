@@ -1,15 +1,37 @@
+class Elf {
+  constructor (location) {
+    this.location = location
+  }
+
+  move (distance) {
+    for (let x = 0; x < distance; x++) {
+      this.location = this.location.next
+    }
+  }
+}
+
 /**
  * Circular linked list of recipes
+ * @param {Array} recipes list of initial recipe values
  */
 class Recipes {
-  constructor (recipe) {
+  constructor (recipes) {
     this.head = null
     this.tail = null
     this.length = 0
-    this.addFirst(recipe)
+    this.elves = []
+    this._addFirst(recipes[0])
+    for (let x = 1; x < recipes.length; x++) {
+      this.addRecipe(recipes[x])
+    }
+    this.addElf(this.tail)
+    this.addElf(this.head)
   }
 
-  addFirst (recipe) {
+  /**
+   * @private
+   */
+  _addFirst (recipe) {
     const newRecipe = { value: recipe }
     newRecipe.next = newRecipe
     newRecipe.prev = newRecipe
@@ -17,6 +39,14 @@ class Recipes {
     this.tail = newRecipe
     this.length++
     return this
+  }
+
+  /**
+   * Adds an elf (location marker) to the linked list for easier iterative tracking
+   * @param {*} location Item on the linked list that the elf is positioned at
+   */
+  addElf (location) {
+    this.elves.push(new Elf(location))
   }
 
   /**
@@ -57,54 +87,88 @@ const totalDigitsInArray = (arr) => {
 
 /**
  * Loops the elves through the recipes list the specified number of times
- * @param {Array} elves list of elves
  * @param {LinkedList} recipes list of recipes
- * @param {Numbe} repeat count of desired iterations
+ * @param {Number} repeat count of desired iterations
  */
-const loopRecipesForElves = (elves, recipes, repeat) => {
+const loopRecipesForElves = (recipes, repeat) => {
+  let result = ''
   for (let x = 1; x <= repeat; x++) {
-    const score = totalDigitsInArray(elves.map((elf) => elf.value))
+    const score = totalDigitsInArray(recipes.elves.map((elf) => elf.location.value))
+    result += score.toString()
     recipes.scoreRecipes(score)
-    elves.forEach((elf, idx) => {
-      const distance = elf.value + 1
-      for (let x = 0; x < distance; x++) {
-        elf = elf.next
-      }
-      elves[idx] = elf
+    recipes.elves.forEach((elf, idx) => {
+      const distance = elf.location.value + 1
+      elf.move(distance)
     })
   }
+  return result
 }
 
 /**
  * Determines the next X recipes after the elves have generated Y recipes
  */
-const calculateXAfterY = (x, y, recipes, elves) => {
+const calculateXAfterY = (x, y, recipes) => {
   let iterator = recipes.head
-  while (recipes.length <= y) {
-    loopRecipesForElves(elves, recipes, 1)
+  let counter = recipes.length
+  while (counter < y) {
+    loopRecipesForElves(recipes, 1)
+    counter = recipes.length
   }
 
-  if (recipes.length === y + 1) {
-    iterator = recipes.head
-  } else {
-    // In case multidigit recipe results created more than Y
-    iterator = recipes.head.prev
-  }
+  // In case multidigit recipe results created more than Y
+  iterator = (recipes.length > y) ? recipes.head.prev : recipes.head
 
+  // Add enough recipes to cover X
   while (recipes.length < x + y) {
-    loopRecipesForElves(elves, recipes, 1)
+    loopRecipesForElves(recipes, x + y - recipes.length)
   }
 
   let result = ''
   while (result.length < x) {
-    result += iterator.value.toString()
     iterator = iterator.next
+    result += iterator.value.toString()
   }
   return result
 }
 
+/**
+ * Counts how many recipes are to the left of the specified pattern
+ * @param {String} pattern to search for
+ * @param {LinkedList} recipes recipe list
+ * @param {Number} bufferSize bucket size to search. Tuning bucket size can improve speed by adjusting memory usage.
+ */
+const findPattern = (pattern, recipes, bufferSize) => {
+  bufferSize = bufferSize || 101
+  let matched = false
+  let position = recipes.length
+  let overlapBuffer = ''
+
+  while (matched !== true) {
+    // console.log(`Checking for ${pattern} in segement starting at ${position}`)
+    let haystack = loopRecipesForElves(recipes, bufferSize)
+
+    let offset = haystack.indexOf(pattern)
+
+    position = (offset >= 0) ? position + offset : recipes.length
+    if (offset > -1) {
+      // console.log(`Found ${pattern} at ${haystack.substr(0, offset + pattern.length)}`)
+      matched = true
+    }
+    // Use another small buffer to check the string that overlaps the split between buffer segements
+    overlapBuffer = overlapBuffer.substr(overlapBuffer.length - 1 - pattern.length, pattern.length)
+    overlapBuffer += haystack.substr(0, pattern.length)
+    if (overlapBuffer.indexOf(pattern) > -1) {
+      position = position - pattern.length + overlapBuffer.indexOf(pattern)
+      matched = true
+    }
+  }
+
+  return position
+}
+
 module.exports = {
   calculateXAfterY,
+  findPattern,
   loopRecipesForElves,
   Recipes,
   totalDigitsInArray
