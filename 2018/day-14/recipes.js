@@ -115,7 +115,7 @@ const calculateXAfterY = (x, y, recipes) => {
     counter = recipes.length
   }
 
-    // In case multidigit recipe results created more than Y
+  // In case multidigit recipe results created more than Y
   iterator = (recipes.length > y) ? recipes.head.prev : recipes.head
 
   // Add enough recipes to cover X
