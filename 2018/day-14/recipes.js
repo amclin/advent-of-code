@@ -135,22 +135,31 @@ const calculateXAfterY = (x, y, recipes) => {
  * Counts how many recipes are to the left of the specified pattern
  * @param {String} pattern to search for
  * @param {LinkedList} recipes recipe list
- * @param {Number} bufferSize bucket size to search. Tuning bucket size can improve speed but may risk missing match if the match crosses buckets.
+ * @param {Number} bufferSize bucket size to search. Tuning bucket size can improve speed by adjusting memory usage.
  */
 const findPattern = (pattern, recipes, bufferSize) => {
   bufferSize = bufferSize || 101
   let matched = false
   let position = recipes.length
+  let overlapBuffer = ''
+
   while (matched !== true) {
+    console.log(`Checking for ${pattern} in segement starting at ${position}`)
     let haystack = loopRecipesForElves(recipes, bufferSize)
+
     let offset = haystack.indexOf(pattern)
+
+    position = (offset >= 0) ? position + offset : recipes.length
     if (offset > -1) {
-      position += offset
-      console.log(`Found ${pattern} at ${haystack.substr(0, offset + pattern.length)}`)
+      // console.log(`Found ${pattern} at ${haystack.substr(0, offset + pattern.length)}`)
       matched = true
-    } else {
-      position += bufferSize
-      console.log(`Did not find ${pattern} before ${position}`)
+    }
+    // Use another small buffer to check the string that overlaps the split between buffer segements
+    overlapBuffer = overlapBuffer.substr(overlapBuffer.length - 1 - pattern.length, pattern.length)
+    overlapBuffer += haystack.substr(0, pattern.length)
+    if (overlapBuffer.indexOf(pattern) > -1) {
+      position = position - pattern.length + overlapBuffer.indexOf(pattern)
+      matched = true
     }
   }
 

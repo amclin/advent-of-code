@@ -104,22 +104,24 @@ describe('--- Day 14: Chocolate Charts ---', () => {
         const actual = findPattern('51589', recipes)
         expect(actual).to.equal(9)
       })
-    })
-    describe('findPattern()', () => {
       it('counts the number of recipes to the left of the specified pattern', () => {
         const actual = findPattern('01245', recipes)
         expect(actual).to.equal(5)
       })
-    })
-    describe('findPattern()', () => {
       it('counts the number of recipes to the left of the specified pattern', () => {
         const actual = findPattern('92510', recipes)
         expect(actual).to.equal(18)
       })
-    })
-    describe('findPattern()', () => {
       it('counts the number of recipes to the left of the specified pattern', () => {
         const actual = findPattern('59414', recipes)
+        expect(actual).to.equal(2018)
+      })
+      it('accepts small search buffer sizes', () => {
+        const actual = findPattern('59414', recipes, 20)
+        expect(actual).to.equal(2018)
+      })
+      it('accepts large search buffer sizes', () => {
+        const actual = findPattern('59414', recipes, 50000)
         expect(actual).to.equal(2018)
       })
     })
