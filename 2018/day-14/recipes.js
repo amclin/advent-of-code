@@ -6,7 +6,6 @@ class Recipes {
     this.head = null
     this.tail = null
     this.length = 0
-    this.tracker = ''
     this.addFirst(recipe)
   }
 
@@ -16,7 +15,6 @@ class Recipes {
     newRecipe.prev = newRecipe
     this.head = newRecipe
     this.tail = newRecipe
-    this.tracker += recipe.toString()
     this.length++
     return this
   }
@@ -32,7 +30,6 @@ class Recipes {
     newRecipe.prev = this.head // link new recipe to old head
     this.head.next = newRecipe
     this.head = newRecipe // make new recipe the new head
-    this.tracker += recipe.toString() // Sore the sequence
     this.length++
     return this.head
   }
@@ -65,8 +62,10 @@ const totalDigitsInArray = (arr) => {
  * @param {Numbe} repeat count of desired iterations
  */
 const loopRecipesForElves = (elves, recipes, repeat) => {
+  let result = ''
   for (let x = 1; x <= repeat; x++) {
     const score = totalDigitsInArray(elves.map((elf) => elf.value))
+    result += score.toString()
     recipes.scoreRecipes(score)
     elves.forEach((elf, idx) => {
       const distance = elf.value + 1
@@ -76,6 +75,7 @@ const loopRecipesForElves = (elves, recipes, repeat) => {
       elves[idx] = elf
     })
   }
+  return result
 }
 
 /**
@@ -111,13 +111,20 @@ const calculateXAfterY = (x, y, recipes, elves) => {
  * @param {String} pattern to search for
  * @param {LinkedList} recipes recipe list
  * @param {Array} elves doing the work
+ * @param {Number} bufferSize bucket size to search. Higher sizes use more memory but go faster
  */
-const findPattern = (pattern, recipes, elves) => {
-  let position = -1
-  // Generate the sequence until the sequence exists
-  while (position < 0) {
-    loopRecipesForElves(elves, recipes, 1)
-    position = recipes.tracker.indexOf(pattern)
+const findPattern = (pattern, recipes, elves, bufferSize) => {
+  bufferSize = bufferSize || 10000
+  let matched = false
+  let position = recipes.length
+  while (matched !== true) {
+    let haystack = loopRecipesForElves(elves, recipes, bufferSize)
+    if (haystack.indexOf(pattern) > -1) {
+      position += haystack.indexOf(pattern)
+      matched = true
+    } else {
+      position += 1000
+    }
   }
   return position
 }
