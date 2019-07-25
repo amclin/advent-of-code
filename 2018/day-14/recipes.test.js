@@ -79,7 +79,7 @@ describe('--- Day 14: Chocolate Charts ---', () => {
     })
     describe('calculateXAfterY(x, y, recipe)', () => {
       it('predicts the next X results after the elves have executed Y', () => {
-        let actual = calculateXAfterY(10, 9, recipes)
+        const actual = calculateXAfterY(10, 9, recipes)
         expect(actual).to.equal('5158916779')
       })
       it('predicts the next X results after the elves have executed Y', () => {
@@ -95,7 +95,7 @@ describe('--- Day 14: Chocolate Charts ---', () => {
         expect(actual).to.equal('5941429882')
       })
       it('positions results correctly if X triggers 2 recipes being added', () => {
-        let actual = calculateXAfterY(3, 15, recipes)
+        const actual = calculateXAfterY(3, 15, recipes)
         expect(actual).to.equal('677')
       })
     })

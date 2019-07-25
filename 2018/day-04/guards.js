@@ -1,6 +1,6 @@
 const helpers = require('./helpers')
 
-let _data = {}
+const _data = {}
 
 const getData = (key) => _data[key]
 const setData = (key) => _data[key]
@@ -12,7 +12,7 @@ const setData = (key) => _data[key]
 const findLaziestGuards = (days) => {
   // Get a list of guards with their sleeping times
   // returns { id: XX, asleep: YY }
-  let guards = days.filter((day, idx, arr) => {
+  const guards = days.filter((day, idx, arr) => {
     return (arr.indexOf(day) === idx) // filters a list of unique guard IDs
   }).map((day) => {
     return { id: day.guard } // Makes a list of guard objects
@@ -49,10 +49,10 @@ const findSleepiestTimes = (guard, data) => {
       .map((minute) => minute.id) // convert into a list of times
   }
 
-  let times = data.filter((day) => day.guard === guard) // Find the days the guard is working
+  const times = data.filter((day) => day.guard === guard) // Find the days the guard is working
     .map((day) => getTimesAsleep(day.activity)) // Convert activity streams into lists of times where guard is asleep
     .reduce((acc, day) => {
-      let counter = acc || []
+      const counter = acc || []
       // Loop through the minutes of the day, and increment status in the acclumator if the guard is asleep
       day.forEach((minute) => {
         counter[minute] = (counter[minute]) ? counter[minute] + 1 : 1
@@ -75,7 +75,7 @@ const processActivities = (data) => {
   }
 
   // store variables iterated through the loop
-  let store = {
+  const store = {
     date: data[0].date,
     hour: data[0].hour,
     minute: data[0].minute,
@@ -84,7 +84,7 @@ const processActivities = (data) => {
   }
 
   // Build up the results set
-  let results = [{
+  const results = [{
     date: store.date,
     guard: store.guard,
     activity: ''
@@ -95,7 +95,7 @@ const processActivities = (data) => {
     // Crossed into new day
     if (event.date !== store.date) {
       // Finish out the open pattern
-      let prevAct = results[results.length - 1].activity
+      const prevAct = results[results.length - 1].activity
       if (prevAct.length < 60) {
         results[results.length - 1].activity += store.state.repeat(60 - prevAct.length)
       }
@@ -103,7 +103,7 @@ const processActivities = (data) => {
       // Start a new activity pattern
       // The new activity pattern should fill up to the current minute, or completely fill
       // when the new event is in a later hour
-      let len = (event.hour === 0) ? event.minute : 60
+      const len = (event.hour === 0) ? event.minute : 60
       results.push({
         date: event.date,
         guard: event.guard || store.guard,
@@ -113,10 +113,10 @@ const processActivities = (data) => {
 
     // Event is the same day as the previous event
     if (event.date === store.date) {
-      let act = results[results.length - 1].activity
+      const act = results[results.length - 1].activity
       // Populate the previous state up to the current minute or up to the full hour
       // when it's no longer the 0 hour
-      let len = (event.hour === 0) ? event.minute - act.length : 60 - act.length
+      const len = (event.hour === 0) ? event.minute - act.length : 60 - act.length
 
       if (len > 0 && len < 60) {
         results[results.length - 1].activity += store.state.repeat(len)

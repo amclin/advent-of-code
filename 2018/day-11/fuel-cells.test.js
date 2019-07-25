@@ -16,40 +16,40 @@ describe('--- Day 11: Chronal Charge ---', () => {
     })
     describe('getRackID(coordinates)', () => {
       it('caclulcates the rack ID of the cell at specified x,y coordinate', () => {
-        let test = [3, 5]
-        let testSerial = 8
+        const test = [3, 5]
+        const testSerial = 8
         const expected = 13
-        let actual = new Rack(testSerial).getRackId(test, testSerial)
+        const actual = new Rack(testSerial).getRackId(test, testSerial)
         expect(actual).to.equal(expected)
       })
     })
     describe('getPowerLevel(coordinates)', () => {
       it('caclulcates the power level of the cell at specified x,y coordinate', () => {
-        let test = [3, 5]
+        const test = [3, 5]
         const testSerial = 8
         const expected = 4
-        let actual = new Rack(testSerial).getPowerLevel(test, testSerial)
+        const actual = new Rack(testSerial).getPowerLevel(test, testSerial)
         expect(actual).to.equal(expected)
       })
       it('can generate a negative power level', () => {
-        let test = [122, 79]
+        const test = [122, 79]
         const testSerial = 57
         const expected = -5
-        let actual = new Rack(testSerial).getPowerLevel(test, testSerial)
+        const actual = new Rack(testSerial).getPowerLevel(test, testSerial)
         expect(actual).to.equal(expected)
       })
       it('can generate a power level of 0', () => {
-        let test = [217, 196]
+        const test = [217, 196]
         const testSerial = 39
         const expected = 0
-        let actual = new Rack(testSerial).getPowerLevel(test, testSerial)
+        const actual = new Rack(testSerial).getPowerLevel(test, testSerial)
         expect(actual).to.equal(expected)
       })
       it('can generate a positive power level', () => {
-        let test = [101, 153]
+        const test = [101, 153]
         const testSerial = 71
         const expected = 4
-        let actual = new Rack(testSerial).getPowerLevel(test, testSerial)
+        const actual = new Rack(testSerial).getPowerLevel(test, testSerial)
         expect(actual).to.equal(expected)
       })
     })

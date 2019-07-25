@@ -23,7 +23,7 @@ const init = (data) => {
   // Sort the guards most likely to fall asleep on a repeated minute
   guardsBySleepTime = guardsBySleepTime.map((guard) => {
     if (guard.asleep > 0) {
-      let sleepiestTimes = findSleepiestTimes(guard.id, data)
+      const sleepiestTimes = findSleepiestTimes(guard.id, data)
       guard.sleepiestMinute = sleepiestTimes[0].minute
       guard.sleepiestMinuteQty = sleepiestTimes[0].qty
     } else {

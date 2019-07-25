@@ -7,8 +7,8 @@ const loadInput = (callback) => {
   fs.readFile(filePath, { encoding: 'utf8' }, (err, data) => {
     if (err) throw err
 
-    let list = linesToArray(data).sort().map((line) => {
-      let coords = line.split(', ')
+    const list = linesToArray(data).sort().map((line) => {
+      const coords = line.split(', ')
       return {
         x: parseInt(coords[0]),
         y: parseInt(coords[1])

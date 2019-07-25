@@ -57,8 +57,8 @@ const executeInstructions = (tree, workers, minDuration) => {
   const getAssignedTasks = () => workerStates.filter(isActive).map((w) => w.state)
 
   let elapsed = 0 // Timer
-  let pending = _instructionIds // Tasks not started or incomplete
-  let completed = [] // Tasks completed
+  const pending = _instructionIds // Tasks not started or incomplete
+  const completed = [] // Tasks completed
   let assigned = getAssignedTasks() // Tasks currently being processed
   while (pending.length > 0 || assigned.length > 0) { // Loop through until tree is exhausted and all workers done
     // Free up any workers from the last cycle
@@ -92,7 +92,7 @@ const executeInstructions = (tree, workers, minDuration) => {
       return assigned
     }
 
-    let startable = findHasNoDependencies(tree, pending)
+    const startable = findHasNoDependencies(tree, pending)
     let activeWorkers = workerStates.filter(isActive).length
     let workersAreAvailable = (activeWorkers < workers)
     let tasksAreAssigned = areAssigned(startable, assigned)
@@ -102,7 +102,7 @@ const executeInstructions = (tree, workers, minDuration) => {
         startable.shift()
       } else {
         // Assign the task to the first available worker
-        let id = workerStates.indexOf(workerStates.find(isFree))
+        const id = workerStates.indexOf(workerStates.find(isFree))
         workerStates[id].state = startable.shift()
         workerStates[id].availableIn = minDuration + workerStates[id].state.charCodeAt(0) - 64 // A is ASCII 65
       }
@@ -153,7 +153,7 @@ const findHasNoDependencies = (dependencies, pending) => {
   })
 
   // Filter to IDs with no dependencies
-  let startable = pending.filter((id) => ids.indexOf(id) < 0)
+  const startable = pending.filter((id) => ids.indexOf(id) < 0)
 
   // console.log(`${startable} have no dependencies so are safe to start`)
 
@@ -187,7 +187,7 @@ const getInstructionIds = () => {
  * @returns {Object} structured data
  */
 const parseEntry = (line, idx, arr) => {
-  let data = line.split(' ')
+  const data = line.split(' ')
   return {
     id: data[7],
     dep: data[1]
@@ -214,11 +214,11 @@ const sortInstructions = (entries) => {
   let sorted = []
 
   storeData(entries)
-  let tree = JSON.parse(JSON.stringify(_dependencies))
+  const tree = JSON.parse(JSON.stringify(_dependencies))
 
   while (Object.keys(tree).length > 0) {
     // find next step
-    let next = findHasNoDependencies(tree)[0]
+    const next = findHasNoDependencies(tree)[0]
     sorted.push(next)
     _instructionIds.splice(_instructionIds.indexOf(next), 1)
     // Go through dependency tree and remove the step that's been cleared

@@ -42,7 +42,7 @@ const dynamicSortMultiple = (...keys) => {
   return (a, b) => {
     let i = 0
     let result = 0
-    let numberOfProperties = keys.length
+    const numberOfProperties = keys.length
 
     while (result === 0 && i < numberOfProperties) {
       result = dynamicSort(keys[i])(a, b)
@@ -67,8 +67,8 @@ const parseLog = (log) => {
  * @returns {Object} { activity, date, guard, minute }
  */
 const parseLogEntry = (entry) => {
-  let data = {}
-  let res = entry.split(' ')
+  const data = {}
+  const res = entry.split(' ')
 
   data.date = res.shift()
     .replace('[', '') // strip brackets from date

@@ -5,16 +5,16 @@
  * @returns {Object} { children: [node], remainder: [data values]}
  */
 const findChildren = (input, expected) => {
-  let results = []
+  const results = []
 
   while (results.length < expected) {
-    let result = {
+    const result = {
       children: [],
       metadata: []
     }
-    let childCount = input.shift()
-    let metaCount = input.shift()
-    let childSearchResults = findChildren(input, childCount)
+    const childCount = input.shift()
+    const metaCount = input.shift()
+    const childSearchResults = findChildren(input, childCount)
 
     result.children = childSearchResults.children
     input = childSearchResults.remainder

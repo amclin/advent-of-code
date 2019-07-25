@@ -4,10 +4,10 @@ const serial = 1133 // From puzzle input
 const size = [300, 300]
 const squareSize = [3, 3]
 
-let powerBank = new Rack(serial, size)
+const powerBank = new Rack(serial, size)
 // powerBank.tallySquares(squareSize)
 // const answer = powerBank.getCellsByPower(squareSize)[0].coords
-let max = powerBank.findMaxSquare(squareSize).idx
+const max = powerBank.findMaxSquare(squareSize).idx
 const answer = powerBank.cells[max].coords
 
 console.log(`-- Part 1 --`)
@@ -42,7 +42,7 @@ for (let dial = 1; dial <= 300; dial++) {
 }
 
 const bestOfAnySize = anySizeSquares.sort(dynamicSort('-power'))[0]
-let answer2 = bestOfAnySize.coords
+const answer2 = bestOfAnySize.coords
 answer2.push(bestOfAnySize.size)
 
 console.log(`-- Part 2 --`)

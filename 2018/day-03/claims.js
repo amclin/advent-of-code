@@ -100,7 +100,7 @@ const makeClaim = (claim) => {
  * @returns {Object} Claim object with named properties
  */
 const parseClaim = (str) => {
-  let claim = {}
+  const claim = {}
   let vals = str.split(' @ ')
   claim.id = vals[0].replace(/#/g, '')
   vals = vals[1].split(',')

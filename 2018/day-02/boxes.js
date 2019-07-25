@@ -4,8 +4,8 @@ const unique = require('../helpers').unique
 const hasNRepeatedChars = (haystack, n) => {
   let chars = unique(haystack.split(''))
   chars = chars.filter((char) => {
-    let needle = new RegExp(char, 'g')
-    let count = (haystack.match(needle) || []).length // find number of results in the ID
+    const needle = new RegExp(char, 'g')
+    const count = (haystack.match(needle) || []).length // find number of results in the ID
     return (count === n)
   })
   return (chars.length > 0)
@@ -30,7 +30,7 @@ function getChecksum (input) {
  * @returns {number}
  */
 const scoreIDs = (str1, str2) => {
-  let common = getCommonLetters(str1, str2)
+  const common = getCommonLetters(str1, str2)
   return str1.length - common.length
 }
 
@@ -56,14 +56,14 @@ const getCommonLetters = (str1, str2) => {
  * @returns {Array} list of similar IDs
  */
 const findSimilarIDs = (ids, threshold) => {
-  let results = []
+  const results = []
   threshold = threshold || 1
 
   let searchIdx = 0
   do {
-    let needle = ids[searchIdx]
+    const needle = ids[searchIdx]
     // Find matches that differ by only one letter
-    let matches = ids.filter((id, idx) => {
+    const matches = ids.filter((id, idx) => {
       // Don't repeat comparisons and don't compare to self
       if (searchIdx <= idx) {
         return false
