@@ -54,7 +54,7 @@ describe('--- Day 12: Subterranean Sustainability ---', () => {
           { position: 23, state: '#' },
           { position: 24, state: '#' }
         ]
-        let plantTracker = new Plants(initialState)
+        const plantTracker = new Plants(initialState)
         const actual = plantTracker.generations[0]
         expect(actual).to.deep.equal(expected)
       })
@@ -100,7 +100,7 @@ describe('--- Day 12: Subterranean Sustainability ---', () => {
           { position: 29, state: '.' },
           { position: 30, state: '.' }
         ]
-        let plantTracker = new Plants(initialState, rules)
+        const plantTracker = new Plants(initialState, rules)
         plantTracker.advance()
         const actual = plantTracker.generations[1]
         expect(actual).to.deep.equal(expected)
@@ -110,7 +110,7 @@ describe('--- Day 12: Subterranean Sustainability ---', () => {
       it('retrieves the expected state based on the specified pattern', () => {
         const pattern = '#.#.#'
         const expected = '#'
-        let plantTracker = new Plants(initialState, rules)
+        const plantTracker = new Plants(initialState, rules)
         const actual = plantTracker.predictPlant(pattern)
         expect(actual).to.equal(expected)
       })

@@ -34,7 +34,7 @@ describe('--- Day 7: The Sum of Its Parts ---', () => {
     describe('findHasNoDependencies()', () => {
       it('Gets a list of IDs that can be executed since they have no dependencies', () => {
         const expected = ['C']
-        let test = testData.map(parseEntry)
+        const test = testData.map(parseEntry)
         storeData(test)
         const dependencies = getDependencies()
         const actual = findHasNoDependencies(dependencies)
@@ -44,7 +44,7 @@ describe('--- Day 7: The Sum of Its Parts ---', () => {
     describe('sortInstructions()', () => {
       it('Puts the instructions in the necessary order', () => {
         const expected = 'CABDFE'
-        let test = testData.map(parseEntry)
+        const test = testData.map(parseEntry)
         const actual = sortInstructions(test).join('')
         expect(actual).to.equal(expected)
       })
@@ -52,7 +52,7 @@ describe('--- Day 7: The Sum of Its Parts ---', () => {
     describe('storeData()', () => {
       it('Builds and stores a list of identified IDs', () => {
         const expected = ['A', 'B', 'C', 'D', 'E', 'F']
-        let test = testData.map(parseEntry)
+        const test = testData.map(parseEntry)
         storeData(test)
         const actual = getInstructionIds()
         expect(actual).to.deep.equal(expected)
@@ -75,7 +75,7 @@ describe('--- Day 7: The Sum of Its Parts ---', () => {
             ids: ['E']
           }
         }
-        let test = testData.map(parseEntry)
+        const test = testData.map(parseEntry)
         storeData(test)
         const actual = getDependencies()
         expect(actual).to.deep.equal(expected)

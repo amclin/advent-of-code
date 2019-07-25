@@ -17,7 +17,9 @@ class Track {
   }
 
   _isCollision (x, y) { return (this.carts.filter((c) => c.x === x && c.y === y).length > 1) }
+
   _isIntersection (s) { return s === '+' }
+
   _isTurn (s) { return this.trackTurns.indexOf(s) >= 0 }
 
   /**
@@ -29,7 +31,7 @@ class Track {
    */
   _intersect (cart) {
     const i = this.interSectionOrder
-    let l = cart.lastIntersections
+    const l = cart.lastIntersections
 
     // Figure out the new rotation
     let r = i.indexOf(l[0])
@@ -52,7 +54,7 @@ class Track {
    */
   _rotate (s, a, d) {
     // Determine which way we're rotating
-    let r = (
+    const r = (
       (this.trackTurns.indexOf(s) === 1 && a === 'y') || // vertical turns clockwise
       (this.trackTurns.indexOf(s) === 0 && a === 'x') // horizontal turns clockwise
       // (this.trackTurns.indexOf(s) === 0 && a === 'x') // horizontal turns counter-clockwise

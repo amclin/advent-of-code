@@ -13,7 +13,7 @@ const init = (data) => {
 
   // Play the animation and interpret the frames
   for (let x = start; x < end; x++) {
-    let frame = beaconTracker.getFrame(x)
+    const frame = beaconTracker.getFrame(x)
     console.log(`Analyzing frame ${x}. Focus: ${frame.meta.focus}`)
   }
 

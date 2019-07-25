@@ -46,14 +46,14 @@ describe('--- Day 3: No Matter How You Slice It ---', () => {
     describe('makeClaim(claim)', () => {
       it('marks the points on the cloth with the claim ID', () => {
         const claim = parseClaim(claims[0])
-        let result = makeClaim(claim)
+        const result = makeClaim(claim)
         expect(result[1][1]).to.equal(undefined)
         expect(result[3][2]).to.deep.equal([123])
         expect(result[7][5]).to.deep.equal([123])
       })
 
       it('marks the points that are overlapped', () => {
-        let testClaims = claims.map(parseClaim)
+        const testClaims = claims.map(parseClaim)
         let result = _cloth
         for (let x = 1; x < claims.length; x++) {
           result = makeClaim(testClaims[x])
@@ -91,7 +91,7 @@ describe('--- Day 3: No Matter How You Slice It ---', () => {
 
     describe('countConflicts()', () => {
       it('counts the number of points with conflicting claims', () => {
-        let testClaims = claims.map(parseClaim)
+        const testClaims = claims.map(parseClaim)
         for (let x = 1; x < claims.length; x++) {
           makeClaim(testClaims[x])
         }
@@ -105,7 +105,7 @@ describe('--- Day 3: No Matter How You Slice It ---', () => {
   describe('Part 2', () => {
     describe('findNonOverlappingClaims()', () => {
       it('locates the first claim that doesn\'t have overlapping claims', () => {
-        let testClaims = claims.map(parseClaim)
+        const testClaims = claims.map(parseClaim)
         for (let x = 1; x < claims.length; x++) {
           makeClaim(testClaims[x])
         }

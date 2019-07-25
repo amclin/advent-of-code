@@ -34,7 +34,7 @@ const _listToProps = (obj, val, idx, keys) => {
  * @returns Structured object with velocity and position x/y pairs
  */
 const parseLine = (input) => {
-  let pattern = /-*\d+,\s*-*\d+/g
+  const pattern = /-*\d+,\s*-*\d+/g
 
   return input.match(pattern)
     .map((res) => res.split(',')

@@ -1,7 +1,7 @@
 const { dynamicSort } = require('../day-04/helpers')
 
-let minX = 0
-let minY = 0
+const minX = 0
+const minY = 0
 let maxX = 10
 let maxY = 10
 
@@ -30,7 +30,7 @@ const distance = (A, B) => {
  * @param {*} data List of points to measure to
  */
 const findClosestPoint = (source, data) => {
-  let distances = data.map((target, idx) => {
+  const distances = data.map((target, idx) => {
     return {
       id: idx,
       distance: distance(source, target)
@@ -38,7 +38,7 @@ const findClosestPoint = (source, data) => {
   }).sort(dynamicSort('distance'))
 
   // Point is invalid when equadistant, so mark with '.' instead of a value
-  let point = (distances[0].distance === distances[1].distance) ? '.' : distances[0].id
+  const point = (distances[0].distance === distances[1].distance) ? '.' : distances[0].id
   return String.fromCharCode(point)
 }
 
@@ -71,7 +71,7 @@ const isUnbounded = (area, grid) => {
  * Creates an empty XY grid array
  */
 const blankGrid = () => {
-  let grid = []
+  const grid = []
   for (let x = minX; x < maxX; x++) {
     grid[x] = grid[x] || []
     for (let y = minY; y < maxY; y++) {

@@ -14,7 +14,7 @@ const toggleCase = (input) => {
  * @param {String} input Polymer chain
  */
 const reducePolymer = (input) => {
-  let polymer = input.trim().split('')
+  const polymer = input.trim().split('')
 
   polymer.forEach((char, idx) => {
     if (toggleCase(char) === polymer[idx - 1]) {

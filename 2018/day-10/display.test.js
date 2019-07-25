@@ -30,7 +30,7 @@ describe('--- Day 10: The Stars Align ---', () => {
 ......................
 ......................
 ......................`
-        let testData = `position=< 9,  1> velocity=< 0,  2>
+        const testData = `position=< 9,  1> velocity=< 0,  2>
 position=< 7,  0> velocity=<-1,  0>
 position=< 3, -2> velocity=<-1,  1>
 position=< 6, 10> velocity=<-2, -1>

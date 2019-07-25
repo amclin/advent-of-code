@@ -10,7 +10,7 @@ const initialState = '#...#...##..####..##.####.#...#...#.#.#.#......##....#....
 
 const init = (data) => {
   const rules = data
-  let plantTracker = new Plants(initialState, rules)
+  const plantTracker = new Plants(initialState, rules)
   const generations = 20
   for (let gen = 1; gen <= generations; gen++) {
     plantTracker.advance()
