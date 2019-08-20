@@ -10,7 +10,7 @@ const powerBank = new Rack(serial, size)
 const max = powerBank.findMaxSquare(squareSize).idx
 const answer = powerBank.cells[max].coords
 
-console.log(`-- Part 1 --`)
+console.log('-- Part 1 --')
 console.log(`Answer: ${answer}`)
 
 const anySizeSquares = []
@@ -45,5 +45,5 @@ const bestOfAnySize = anySizeSquares.sort(dynamicSort('-power'))[0]
 const answer2 = bestOfAnySize.coords
 answer2.push(bestOfAnySize.size)
 
-console.log(`-- Part 2 --`)
+console.log('-- Part 2 --')
 console.log(`Answer: ${answer2}`)

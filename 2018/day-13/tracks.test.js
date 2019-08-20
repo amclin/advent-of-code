@@ -58,57 +58,57 @@ describe('--- Day 13: Mine Cart Madness ---', () => {
     })
     describe('moveCart(cart)', () => {
       it('moves an individual cart right', () => {
-        const test = `->--`
+        const test = '->--'
         const track = new Track(test)
-        const expected = `-->-`
+        const expected = '-->-'
         track.moveCart(track.carts[0])
         const actual = track.display().trim()
         expect(actual).to.equal(expected)
       })
       it('moves an individual cart left', () => {
-        const test = `--<-`
+        const test = '--<-'
         const track = new Track(test)
-        const expected = `-<--`
+        const expected = '-<--'
         track.moveCart(track.carts[0])
         const actual = track.display().trim()
         expect(actual).to.equal(expected)
       })
       it('moves an individual cart down', () => {
-        const test = `|\nv\n|\n|`
+        const test = '|\nv\n|\n|'
         const track = new Track(test)
-        const expected = `|\n|\nv\n|`
+        const expected = '|\n|\nv\n|'
         track.moveCart(track.carts[0])
         const actual = track.display().trim()
         expect(actual).to.equal(expected)
       })
       it('moves an individual cart up', () => {
-        const test = `|\n|\n^\n|`
+        const test = '|\n|\n^\n|'
         const track = new Track(test)
-        const expected = `|\n^\n|\n|`
+        const expected = '|\n^\n|\n|'
         track.moveCart(track.carts[0])
         const actual = track.display().trim()
         expect(actual).to.equal(expected)
       })
       it('rotates a cart when it enters turns', () => {
         const tests = [
-          `->-\\-`,
-          `->-/-`,
-          `-/-<-`,
-          `-\\-<-`,
-          `|\nv\n|\n\\\n|`,
-          `|\nv\n|\n/\n|`,
-          `|\n/\n|\n^\n|`,
-          `|\n\\\n|\n^\n|`
+          '->-\\-',
+          '->-/-',
+          '-/-<-',
+          '-\\-<-',
+          '|\nv\n|\n\\\n|',
+          '|\nv\n|\n/\n|',
+          '|\n/\n|\n^\n|',
+          '|\n\\\n|\n^\n|'
         ]
         const expected = [
-          `---v-`,
-          `---^-`,
-          `-v---`,
-          `-^---`,
-          `|\n|\n|\n>\n|`,
-          `|\n|\n|\n<\n|`,
-          `|\n>\n|\n|\n|`,
-          `|\n<\n|\n|\n|`
+          '---v-',
+          '---^-',
+          '-v---',
+          '-^---',
+          '|\n|\n|\n>\n|',
+          '|\n|\n|\n<\n|',
+          '|\n>\n|\n|\n|',
+          '|\n<\n|\n|\n|'
         ]
         tests.forEach((test, idx) => {
           const track = new Track(test)
@@ -119,9 +119,9 @@ describe('--- Day 13: Mine Cart Madness ---', () => {
         })
       })
       it('rotates a cart when it enters an intersection', () => {
-        const test = `->-+-`
+        const test = '->-+-'
         const track = new Track(test)
-        const expected = `---^-`
+        const expected = '---^-'
         track.moveCart(track.carts[0])
         track.moveCart(track.carts[0])
         const actual = track.display().trim()
@@ -153,8 +153,8 @@ describe('--- Day 13: Mine Cart Madness ---', () => {
         expect(actual).to.equal(expected)
       })
       it('only moves the specified cart', () => {
-        const test = `->--<-`
-        const expected = `---><-`
+        const test = '->--<-'
+        const expected = '---><-'
         const track = new Track(test)
         track.moveCart(track.carts[0])
         track.moveCart(track.carts[0])
@@ -162,7 +162,7 @@ describe('--- Day 13: Mine Cart Madness ---', () => {
         expect(actual).to.equal(expected)
       })
       it('throws an error if the cart runs off the rails', () => {
-        const test = `->- -`
+        const test = '->- -'
         const track = new Track(test)
         try {
           track.moveCart(track.carts[0])
@@ -171,8 +171,8 @@ describe('--- Day 13: Mine Cart Madness ---', () => {
         }
       })
       it('registers a collision', () => {
-        const test = `->-<-`
-        const expected = `---X-`
+        const test = '->-<-'
+        const expected = '---X-'
         const track = new Track(test)
         try {
           track.moveCart(track.carts[0])
