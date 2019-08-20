@@ -26,9 +26,9 @@ const init = (data) => {
   // console.log(remaining)
   const answer2 = [remaining.x, remaining.y]
 
-  console.log(`-- Part 1 --`)
+  console.log('-- Part 1 --')
   console.log(`Answer: ${answer}`)
-  console.log(`-- Part 2 --`)
+  console.log('-- Part 2 --')
   console.log(`Answer: ${answer2}`)
 }
 

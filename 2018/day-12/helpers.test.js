@@ -8,7 +8,7 @@ describe('--- Day 12: Subterranean Sustainability ---', () => {
   describe('Helpers:', () => {
     describe('parseLine(input)', () => {
       it('converts a line of the input into structured object', () => {
-        const test = `..#.. => #`
+        const test = '..#.. => #'
         const expected = {
           id: '..#..',
           generate: '#'

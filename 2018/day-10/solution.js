@@ -28,14 +28,14 @@ const init = (data) => {
 
   // const answer = sumMetadata(data)
   // const answer2 = data.value
-  console.log(`-- Part 1 --`)
+  console.log('-- Part 1 --')
   console.log(`Ran animation from frame ${start} to ${end}.`)
   console.log(`The best frame appears to be ${best.idx} with a focus value of ${best.focus}`)
-  console.log(`Here's what the frame looks like:`)
-  console.log(`---------------------------------`)
+  console.log('Here\'s what the frame looks like:')
+  console.log('---------------------------------')
   display.show(beaconTracker.getFrame(best.idx), best.dims.dim, best.dims.origin)
-  console.log(`---------------------------------`)
-  console.log(`-- Part 2 --`)
+  console.log('---------------------------------')
+  console.log('-- Part 2 --')
   console.log(`Answer: ${best.idx}`)
 
   // console.log(`Answer: ${answer}`)

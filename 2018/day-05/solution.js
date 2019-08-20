@@ -23,8 +23,8 @@ fs.readFile(filePath, { encoding: 'utf8' }, (err, data) => {
     )
   }
 
-  console.log(`-- Part 1 --`)
+  console.log('-- Part 1 --')
   console.log(`Answer: ${answer}`)
-  console.log(`-- Part 2 --`)
+  console.log('-- Part 2 --')
   console.log(`Answer: ${answer2}`)
 })

@@ -60,9 +60,9 @@ const init = (data) => {
   // Calculate the checksum for 50B generations (minus the generation we're already at)
   const answer2 = (stableDeltas[0] * (50000000000 - stableGeneration)) + stableCheckSum
 
-  console.log(`-- Part 1 --`)
+  console.log('-- Part 1 --')
   console.log(`Answer: ${answer}`)
-  console.log(`-- Part 2 --`)
+  console.log('-- Part 2 --')
   console.log(`Answer: ${answer2}`)
 }
 

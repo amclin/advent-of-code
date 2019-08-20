@@ -36,11 +36,11 @@ const init = (data) => {
   const mostRegularGuardsMostRegularMinute = guardsBySleepTime[0].sleepiestMinute
   const answer2 = mostRegularGuard * mostRegularGuardsMostRegularMinute
 
-  console.log(`-- Part 1 --`)
+  console.log('-- Part 1 --')
   console.log(`Laziest Guard: ${laziestGuard}`)
   console.log(`Sleepiest time: ${sleepiestTime}`)
   console.log(`Answer: ${answer}`)
-  console.log(`-- Part 2 --`)
+  console.log('-- Part 2 --')
   console.log(`Most Regular Guard: ${mostRegularGuard}`)
   console.log(`Most Regular Minute for same Guard: ${mostRegularGuardsMostRegularMinute}`)
   console.log(`Answer: ${answer2}`)
