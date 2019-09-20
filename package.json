@@ -30,7 +30,7 @@
     "@semantic-release/git": "^7.0.16",
     "@semantic-release/github": "^5.4.3",
     "chai": "^4.2.0",
-    "codecov": "^3.5.0",
+    "codecov": "^3.6.1",
     "mocha": "^6.2.0",
     "nyc": "^14.1.1",
     "semantic-release": "^15.13.24",
