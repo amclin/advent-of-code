@@ -41,7 +41,7 @@ describe('--- 2019 Day 2: 1202 Program Alarm ---', () => {
           [30, 1, 1, 4, 2, 5, 6, 0, 99]
         ]
         testInputs.forEach((data, idx) => {
-          runProgram(data)
+          runProgram({ data })
           expect(data).to.deep.equal(testOutputs[idx])
         })
       })
