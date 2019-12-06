@@ -40,6 +40,17 @@ describe('--- 2019 Day 2: 1202 Program Alarm ---', () => {
           [2, 4, 4, 5, 99, 9801],
           [30, 1, 1, 4, 2, 5, 6, 0, 99]
         ]
+        // Convert outputs to BigInts
+        testOutputs.forEach((out, idx) => {
+          out.forEach((value, idx2) => {
+            // TODO: Standard chokes on this ES2020 feature. Remove eslint-disable
+            // once fixed.
+            // See https://github.com/standard/standard/issues/1436
+            // eslint-disable-next-line no-undef
+            testOutputs[idx][idx2] = BigInt(value)
+          })
+        })
+
         testInputs.forEach((data, idx) => {
           runProgram({ data })
           expect(data).to.deep.equal(testOutputs[idx])
