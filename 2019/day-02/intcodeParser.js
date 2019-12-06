@@ -10,32 +10,33 @@ const multiply = ({ posIn1, posIn2, posOut, data }) => {
   return true
 }
 
-const terminate = ({ position }) => {
-  console.log(`Reached terminator at position ${position}. Stopping.`)
+const terminate = ({ instructionPointer }) => {
+  console.log(`Reached terminator at instructionPointer ${instructionPointer}. Stopping.`)
   return false
 }
 
-const step = ({ position, data }) => {
-  console.debug(`Step: ${position}`)
+const step = ({ instructionPointer, data }) => {
+  console.debug(`Step: ${instructionPointer}`)
   const opCodesMap = {
     1: add,
     2: multiply,
     99: terminate
   }
-  const segment = data.slice(position, position + 4)
+  const instruction = data.slice(instructionPointer, instructionPointer + 4)
+  const opcode = instruction[0]
 
   // Run the correct opcode for the specified step
-  return opCodesMap[data[position]]({
-    posIn1: segment[1],
-    posIn2: segment[2],
-    posOut: segment[3],
+  return opCodesMap[opcode]({
+    posIn1: instruction[1],
+    posIn2: instruction[2],
+    posOut: instruction[3],
     data,
-    position
+    instructionPointer
   })
 }
 
 const runProgram = ({ data }) => {
-  let position = 0
+  let instructionPointer = 0
   let running = true
 
   // Convert to BigInts because operations will exceed 53bit integers
@@ -45,9 +46,10 @@ const runProgram = ({ data }) => {
   // eslint-disable-next-line no-undef
   data.forEach((key, idx) => { data[idx] = BigInt(key) })
 
-  while (running === true && position <= data.length) {
-    running = step({ position, data })
-    position += 4
+  while (running === true && instructionPointer <= data.length) {
+    const instructionLength = 4
+    running = step({ instructionPointer, data })
+    instructionPointer += instructionLength
   }
 }
 
