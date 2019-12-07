@@ -23,8 +23,7 @@ fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
     return data[0]
   }
 
-  const part2 = ({target, maxNoun, maxVerb}) => {
-
+  const part2 = ({ target, maxNoun, maxVerb }) => {
     // Helper for running the program with specified noun and verb inputs
     const tryProgram = ({
       noun,
@@ -40,26 +39,25 @@ fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
 
     // Manipulate and loop through attempts for Part 2
     let noun = -1
-    while ( noun <= maxNoun) {
+    while (noun <= maxNoun) {
       let verb = -1
       noun++
       while (verb <= maxVerb) {
         verb++
-        output = tryProgram({
+        const output = tryProgram({
           noun,
           verb
         })
         // Break the search loop on success
-        if(output === target) {
+        if (output === target) {
           return 100 * noun + verb
         }
       }
     }
   }
 
-
   const answer1 = part1()
-  const answer2 = part2({ target:19690720, maxNoun: 99, maxVerb: 99})
+  const answer2 = part2({ target: 19690720, maxNoun: 99, maxVerb: 99 })
 
   console.log('-- Part 1 --')
   console.log(`Answer: ${answer1}`)
