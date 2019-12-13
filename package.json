@@ -5,6 +5,7 @@
   "main": "index.js",
   "private": true,
   "scripts": {
+    "start": "node index.js",
     "pretest": "npm run lint",
     "test": "nyc mocha \"./20*/**/*.test.js\"",
     "posttest": "nyc report --reporter=html --reporter=text-lcov > coverage.lcov",
@@ -35,5 +36,8 @@
     "nyc": "^14.1.1",
     "semantic-release": "^15.13.31",
     "standard": "^14.3.1"
+  },
+  "dependencies": {
+    "path-intersection": "^2.0.1"
   }
 }
