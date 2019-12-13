@@ -47,8 +47,16 @@ const isCloser = (intA, intB) => {
 
 const getClosesetIntersection = (intersections) => {
   intersections.sort(isCloser)
-  // Skip the origin since all wires start at origin
-  return intersections[1]
+
+  // TODO: Remove workaround for bug in SVG intersection library
+  // https://github.com/bpmn-io/path-intersection/issues/10
+  //
+  // The shared origin inconsistently shows up in the intersection list
+  if (parseInt(intersections[0].x) === 0 && parseInt(intersections[0].y) === 0) {
+    // Skip the shared origin since all wires start at origin
+    return intersections[1]
+  }
+  return intersections[0]
 }
 
 module.exports = {
