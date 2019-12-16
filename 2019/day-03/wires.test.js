@@ -65,7 +65,7 @@ describe('--- 2019 Day 3: Crossed Wires ---', () => {
           40, 30
         ]
         const intersections = findWireIntersections(...wires)
-        const actual = intersections.map((inter) => getIntersectionWireDistance({wires, intersection:inter}))
+        const actual = intersections.map((inter) => getIntersectionWireDistance({ wires, intersection: inter }))
         expect(actual).to.deep.equal(expected)
       })
     })
