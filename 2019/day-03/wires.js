@@ -27,26 +27,33 @@ const findWireIntersections = (wires) => {
     return { x: parseInt(point.x), y: parseInt(point.y) }
   })
 
-  return ints.sort(isCloser)
+  return ints.sort(isCloser.manhattan)
 }
 
-const isCloser = (intA, intB) => {
-  const origin = { x: 0, y: 0 }
-  intA.distance = distance(origin, intA)
-  intB.distance = distance(origin, intB)
-  if (intA.distance < intB.distance) {
-    return -1
+const isCloser = {
+  manhattan: (intA, intB) => {
+    const origin = { x: 0, y: 0 }
+    intA.distance = distance(origin, intA)
+    intB.distance = distance(origin, intB)
+    if (intA.distance < intB.distance) {
+      return -1
+    }
+    if (intA.distance > intB.distance) {
+      return 1
+    }
+    if (intA.distance === intB.distance) {
+      return 0
+    }
   }
-  if (intA.distance > intB.distance) {
-    return 1
-  }
-  if (intA.distance === intB.distance) {
-    return 0
+}
   }
 }
 
-const getClosesetIntersection = (intersections) => {
-  intersections.sort(isCloser)
+const getClosesetIntersection = ({
+  intersections,
+  method = 'manhattan'
+}) => {
+  intersections.sort(isCloser[method])
 
   // TODO: Remove workaround for bug in SVG intersection library
   // https://github.com/bpmn-io/path-intersection/issues/10
