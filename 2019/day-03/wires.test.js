@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 const expect = require('chai').expect
-const { elfWireToSVGPath, findWireIntersections, getClosesetIntersection } = require('./wires')
+const { elfWireToSVGPath, findWireIntersections, getClosesetIntersection, getIntersectionWireDistance, getClosesetIntersectionByWire } = require('./wires')
 
 describe('--- 2019 Day 3: Crossed Wires ---', () => {
   describe('Part 1', () => {
@@ -69,7 +69,7 @@ describe('--- 2019 Day 3: Crossed Wires ---', () => {
         expect(actual).to.deep.equal(expected)
       })
     })
-    describe('getClosestIntersectionByWire()', () => {
+    describe('getClosestIntersectionByWireDistance()', () => {
       it('can be used to find the wire distance to the closest intersection', () => {
         const wiresets = [
           [

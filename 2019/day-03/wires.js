@@ -46,7 +46,49 @@ const isCloser = {
     }
   }
 }
+
+const advance = ({ segment, remaining, distance, current }) => {
+  // Track the step
+  switch (direction) {
+    case 'U': // Up
+      current.y += -dimension
+      break
+    case 'D': // Down
+      current.y += dimension
+      break
+    case 'R': // Right
+      current.x += dimension
+      break
+    case 'L': // Left
+      current.x += -dimension
   }
+  remaining += -1
+  distance++
+}
+
+const getIntersectionWireDistance = ({ intersection, wires }) => {
+  intersection.wireDistance = 0
+
+  wires.reduce((wire) => {
+    const segments = wire.split(',')
+    const current = { x: 0, y: 0 }
+    const distance = 0
+
+    segments.forEach((segment, idx) => {
+      const direction = segment.slice(0, 1)
+      const length = parseInt(segment.slice(1))
+      for (let d = 0; d < length; d++) {
+        advance({ direction, remaining, distance, current })
+        // Reached the desired intersection, stop counting and track result
+        if (current.x === intersection.x && current.y === intersection.y) {
+          intersection.wireDistance += distance
+          break
+        }
+      }
+    })
+  }, 0)
+
+  return intersection.wireDistance
 }
 
 const getClosesetIntersection = ({
@@ -66,8 +108,14 @@ const getClosesetIntersection = ({
   return intersections[0]
 }
 
+const getClosesetIntersectionByWire = (intersections) => {
+  intersections.sort(isCloserByWire)
+}
+
 module.exports = {
   elfWireToSVGPath,
   findWireIntersections,
-  getClosesetIntersection
+  getClosesetIntersection,
+  getIntersectionWireDistance,
+  getClosestIntersectionByWireDistance
 }
