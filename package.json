@@ -33,7 +33,7 @@
     "codecov": "^3.6.5",
     "mocha": "^7.0.1",
     "nyc": "^15.0.0",
-    "semantic-release": "^17.0.3",
+    "semantic-release": "^17.0.4",
     "standard": "^14.3.1"
   }
 }
