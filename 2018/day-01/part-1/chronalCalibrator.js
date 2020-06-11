@@ -5,7 +5,7 @@ const parseData = require('../../inputParser').parseData
  * @param {String} input list of values
  */
 const chronalCalibrator = (input) => {
-  let adjustments = parseData(input)
+  const adjustments = parseData(input)
   return adjustments.reduce(
     (total, current) => total + current
   )

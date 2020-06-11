@@ -8,7 +8,7 @@ fs.readFile(filePath, { encoding: 'utf8' }, (err, data) => {
 
   data = data.trim()
 
-  let answer = reducePolymer(data).length
+  const answer = reducePolymer(data).length
 
   // Try removing each potential problem pair, and see which gets to the smallest polymer
   let answer2 = answer
@@ -23,8 +23,8 @@ fs.readFile(filePath, { encoding: 'utf8' }, (err, data) => {
     )
   }
 
-  console.log(`-- Part 1 --`)
+  console.log('-- Part 1 --')
   console.log(`Answer: ${answer}`)
-  console.log(`-- Part 2 --`)
+  console.log('-- Part 2 --')
   console.log(`Answer: ${answer2}`)
 })

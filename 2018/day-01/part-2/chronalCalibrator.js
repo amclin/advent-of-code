@@ -5,7 +5,7 @@ const parseData = require('../../inputParser').parseData
  * @param {String} input list of values
  */
 function getFrequency (input) {
-  let adjustments = parseData(input)
+  const adjustments = parseData(input)
   return adjustments.reduce(
     (total, current) => total + current
   )
@@ -19,7 +19,7 @@ function getFirstMatch (input) {
   const sequence = parseData(input)
   let freq = 0
   let idx = 0
-  let log = [freq]
+  const log = [freq]
   let matched = null
   do {
     // Adjust Frequence

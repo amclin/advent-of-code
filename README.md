@@ -3,7 +3,12 @@
 [![codecov](https://codecov.io/gh/amclin/advent-of-code/branch/master/graph/badge.svg)](https://codecov.io/gh/amclin/advent-of-code)
 
 ### Special Instructions
+Run by modifying `index.js` to point to the puzzle you want to execute.
 
-#### Day 14
+#### 2019:Day 02
+Day 2 requires the use of BigInt which is added to Javascript in ES2020 and I didn't include a polyfill.
+This limits the solution to [Javascript engines with BigInt support](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt#Browser_compatibility)
+
+#### 2018:Day 14
 Day 14 is fast but needs more memory to complete. Run node with 4GB of heap space:
 `node --max_old_space_size=4096 index.js`

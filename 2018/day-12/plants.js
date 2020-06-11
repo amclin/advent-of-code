@@ -56,7 +56,7 @@ class Plants {
       // Assemble pattern for the given pot
       let pattern = ''
       for (let x = pot.position - 2; x <= pot.position + 2; x++) {
-        let pp = prevGen.find((p) => p.position === x)
+        const pp = prevGen.find((p) => p.position === x)
         pattern += (pp) ? pp.state : '.'
       }
       const state = this.predictPlant(pattern)
@@ -90,7 +90,7 @@ class Plants {
    */
   findPotBoundaries () {
     return this.generations.reduce((acc, gen) => {
-      let pots = gen.filter((p) => p.state === '#')
+      const pots = gen.filter((p) => p.state === '#')
       return [
         acc[0] < pots[0].position ? acc[0] : pots[0].position,
         acc[1] < pots[pots.length - 1].postion ? acc[1] : pots[pots.length - 1].position
@@ -104,12 +104,12 @@ class Plants {
    * @returns {Array} [left, right] necessary buffer size of first and last pots
    */
   getBoundaryBuffers () {
-    let buffers = [0, 0]
+    const buffers = [0, 0]
     Object.keys(this.rules).filter((rule) => this.rules[rule] === '#').forEach((rule) => {
       // For left edge
       for (let x = 0; x < rule.length; x++) {
         if (rule.substr(x, 1) === '.') {
-          let y = x + 1
+          const y = x + 1
           buffers[0] = Math.max(buffers[0], y)
         } else {
           // break the loop when we encounter a #
@@ -120,7 +120,7 @@ class Plants {
 
       for (let x = rule.length - 1; x >= 0; x--) {
         if (rule.substr(x, 1) === '.') {
-          let y = rule.length - x
+          const y = rule.length - x
           buffers[1] = Math.max(buffers[1], y)
         } else {
           // break the loop when we encounter a #

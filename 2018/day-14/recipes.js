@@ -145,9 +145,9 @@ const findPattern = (pattern, recipes, bufferSize) => {
 
   while (matched !== true) {
     // console.log(`Checking for ${pattern} in segement starting at ${position}`)
-    let haystack = loopRecipesForElves(recipes, bufferSize)
+    const haystack = loopRecipesForElves(recipes, bufferSize)
 
-    let offset = haystack.indexOf(pattern)
+    const offset = haystack.indexOf(pattern)
 
     position = (offset >= 0) ? position + offset : recipes.length
     if (offset > -1) {

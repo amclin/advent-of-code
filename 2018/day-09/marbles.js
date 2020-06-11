@@ -136,7 +136,7 @@ const nextPlayer = () => {
  */
 const playGame = (playerCount, highMarble, showBoard) => {
   resetGame(playerCount)
-  let game = new Circle(0)
+  const game = new Circle(0)
 
   // Go through the game
   for (let marble = 1; marble <= highMarble; marble++) {
@@ -146,7 +146,7 @@ const playGame = (playerCount, highMarble, showBoard) => {
       // Player keeps marble divisble by 23
       players[player] += marble
       // Player picks up marble from circle
-      let score = game.moveHead(-7).removeHeadMarble()
+      const score = game.moveHead(-7).removeHeadMarble()
       players[player] += score
       // console.log(`player ${player} scored ${marble} + ${score}`)
     } else {
@@ -159,7 +159,7 @@ const playGame = (playerCount, highMarble, showBoard) => {
   }
 
   // tally the results
-  let results = {
+  const results = {
     players: players,
     highScore: players.sort((a, b) => b - a)[0]
   }

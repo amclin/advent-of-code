@@ -27,7 +27,7 @@ class Beacon {
    * @returns {Object} frame contents
    */
   getFrame (frame) {
-    let data = {}
+    const data = {}
     // Calculate the position of all the beacons
     data.contents = this.start.map((beacon) => {
       var point = {}
@@ -42,7 +42,7 @@ class Beacon {
       data.meta = this.frameMeta[frame]
     } else {
       // cache metadata for this frame if we haven't already
-      let meta = {
+      const meta = {
         focus: this._getFocus(data.contents),
         dims: this._getContentDimensions(data.contents)
       }
@@ -63,7 +63,7 @@ class Beacon {
    */
   _getFocus (points) {
     // Find min/max values
-    let ranges = points.reduce(_aggMinMaxCoords, { maxX: points[0].x, maxY: points[0].y, minX: points[0].x, minY: points[0].y })
+    const ranges = points.reduce(_aggMinMaxCoords, { maxX: points[0].x, maxY: points[0].y, minX: points[0].x, minY: points[0].y })
     // Focus is the area
     return (ranges.maxX - ranges.minX) * (ranges.maxY - ranges.minY)
   }
@@ -76,7 +76,7 @@ class Beacon {
    */
   _getContentDimensions (points) {
     // Find min/max values
-    let ranges = points.reduce(_aggMinMaxCoords, { maxX: points[0].x, maxY: points[0].y, minX: points[0].x, minY: points[0].y })
+    const ranges = points.reduce(_aggMinMaxCoords, { maxX: points[0].x, maxY: points[0].y, minX: points[0].x, minY: points[0].y })
 
     return {
       origin: [ranges.minX, ranges.minY],
