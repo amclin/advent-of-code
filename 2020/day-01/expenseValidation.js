@@ -2,24 +2,61 @@
 /**
  * Validates a list of records by comparing every combination
  * to the checksum. Stops when the first match is found
+ * @param {array} records List of records to check
+ * @param {int} checksum The target sum that records should add up to
+ * @param {int} goal The number of records we hope to find
  */
-const validateRecords = (records, checksum = 2020) => {
+const validateRecords = (records, checksum = 2020, goal = 2) => {
   const results = []
 
-  // We're using Array.find() at each level so it stops looping
-  // onced matched. This game has a habit of throwing huge
-  // data sets to discourage brute-forcing
-  const matcher = records.find((record) => {
-    const match = records.find(matchRec => record + matchRec === checksum)
-    if (match) {
-      results.push(match)
+  const obj = { foo: 'bar' }
+  // Intentionally using `function()` instead of `() =>` because
+  // the thisArg won't get passed to the find callback otherwise
+  // https://stackoverflow.com/questions/46639131/javascript-array-prototype-find-second-argument-thisarg-not-working
+  function testRecursive (record, idx, arr, parent) {
+    console.log(`recurse check ${record} - `, parent)
+    console.log(this)
+  }
+  records.find(testRecursive, obj)
+
+  function matcher (record) {
+    this.depth = this.depth || 1 // depth tracking starts at level 1
+    this.tracker = this.tracker || 0 // for basic sums, start counter at 0
+    const subTotal = this.tracker + record
+    // Found a match, don't keep searching!
+    if (subTotal === this.target) {
+      results.push(record)
       return true
     }
+    // When subtotal exceeds target, return immediately and don't waste time
+    // on more loops that won't get results
+    if (subTotal > this.target) {
+      return false
+    }
+    // If we're already at max depth, don't waste time on more loops
+    if (this.depth >= this.maxDepth) {
+      return false
+    }
+    // Check the next level down
+    const res = records.find(matcher, {
+      maxDepth: this.maxDepth,
+      target: this.target,
+      depth: this.depth + 1,
+      tracker: this.tracker + record
+    })
+    // Children matched, so record this one as well
+    if (res) {
+      results.push(record)
+      return true
+    }
+    // Nothing found with this combo, step to the next sibling
     return false
-  })
-  if (matcher) {
-    results.push(matcher)
   }
+
+  records.find(matcher, {
+    maxDepth: goal,
+    target: checksum
+  })
 
   if (results.length < 2) {
     throw new Error('Couldn\'t find a checksum match')
