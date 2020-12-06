@@ -9,16 +9,9 @@
 const validateRecords = (records, checksum = 2020, goal = 2) => {
   const results = []
 
-  const obj = { foo: 'bar' }
   // Intentionally using `function()` instead of `() =>` because
   // the thisArg won't get passed to the find callback otherwise
   // https://stackoverflow.com/questions/46639131/javascript-array-prototype-find-second-argument-thisarg-not-working
-  function testRecursive (record, idx, arr, parent) {
-    console.log(`recurse check ${record} - `, parent)
-    console.log(this)
-  }
-  records.find(testRecursive, obj)
-
   function matcher (record) {
     this.depth = this.depth || 1 // depth tracking starts at level 1
     this.tracker = this.tracker || 0 // for basic sums, start counter at 0
@@ -53,6 +46,7 @@ const validateRecords = (records, checksum = 2020, goal = 2) => {
     return false
   }
 
+  // Parse the records to find results
   records.find(matcher, {
     maxDepth: goal,
     target: checksum
