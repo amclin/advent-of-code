@@ -23,8 +23,8 @@ const validateRecords = (records, checksum = 2020, goal = 2) => {
     this.depth = this.depth || 1 // depth tracking starts at level 1
     this.tracker = this.tracker || 0 // for basic sums, start counter at 0
     const subTotal = this.tracker + record
-    // Found a match, don't keep searching!
-    if (subTotal === this.target) {
+    // Found a match in the specified with desired qty of results, don't keep searching!
+    if (subTotal === this.target && this.depth >= goal) {
       results.push(record)
       return true
     }
@@ -44,7 +44,7 @@ const validateRecords = (records, checksum = 2020, goal = 2) => {
       depth: this.depth + 1,
       tracker: this.tracker + record
     })
-    // Children matched, so record this one as well
+    // Propogate maches back up the recursion chain, capturing each
     if (res) {
       results.push(record)
       return true
