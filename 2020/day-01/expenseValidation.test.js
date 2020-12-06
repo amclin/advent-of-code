@@ -23,6 +23,16 @@ describe('--- 2020 Day 1: Report Repair ---', () => {
           expect(testData.indexOf(result)).to.be.greaterThan(-1)
         })
       })
+      it('it can find a specified number of records adding up to 2020', () => {
+        const expected = [979, 366, 675]
+        const results = validateRecords(testData, undefined, 3)
+        // Should same number of results
+        expect(results.length).to.equal(expected.length)
+        // Result order is unnecessary, but all expected hould be in the result set
+        expected.forEach(result => {
+          expect(testData.indexOf(result)).to.be.greaterThan(-1)
+        })
+      })
       it('it supports specifying an alternate checksum', () => {
         const arrSum = (arr) => arr.reduce((x, y) => x + y, 0)
         const expected = [testData[3], testData[5]]
