@@ -21,8 +21,20 @@ fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
 
   const part2 = () => {
     const data = resetInput()
-    console.debug(data)
-    return 'No answer yet'
+    const slopes = [
+      [1, 1],
+      [3, 1], // Same as default
+      [5, 1],
+      [7, 1],
+      [1, 2]
+    ]
+    // Multiple the results of multiple slopes
+    return slopes.reduce((itr, slope) => {
+      return itr * countTreesOnRoute({
+        map: { rows: data },
+        slope
+      })
+    }, 1)
   }
   const answers = []
   answers.push(part1())
