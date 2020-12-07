@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 const { expect } = require('chai')
-const { groupChecksum } = require('./questions')
+const { groupChecksum, groupChecksumEveryone } = require('./questions')
 
 const testData = {
   groups: [
@@ -19,7 +19,8 @@ const testData = {
       a`,
     'b'
   ],
-  checksums: [6, 3, 3, 3, 1, 1]
+  checksumsAnyone: [6, 3, 3, 3, 1, 1],
+  checksumsEveryone: [3, 3, 0, 1, 1, 1]
 }
 
 describe('--- Day 6: Custom Customs ---', () => {
@@ -27,7 +28,16 @@ describe('--- Day 6: Custom Customs ---', () => {
     describe('groupChecksum()', () => {
       it('tallies the number of unique questions answered collectively by a group', () => {
         testData.groups.forEach((group, idx) => {
-          expect(groupChecksum(group)).to.deep.equal(testData.checksums[idx])
+          expect(groupChecksum(group)).to.deep.equal(testData.checksumsAnyone[idx])
+        })
+      })
+    })
+  })
+  describe('Part 2', () => {
+    describe('groupChecksumEveryone()', () => {
+      it('tallies the number of questions answered by everyone in a group', () => {
+        testData.groups.forEach((group, idx) => {
+          expect(groupChecksumEveryone(group)).to.deep.equal(testData.checksumsEveryone[idx])
         })
       })
     })
