@@ -1,3 +1,4 @@
+const DEBUG = false;
 const fs = require('fs')
 const path = require('path')
 const split2 = require('split2')
@@ -21,8 +22,10 @@ const part1 = () => {
       }
     } catch (e) {
       invalidCount++
-      console.warn(e.message)
-      console.debug('Invalid passport', passport)
+      if (DEBUG) {
+        console.warn(e.message)
+        console.debug('Invalid passport', passport)
+      }
     }
     totalCount++
   }
