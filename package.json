@@ -37,5 +37,8 @@
     "plop": "^2.7.4",
     "semantic-release": "^17.3.0",
     "standard": "^14.3.4"
+  },
+  "dependencies": {
+    "split2": "^3.2.2"
   }
 }
