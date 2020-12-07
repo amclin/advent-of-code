@@ -27,7 +27,7 @@ const splitRule = (rule) => {
 /**
  * Validates a password against the specified rule
  */
-const isValid = (rule, password) => {
+const isValidPassword = (rule, password) => {
   // count how many times `rule.char` exists in `password`
   const count = (
     password.match(
@@ -40,8 +40,15 @@ const isValid = (rule, password) => {
   return true
 }
 
+const isValidRecord = (record) => {
+  const { rule, password } = splitRecord(record)
+  const { min, max, char } = splitRule(rule)
+  return isValidPassword({ min, max, char }, password)
+}
+
 module.exports = {
   splitRecord,
   splitRule,
-  isValid
+  isValidRecord,
+  isValidPassword
 }
