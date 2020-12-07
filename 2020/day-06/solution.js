@@ -1,35 +1,23 @@
-const fs = require('fs')
 const path = require('path')
+const { streamHandler } = require('./streamHandler')
+const { groupChecksum } = require('./questions')
+
 const filePath = path.join(__dirname, 'input.txt')
-const { inputToArray } = require('../../2018/inputParser')
+const answers = []
 
-fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
-  if (err) throw err
-
-  initData = inputToArray(initData.trim())
-
-  const resetInput = () => {
-    // Deep copy to ensure we aren't mutating the original data
-    return JSON.parse(JSON.stringify(initData))
-  }
-
-  const part1 = () => {
-    const data = resetInput()
-    console.debug(data)
-    return 'No answer yet'
-  }
-
-  const part2 = () => {
-    const data = resetInput()
-    console.debug(data)
-    return 'No answer yet'
-  }
-  const answers = []
-  answers.push(part1())
-  answers.push(part2())
-
+const results = () => {
   answers.forEach((ans, idx) => {
     console.info(`-- Part ${idx + 1} --`)
     console.info(`Answer: ${ans}`)
   })
-})
+}
+
+streamHandler({ filePath, processor: groupChecksum })
+  .then(({ checksum }) => {
+    console.info('Scanned all passenger answers')
+    answers.push(checksum)
+  })
+  .then(() => {
+    answers.push('No answer yet')
+  })
+  .then(results)
