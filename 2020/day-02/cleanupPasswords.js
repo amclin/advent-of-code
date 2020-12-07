@@ -14,7 +14,7 @@ const splitRecord = (row) => {
 /**
  * Splits a password validation rule into its component parts
  */
-const splitRule = (rule) => {
+const oldSplitRule = (rule) => {
   const splitRow = rule.split(/-| /)
 
   return {
@@ -27,7 +27,7 @@ const splitRule = (rule) => {
 /**
  * Validates a password against the specified rule
  */
-const isValidPassword = (rule, password) => {
+const oldIsValidPassword = (rule, password) => {
   // count how many times `rule.char` exists in `password`
   const count = (
     password.match(
@@ -40,15 +40,17 @@ const isValidPassword = (rule, password) => {
   return true
 }
 
-const isValidRecord = (record) => {
+const oldIsValidRecord = (record) => {
   const { rule, password } = splitRecord(record)
-  const { min, max, char } = splitRule(rule)
-  return isValidPassword({ min, max, char }, password)
+  const parsedRule = oldSplitRule(rule)
+  return oldIsValidPassword(parsedRule, password)
 }
 
 module.exports = {
-  splitRecord,
-  splitRule,
-  isValidRecord,
-  isValidPassword
+  old: {
+    splitRule: oldSplitRule,
+    isValidPassword: oldIsValidPassword,
+    isValidRecord: oldIsValidRecord
+  },
+  splitRecord
 }
