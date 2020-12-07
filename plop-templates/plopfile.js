@@ -17,7 +17,8 @@ module.exports = function (plop) {
     }, {
       type: 'input',
       name: 'day',
-      message: 'Which day?'
+      message: 'Which day?',
+      default: new Date().getDate()
     }],
     actions: (data) => {
       return [{
