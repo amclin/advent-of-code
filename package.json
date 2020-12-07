@@ -10,7 +10,8 @@
     "posttest": "nyc report --reporter=html --reporter=text-lcov > coverage.lcov",
     "lint": "standard",
     "semantic-release": "semantic-release",
-    "report-coverage": "codecov"
+    "report-coverage": "codecov",
+    "new": "plop --plopfile ./plop-templates/plopfile.js"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,7 @@
     "codecov": "^3.8.1",
     "mocha": "^8.2.1",
     "nyc": "^15.1.0",
+    "plop": "^2.7.4",
     "semantic-release": "^17.3.0",
     "standard": "^14.3.4"
   }

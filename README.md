@@ -2,9 +2,10 @@
 [![Build Status](https://travis-ci.com/amclin/advent-of-code.svg?branch=master)](https://travis-ci.com/amclin/advent-of-code)
 [![codecov](https://codecov.io/gh/amclin/advent-of-code/branch/master/graph/badge.svg)](https://codecov.io/gh/amclin/advent-of-code)
 
+## Start a boilerplate for a new day
+`npm run new`
 ### Special Instructions
 Run by modifying `index.js` to point to the puzzle you want to execute.
-
 #### 2019:Day 02
 Day 2 requires the use of BigInt which is added to Javascript in ES2020 and I didn't include a polyfill.
 This limits the solution to [Javascript engines with BigInt support](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt#Browser_compatibility)
