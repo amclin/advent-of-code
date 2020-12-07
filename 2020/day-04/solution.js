@@ -7,9 +7,10 @@ const { parseScan, validate } = require('./passports')
 
 const answers = []
 
-const part1 = () => {
+const scanPassports = () => {
   let recordBuffer = ''
   let validCount = 0
+  let validWithFieldsCount = 0
   let invalidCount = 0
   let totalCount = 0
 
@@ -19,6 +20,9 @@ const part1 = () => {
     try {
       if (validate(passport, false)) {
         validCount++
+      }
+      if (validate(passport)) {
+        validWithFieldsCount++
       }
     } catch (e) {
       invalidCount++
@@ -49,7 +53,7 @@ const part1 = () => {
       console.info('Total passports found:', totalCount)
       console.info('Invalid passports', invalidCount)
       answers.push(validCount)
-      answers.push(part2())
+      answers.push(validWithFieldsCount)
 
       answers.forEach((ans, idx) => {
         console.info(`-- Part ${idx + 1} --`)
@@ -61,8 +65,4 @@ const part1 = () => {
   return validCount
 }
 
-const part2 = () => {
-  return 'No answer yet'
-}
-
-part1()
+scanPassports()
