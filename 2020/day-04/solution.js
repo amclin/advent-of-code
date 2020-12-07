@@ -1,4 +1,4 @@
-const DEBUG = false;
+const DEBUG = true
 const fs = require('fs')
 const path = require('path')
 const split2 = require('split2')
@@ -17,7 +17,7 @@ const part1 = () => {
     // Handle the record in the buffer
     const passport = parseScan(recordBuffer)
     try {
-      if (validate(passport)) {
+      if (validate(passport, false)) {
         validCount++
       }
     } catch (e) {
