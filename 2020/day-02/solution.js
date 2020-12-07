@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const filePath = path.join(__dirname, 'input.txt')
 const { linesToArray } = require('../../2018/inputParser')
-const { isValidRecord } = require('./cleanupPasswords')
+const { old, cur } = require('./cleanupPasswords')
 
 fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
   if (err) throw err
@@ -16,14 +16,14 @@ fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
 
   const part1 = () => {
     const data = resetInput()
-    // Count the valid passwords
-    return data.filter(isValidRecord).length
+    // Count the valid passwords with old rules
+    return data.filter(old.isValidRecord).length
   }
 
   const part2 = () => {
     const data = resetInput()
-    console.debug(data)
-    return 'No answer yet'
+    // Count the valid passwords with new rules
+    return data.filter(cur.isValidRecord).length
   }
   const answers = []
   answers.push(part1())
