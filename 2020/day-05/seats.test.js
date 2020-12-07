@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 const { expect } = require('chai')
-const { getSeat } = require('./seats')
+const { getSeat, findAvailableSeat } = require('./seats')
 
 describe('--- Day 5: Binary Boarding ---', () => {
   describe('Part 1', () => {
@@ -21,6 +21,21 @@ describe('--- Day 5: Binary Boarding ---', () => {
           column: 4,
           id: 820
         })
+      })
+    })
+    describe('findAvailableSeat()', () => {
+      it('finds the first available seat', () => {
+        const secondRow = [
+          'FFFFFFBLLL',
+          'FFFFFFBLLR',
+          'FFFFFFBLRL',
+          'FFFFFFBLRR',
+          // 'FFFFFFBRLL', row:1, col:4, id: 12
+          'FFFFFFBRLR',
+          'FFFFFFBRRL',
+          'FFFFFFBRRR'
+        ]
+        expect(findAvailableSeat(secondRow)).to.equal(12)
       })
     })
   })
