@@ -1,6 +1,6 @@
 const path = require('path')
 const { streamHandler } = require('./streamHandler')
-const { groupChecksum } = require('./questions')
+const { groupChecksum, groupChecksumEveryone } = require('./questions')
 
 const filePath = path.join(__dirname, 'input.txt')
 const answers = []
@@ -18,6 +18,10 @@ streamHandler({ filePath, processor: groupChecksum })
     answers.push(checksum)
   })
   .then(() => {
-    answers.push('No answer yet')
+    return streamHandler({ filePath, processor: groupChecksumEveryone })
+  })
+  .then(({ checksum }) => {
+    console.info('Scanned all passenger answers for everyone answered')
+    answers.push(checksum)
   })
   .then(results)
