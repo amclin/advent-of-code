@@ -26,11 +26,9 @@ const findAllowedOuter = (rules, color) => {
 
   // Loop through the rules, find all colors this bag is allowed within
   rules.filter((rule) => {
-    // console.debug(rule)
     if (!rule.inner) { return false }
     // match when inners contain the color
     return (
-      rule.inner &&
       rule.inner.filter((child) => {
         return (child.color === color)
       }).length > 0
