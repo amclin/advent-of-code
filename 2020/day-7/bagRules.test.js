@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 const { expect } = require('chai')
-const { parseRule } = require('./bagRules')
+const { parseRule, findAllowedOuter } = require('./bagRules')
 
 const testData = {
   rules: [
@@ -37,6 +37,24 @@ describe('--- Day 7: Handy Haversacks ---', () => {
         expect(parseRule(testData.rules[7])).to.deep.equal({
           outer: 'faded blue bag'
         })
+      })
+    })
+    describe('findAllowedOuter()', () => {
+      it('list bags the specified bag is allowed to be placed in', () => {
+        const expectedColors = [
+          'bright white bag',
+          'muted yellow bag',
+          'dark orange bag',
+          'light red bag'
+        ]
+        const result = findAllowedOuter(
+          testData.rules.map(parseRule),
+          'shiny gold bag'
+        )
+        expectedColors.forEach(color => {
+          expect(result[color]).to.equal(true)
+        })
+        expect(Object.keys(result).length).to.equal(expectedColors.length)
       })
     })
   })
