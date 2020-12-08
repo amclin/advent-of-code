@@ -22,27 +22,32 @@ const parseRule = (rule) => {
 }
 
 const findAllowedOuter = (rules, color) => {
+  const isAllowed = (rule) => {
+    if (!rule.inner) return false
+    return (
+      rule.inner.filter((child) => {
+        return (
+          child.color === color
+        )
+      }).length > 0
+    )
+  }
+
   const allowed = {}
 
   // Loop through the rules, find all colors this bag is allowed within
-  rules.filter((rule) => {
-    if (!rule.inner) { return false }
-    // match when inners contain the color
-    return (
-      rule.inner.filter((child) => {
-        return (child.color === color)
-      }).length > 0
-    )
-  }).forEach((rule) => {
+  rules.filter(isAllowed).forEach((rule) => {
     allowed[rule.outer] = true
   })
 
   // Take the list of allowed colors, and find out which they are allowed within
   Object.keys(allowed).forEach((color) => {
-    // Recursively loop
-    Object.assign(allowed, findAllowedOuter(rules, color))
+    const temp = findAllowedOuter(rules, color)
+    if (Object.keys(temp).length > 0) {
+      Object.assign(allowed, temp)
+    }
   })
-
+  console.log(allowed)
   return allowed
 }
 
