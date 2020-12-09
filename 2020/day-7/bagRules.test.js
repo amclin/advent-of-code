@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 const { expect } = require('chai')
-const { parseRule, findAllowedOuter } = require('./bagRules')
+const { parseRule, findAllowedOuter, countInner } = require('./bagRules')
 
 const testData = {
   rules: [
@@ -55,6 +55,16 @@ describe('--- Day 7: Handy Haversacks ---', () => {
           expect(result[color]).to.equal(true)
         })
         expect(Object.keys(result).length).to.equal(expectedColors.length)
+      })
+    })
+  })
+  describe('Part 2', () => {
+    describe('countInner()', () => {
+      it('provides a list of child bags and with quantity of each', () => {
+        const result = Object.keys(
+          countInner(testData.rules.map(parseRule), 'shiny gold bag')
+        ).reduce((total, colorSubTotal) => total + colorSubTotal, 0)
+        expect(result).to.equal(126)
       })
     })
   })

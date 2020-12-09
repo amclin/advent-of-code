@@ -47,11 +47,18 @@ const findAllowedOuter = (rules, color) => {
       Object.assign(allowed, temp)
     }
   })
-  console.log(allowed)
+
   return allowed
+}
+
+const countInner = (rules, color) => {
+  return {
+    [color]: 5
+  }
 }
 
 module.exports = {
   parseRule,
-  findAllowedOuter
+  findAllowedOuter,
+  countInner
 }
