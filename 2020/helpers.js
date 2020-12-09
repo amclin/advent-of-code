@@ -1,7 +1,7 @@
 // Suppress logging
 if (!process.env.DEBUG) {
   console.debug = () => {}
-  console.info = () => {}
+  console.log = () => {}
 }
 
 module.exports = console
