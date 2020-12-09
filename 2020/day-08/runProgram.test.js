@@ -2,15 +2,26 @@
 const { expect } = require('chai')
 const { run, executeStep, logStep, displayLog } = require('./runProgram')
 
-xdescribe('--- Day 8: Handheld Halting ---', () => {
+const exampleLog = `
+nop +0  | 1
+acc +1  | 2, 8(!)
+jmp +4  | 3
+acc +3  | 6
+jmp -3  | 7
+acc -99 | 
+acc +1  | 4
+jmp -4  | 5
+acc +6  | `
+
+describe('--- Day 8: Handheld Halting ---', () => {
   describe('Part 1', () => {
-    describe('run()', () => {
+    xdescribe('run()', () => {
       it('executes the steps of a given program', () => {
         run()
         expect(false).to.equal(true)
       })
     })
-    describe('executeStep()', () => {
+    xdescribe('executeStep()', () => {
       it('executes a specified command', () => {
         executeStep()
         expect(false).to.equal(true)
@@ -32,7 +43,7 @@ xdescribe('--- Day 8: Handheld Halting ---', () => {
         expect(false).to.equal(true)
       })
     })
-    describe('logStep()', () => {
+    xdescribe('logStep()', () => {
       it('records the step in the execution log', () => {
         logStep()
         expect(false).to.equal(true)
@@ -40,8 +51,11 @@ xdescribe('--- Day 8: Handheld Halting ---', () => {
     })
     describe('displayLog()', () => {
       it('renders the output of the execution log', () => {
-        displayLog()
-        expect(false).to.equal(true)
+        expect(
+          displayLog()
+        ).to.equal(
+          exampleLog
+        )
       })
     })
   })
