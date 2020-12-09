@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const filePath = path.join(__dirname, 'input.txt')
 const { linesToArray } = require('../../2018/inputParser')
-const { parseRule, findAllowedOuter } = require('./bagRules')
+const { parseRule, findAllowedOuter, countInner } = require('./bagRules')
 
 fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
   if (err) throw err
@@ -23,10 +23,12 @@ fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
   }
 
   const part2 = () => {
-    const data = resetInput()
-    console.debug(data)
-    return 'No answer yet'
+    const rules = resetInput()
+    return Object.values(
+      countInner(rules.map(parseRule), 'shiny gold bag')
+    ).reduce((a, b) => a + b, 0)
   }
+
   const answers = []
   answers.push(part1())
   answers.push(part2())
