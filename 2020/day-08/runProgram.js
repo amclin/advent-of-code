@@ -30,11 +30,14 @@ const formatLogRow = (command, idx, program) => {
   if (log[idx] && log[idx].length > 1) {
     countStr = `${log[idx].join(', ')}(!)`
   }
-
-  return `${command.padEnd(8, ' ')}| ${countStr}`
+  const row = `${command.padEnd(8, ' ')}| ${countStr}`
+  console.debug(row)
+  return row
 }
 
 const displayLog = () => {
+  console.debug(`${program.length} steps in program.`)
+  console.debug('-----------------------------------')
   const formattedLog = program.map(formatLogRow)
     .reduce((res, row) => {
       res += '\n'
@@ -42,7 +45,6 @@ const displayLog = () => {
       return res
     }, '')
 
-  console.debug(formattedLog)
   return formattedLog
 }
 
