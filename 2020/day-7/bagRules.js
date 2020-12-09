@@ -53,29 +53,26 @@ const findAllowedOuter = (rules, color) => {
   return allowed
 }
 
-const countInner = (rules, color) => {
+const countInner = (rules, color, count = 1) => {
   // const children = {}
   /** checks if rule matches color */
   const matchesColor = ({ outer }) => outer === color
-  /** checks if an object has keys */
-  // const hasKeys = (obj) => (Object.keys(obj).length > 0)
+  /** checks if rule has child bags */
+  const hasChildren = ({ inner }) => (inner) && inner.length > 0
+
+  const getChildrenBags = ({ inner }, multiplier = 1) => {
+    const res = {}
+    // Convert into structured list
+    inner.forEach(({ color, count }) => {
+      res[color] = count * multiplier
+    })
+    return res
+  }
   /** type-safe addition */
   const add = (a, b) => {
     a = (typeof a === 'number') ? a : 0
     b = (typeof b === 'number') ? b : 0
     return a + b
-  }
-  /** type-safe multiplication */
-  const multiply = (a, b) => {
-    a = (typeof a === 'number') ? a : 1
-    b = (typeof b === 'number') ? b : 1
-    return a * b
-  }
-  /** multiply all keys in an object by a value */
-  const multiplyObjKeys = (object, value) => {
-    for (const key in object) {
-      object[key] = multiply(object[key], value)
-    }
   }
   /** combine two objects using the specified operator method for collsions */
   const combineObjects = (a = {}, b = {}, operator) => {
@@ -90,55 +87,21 @@ const countInner = (rules, color) => {
   console.debug('matching', color)
 
   // Loop through the rules to find first level children
-  const children = rules.filter(matchesColor) // find all matches for the color
-    .filter(({ inner }) => (inner) && inner.length > 0) // filter for matches that have children
-    .map(({ inner }) => {
-      const res = {}
-      // Convert into structured list
-      inner.forEach(({ color, count }) => {
-        res[color] = count
-      })
+  return rules
+    .filter(matchesColor) // find all matches for the color
+    .filter(hasChildren) // filter for matches that have children
+    .map(rule => getChildrenBags(rule, count)) // get the counts from the children
+    .reduce((res, children) => {
+      // Add everything back together
+      const childrensChildren = Object.entries(children)
+        .map(([key, value]) => countInner(rules, key, value))
+        .reduce((r, c) => combineObjects(r, c, add), {})
+
+      res = combineObjects(res, children, add)
+      res = combineObjects(res, childrensChildren, add)
+
       return res
-    })
-    .reduce((res, match) => {
-      return combineObjects(res, match, add)
     }, {})
-
-  console.debug('First level match found', children)
-  console.debug(`check the children of ${Object.keys(children).length} immediate child bags recursively`)
-  // Take the list immediate children, and recursively tally the children in each
-  const childResults = Object.entries(children)
-    .map(([color, count]) => {
-      // find the child's children
-      const childChildren = countInner(rules, color)
-      // multilply each of the child's children by the child amount
-      multiplyObjKeys(childChildren, count)
-      return childChildren
-    })
-    // .filter(hasKeys) // Drop empties
-    .reduce((res, matches, idx) => {
-      console.debug(matches)
-      console.debug(
-        '----------------------\n',
-        `${idx}: child result ${color}:`, '\n',
-        combineObjects(res, matches, add), '\n',
-        '----------------------\n'
-      )
-      return combineObjects(res, matches, add)
-    }, {})
-
-  console.debug(
-    '---------------------\n',
-    'results with children\n',
-    'children:', children, '\n',
-    'childResults:', childResults, '\n',
-    'combined:',
-    combineObjects(children, childResults, multiply), '\n',
-    '---------------------\n\n'
-  )
-
-  // Multiply the child results with the current level
-  return combineObjects(children, childResults, multiply)
 }
 
 module.exports = {
