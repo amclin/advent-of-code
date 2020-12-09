@@ -13,6 +13,15 @@ const testData = {
     'vibrant plum bags contain 5 faded blue bags, 6 dotted black bags.',
     'faded blue bags contain no other bags.',
     'dotted black bags contain no other bags.'
+  ],
+  part2Rules: [
+    'shiny gold bags contain 2 dark red bags.',
+    'dark red bags contain 2 dark orange bags.',
+    'dark orange bags contain 2 dark yellow bags.',
+    'dark yellow bags contain 2 dark green bags.',
+    'dark green bags contain 2 dark blue bags.',
+    'dark blue bags contain 2 dark violet bags.',
+    'dark violet bags contain no other bags.'
   ]
 }
 
@@ -61,10 +70,15 @@ describe('--- Day 7: Handy Haversacks ---', () => {
   describe('Part 2', () => {
     describe('countInner()', () => {
       it('provides a list of child bags and with quantity of each', () => {
-        const result = Object.keys(
+        const result1 = Object.values(
           countInner(testData.rules.map(parseRule), 'shiny gold bag')
-        ).reduce((total, colorSubTotal) => total + colorSubTotal, 0)
-        expect(result).to.equal(126)
+        ).reduce((a, b) => a + b, 0)
+        expect(result1).to.equal(32)
+
+        const result2 = Object.values(
+          countInner(testData.part2Rules.map(parseRule), 'shiny gold bag')
+        ).reduce((a, b) => a + b, 0)
+        expect(result2).to.equal(126)
       })
     })
   })
