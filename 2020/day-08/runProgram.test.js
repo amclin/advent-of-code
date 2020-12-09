@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 const { expect } = require('chai')
-const { run, executeStep, logEvent, displayLog } = require('./runProgram')
+const { run, parseCommand, logEvent, displayLog } = require('./runProgram')
 
 const exampleLog = `
 nop +0  | 1
@@ -21,26 +21,40 @@ describe('--- Day 8: Handheld Halting ---', () => {
         expect(false).to.equal(true)
       })
     })
-    xdescribe('executeStep()', () => {
-      it('executes a specified command', () => {
-        executeStep()
-        expect(false).to.equal(true)
-      })
-      it('steps to the next sequential command', () => {
-        logEvent()
-        expect(false).to.equal(true)
-      })
-      it('can execute a `nop` command which does nothing', () => {
-        executeStep('nop')
-        expect(false).to.equal(true)
-      })
-      it('can execute a `acc` command which increments the accumulator', () => {
-        executeStep('acc')
-        expect(false).to.equal(true)
-      })
-      it('can execute a `jmp` command which jumps to a different command in the instruction set', () => {
-        executeStep('jmp')
-        expect(false).to.equal(true)
+    // xdescribe('execInstruction()', () => {
+    //   it('executes a specified command', () => {
+    //     execInstruction()
+    //     expect(false).to.equal(true)
+    //   })
+    //   it('steps to the next sequential command', () => {
+    //     logEvent()
+    //     expect(false).to.equal(true)
+    //   })
+    //   it('can execute a `nop` command which does nothing', () => {
+    //     execInstruction('nop')
+    //     expect(false).to.equal(true)
+    //   })
+    //   it('can execute a `acc` command which increments the accumulator', () => {
+    //     execInstruction('acc')
+    //     expect(false).to.equal(true)
+    //   })
+    //   it('can execute a `jmp` command which jumps to a different command in the instruction set', () => {
+    //     execInstruction('jmp')
+    //     expect(false).to.equal(true)
+    //   })
+    // })
+    describe('parseCommand()', () => {
+      it('parses an instruction string into a structured command object', () => {
+        const instructions = [
+          'jmp +4',
+          'acc +3',
+          'jmp -3',
+          'acc -99'
+        ]
+        instructions.forEach((inst) => {
+          const { cmd, arg } = parseCommand(inst)
+          expect(`${cmd} ${arg}`).to.equal(inst)
+        })
       })
     })
     describe('logEvent()', () => {

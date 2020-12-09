@@ -19,6 +19,12 @@ const program = [
   'acc +6'
 ]
 
+const parseCommand = (inst) => {
+  console.debug('Parsing ', inst)
+  const [cmd, arg] = inst.split(' ')
+  return { cmd, arg }
+}
+
 const formatLogRow = (command, idx, program) => {
   let countStr
   if (!log[idx]) {
@@ -68,6 +74,7 @@ const logEvent = ({ instKey, evKey }) => {
 module.exports = {
   run: console.log('run'),
   executeStep: console.log('executeStep'),
+  parseCommand,
   logEvent,
   displayLog
 }
