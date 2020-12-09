@@ -43,10 +43,14 @@ describe('--- Day 8: Handheld Halting ---', () => {
         expect(false).to.equal(true)
       })
     })
-    xdescribe('logStep()', () => {
+    describe('logStep()', () => {
       it('records the step in the execution log', () => {
-        logStep()
-        expect(false).to.equal(true)
+        const result = logStep({ instKey: 500, stepKey: 17 })
+        expect(result).to.deep.equal([17])
+      })
+      it('tracks the state over multiple logging events', () => {
+        const result = logStep({ instKey: 500, stepKey: 24 })
+        expect(result).to.deep.equal([17, 24])
       })
     })
     describe('displayLog()', () => {

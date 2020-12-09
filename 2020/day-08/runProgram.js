@@ -48,9 +48,26 @@ const displayLog = () => {
   return formattedLog
 }
 
+const logStep = ({ instKey, stepKey }) => {
+  console.debug(`step ${instKey} called instruction ${instKey}`)
+  if (
+    log[instKey] &&
+    typeof log[instKey] === 'object' &&
+    log[instKey].length > 0
+  ) {
+    // Record another entry on a command already executed once
+    log[instKey].push(stepKey)
+    return log[instKey]
+  } else {
+    // Record the first entry on a command
+    log[instKey] = [stepKey]
+  }
+  return log[instKey]
+}
+
 module.exports = {
   run: console.log('run'),
   executeStep: console.log('executeStep'),
-  logStep: console.log('logStep'),
+  logStep,
   displayLog
 }
