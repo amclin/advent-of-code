@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 const { expect } = require('chai')
-const { run, executeStep, logStep, displayLog } = require('./runProgram')
+const { run, executeStep, logEvent, displayLog } = require('./runProgram')
 
 const exampleLog = `
 nop +0  | 1
@@ -27,7 +27,7 @@ describe('--- Day 8: Handheld Halting ---', () => {
         expect(false).to.equal(true)
       })
       it('steps to the next sequential command', () => {
-        logStep()
+        logEvent()
         expect(false).to.equal(true)
       })
       it('can execute a `nop` command which does nothing', () => {
@@ -43,13 +43,13 @@ describe('--- Day 8: Handheld Halting ---', () => {
         expect(false).to.equal(true)
       })
     })
-    describe('logStep()', () => {
+    describe('logEvent()', () => {
       it('records the step in the execution log', () => {
-        const result = logStep({ instKey: 500, stepKey: 17 })
+        const result = logEvent({ instKey: 500, evKey: 17 })
         expect(result).to.deep.equal([17])
       })
       it('tracks the state over multiple logging events', () => {
-        const result = logStep({ instKey: 500, stepKey: 24 })
+        const result = logEvent({ instKey: 500, evKey: 24 })
         expect(result).to.deep.equal([17, 24])
       })
     })
