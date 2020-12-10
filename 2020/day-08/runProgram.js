@@ -19,10 +19,49 @@ const program = [
   'acc +6'
 ]
 
+let accumulator = 0
+let position = 1
+
+/**
+ * API of commands this language supports
+ */
+const api = {
+  nop: (a, b) => {
+    console.debug(`doing a nop ${b}`)
+    return a + 1
+  },
+  acc: (a, b) => {
+    console.debug(`adding ${b} to accumulator`)
+    accumulator += api[b.substr(0, 1)](
+      0,
+      Number(b.substr((1)))
+    )
+    return a + 1
+  },
+  jmp: (a, b) => {
+    console.debug(`jumping from ${a} ${b} `)
+    return a + api[b.substr(0, 1)](
+      0,
+      Number(b.substr((1)))
+    )
+  },
+  '+': (x, y) => x + y,
+  '-': (x, y) => x - y
+}
+
 const parseCommand = (inst) => {
   console.debug('Parsing ', inst)
   const [cmd, arg] = inst.split(' ')
   return { cmd, arg }
+}
+
+const execInstruction = (inst, instKey = 0, evKey = 0) => {
+  const { cmd, arg } = parseCommand(inst)
+  // Run the command
+  // Support jumping by passing back next
+  position = api[cmd](instKey, arg)
+  logEvent({ instKey, evKey })
+  return position
 }
 
 const formatLogRow = (command, idx, program) => {
@@ -73,7 +112,9 @@ const logEvent = ({ instKey, evKey }) => {
 
 module.exports = {
   run: console.log('run'),
-  executeStep: console.log('executeStep'),
+  getAccumulator: () => accumulator,
+  getPosition: () => position,
+  execInstruction,
   parseCommand,
   logEvent,
   displayLog
