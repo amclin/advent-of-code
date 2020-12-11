@@ -2,6 +2,17 @@
 const { expect } = require('chai')
 const { run, getPosition, getAccumulator, execInstruction, parseCommand, logEvent, displayLog } = require('./runProgram')
 
+const exampleProgram = [
+  'nop +0',
+  'acc +1',
+  'jmp +4',
+  'acc +3',
+  'jmp -3',
+  'acc -99',
+  'acc +1',
+  'jmp -4',
+  'acc +6'
+]
 const exampleLog = `
 nop +0  | 1
 acc +1  | 2, 8(!)
@@ -15,12 +26,6 @@ acc +6  | `
 
 describe('--- Day 8: Handheld Halting ---', () => {
   describe('Part 1', () => {
-    xdescribe('run()', () => {
-      it('executes the steps of a given program', () => {
-        run()
-        expect(false).to.equal(true)
-      })
-    })
     describe('execInstruction()', () => {
       it('executes a specified command', () => {
         expect(getPosition()).to.equal(1)
@@ -82,6 +87,15 @@ describe('--- Day 8: Handheld Halting ---', () => {
         ).to.equal(
           exampleLog
         )
+      })
+    })
+    describe('run()', () => {
+      it('executes the steps of a given program', () => {
+        run(exampleProgram)
+        // stops at infinite loop
+        expect(getPosition()).to.equal(2)
+        expect(getAccumulator()).to.equal(6)
+        expect(displayLog()).to.equal(exampleLog)
       })
     })
   })

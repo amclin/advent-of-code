@@ -1,4 +1,4 @@
-const log = []
+let log = []
 log[0] = [1]
 log[1] = [2, 8]
 log[2] = [3]
@@ -7,7 +7,7 @@ log[4] = [7]
 log[6] = [4]
 log[7] = [5]
 
-const program = [
+let program = [
   'nop +0',
   'acc +1',
   'jmp +4',
@@ -21,6 +21,7 @@ const program = [
 
 let accumulator = 0
 let position = 1
+let breaker = false
 
 /**
  * API of commands this language supports
@@ -61,7 +62,25 @@ const execInstruction = (inst, instKey = 0, evKey = 0) => {
   // Support jumping by passing back next
   position = api[cmd](instKey, arg)
   logEvent({ instKey, evKey })
+  // break out when reaching an infinite loop
+  if (log[instKey].length > 1) {
+    breaker = true
+  }
   return position
+}
+
+const run = (insts) => {
+  program = insts
+  accumulator = 0
+  position = 0
+  log = []
+  let evKey = 0
+
+  // eslint-disable-next-line no-unmodified-loop-condition
+  while (breaker === false) {
+    evKey++
+    execInstruction(program[position], position, evKey)
+  }
 }
 
 const formatLogRow = (command, idx, program) => {
@@ -111,7 +130,7 @@ const logEvent = ({ instKey, evKey }) => {
 }
 
 module.exports = {
-  run: console.log('run'),
+  run,
   getAccumulator: () => accumulator,
   getPosition: () => position,
   execInstruction,
