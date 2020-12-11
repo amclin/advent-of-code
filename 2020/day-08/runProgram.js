@@ -65,6 +65,16 @@ const execInstruction = (inst, instKey = 0, evKey = 0) => {
   // break out when reaching an infinite loop
   if (log[instKey].length > 1) {
     breaker = true
+    console.error(`execuetd an error on ${instKey}`, inst, accumulator)
+    // step back the accumulator
+    if (cmd === 'acc') {
+      if (arg.includes('+')) {
+        api[cmd](0, arg.replace('+', '-'))
+      }
+      if (arg.includes('-')) {
+        api[cmd](0, arg.replace('+-', '+'))
+      }
+    }
   }
   return position
 }
