@@ -79,9 +79,6 @@ class Rack {
           return null // break for speed on invalid squares
         }
         const dest = this.cells[pointer]
-        if (!dest) {
-
-        }
         power += (dest) ? dest.power : 0
       }
     }

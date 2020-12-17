@@ -59,7 +59,9 @@ class Track {
       (this.trackTurns.indexOf(s) === 0 && a === 'x') // horizontal turns clockwise
       // (this.trackTurns.indexOf(s) === 0 && a === 'x') // horizontal turns counter-clockwise
       // (this.trackTurns.indexOf(s) === 1 && a === 'y') // vertical turns counter-clockwise
-    ) ? 1 : -1
+    )
+      ? 1
+      : -1
     // Find the value of the new direction
     return this.cartDirections[this._roationDirection(d, r)]
   }

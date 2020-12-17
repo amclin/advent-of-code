@@ -30,7 +30,7 @@ class Beacon {
     const data = {}
     // Calculate the position of all the beacons
     data.contents = this.start.map((beacon) => {
-      var point = {}
+      const point = {}
       Object.keys(beacon.position).forEach((key) => {
         point[key] = beacon.position[key] + (frame * beacon.velocity[key])
       })
