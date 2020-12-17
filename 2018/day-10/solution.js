@@ -19,11 +19,13 @@ const init = (data) => {
 
   // Find the frame with the best focus
   const best = beaconTracker.frameMeta.reduce((acc, curr, idx) => {
-    return (curr.focus < acc.focus) ? {
-      idx: idx,
-      focus: curr.focus,
-      dims: curr.dims
-    } : acc
+    return (curr.focus < acc.focus)
+      ? {
+          idx: idx,
+          focus: curr.focus,
+          dims: curr.dims
+        }
+      : acc
   }, { idx: 0, focus: beaconTracker.frameMeta[0].focus, dims: { dim: [0, 0], origin: [0, 0] } })
 
   // const answer = sumMetadata(data)

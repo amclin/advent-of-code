@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 const expect = require('chai').expect
-var {
+const {
   _cloth,
   countConflicts,
   findNonOverlappingClaims,

@@ -1,8 +1,8 @@
 const unique = require('../helpers').unique
 
-var _conflicts = []
-var _claims = []
-var _cloth = []
+let _conflicts = []
+let _claims = []
+let _cloth = []
 
 /**
  * Generates an empty matrix of X columns and Y rows
