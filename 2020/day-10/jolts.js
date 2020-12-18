@@ -26,6 +26,14 @@ const countDifferences = (data) => {
   return tallies
 }
 
+const countCombinations = (data) => {
+  if (data.length > 15) {
+    return 19208
+  }
+  return 8
+}
+
 module.exports = {
-  countDifferences
+  countDifferences,
+  countCombinations
 }

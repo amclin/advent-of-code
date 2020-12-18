@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 const { expect } = require('chai')
-const { countDifferences } = require('./jolts')
+const { countDifferences, countCombinations } = require('./jolts')
 
 const adapters = [
   [16, 10, 15, 5, 1, 11, 7, 19, 6, 12, 4],
@@ -17,6 +17,19 @@ describe('--- Day 10: Adapter Array ---', () => {
         const result2 = countDifferences(adapters[1])
         expect(result2[1]).to.equal(22)
         expect(result2[3]).to.equal(10)
+      })
+      it('throws an error if any joltage differences exceed 3', () => {
+        expect(() => countDifferences([5, 40])).to.throw()
+      })
+    })
+  })
+  describe('Part 2', () => {
+    describe('countCombinations()', () => {
+      it('tabulates the amoount of adapter combinations in the set', () => {
+        const result = countCombinations(adapters[0])
+        expect(result).to.equal(8)
+        const result2 = countCombinations(adapters[1])
+        expect(result2).to.equal(19208)
       })
       it('throws an error if any joltage differences exceed 3', () => {
         expect(() => countDifferences([5, 40])).to.throw()
