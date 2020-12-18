@@ -1,3 +1,26 @@
+const arrSum = arr => arr.reduce((a, b) => a + b, 0)
+
+const findWeaknessRange = (data, target) => {
+  let counter = 0
+  while (counter < data.length) {
+    const range = []
+    let rangeCounter = counter
+    // Tally up the next set of values trying to hit target
+    while (arrSum(range) < target && rangeCounter < data.length) {
+      range.push(data[rangeCounter])
+
+      if (arrSum(range) === target) {
+        console.debug(`Found range totally ${target}`, range)
+        return range
+      }
+      rangeCounter++
+    }
+    counter++
+  }
+
+  throw new Error('No range found matching target')
+}
+
 const findInvalid = (data, preambleSize) => {
   let match = true
   let counter = preambleSize
@@ -23,6 +46,9 @@ const findInvalid = (data, preambleSize) => {
 const isValid = (value, preamble) => {
   let valid = false
 
+  // TODO: Speed this up by breaking out of while() loops instead
+  // of forEach
+  //
   // Search for a combination of 2 entries that add up to `value`
   preamble.forEach((outer) => {
     preamble.forEach((inner) => {
@@ -39,5 +65,6 @@ const isValid = (value, preamble) => {
 
 module.exports = {
   findInvalid,
+  findWeaknessRange,
   isValid
 }

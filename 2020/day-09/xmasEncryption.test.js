@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 const { expect } = require('chai')
-const { isValid, findInvalid } = require('./xmasEncryption')
+const { isValid, findInvalid, findWeaknessRange } = require('./xmasEncryption')
 
 const range = (i) => { return i ? range(i - 1).concat(i) : [] }
 
@@ -36,6 +36,17 @@ describe('--- Day 9: Encoding Error ---', () => {
       })
       it('throws an error if no invalid value is found', () => {
         expect(() => { findInvalid([1, 2, 3, 5, 8, 13], 2) }).to.throw('No invalid values found')
+      })
+    })
+    describe('findWeaknessRange()', () => {
+      it('locates a range of congtiguous values that sum up to the provided input', () => {
+        const data = [35, 20, 15, 25, 47, 40, 62, 55, 65, 95, 102, 117, 150, 182, 127, 219, 299, 277, 309, 576]
+        expect(
+          findWeaknessRange(data, 127)
+        ).to.deep.equal([15, 25, 47, 40])
+      })
+      it('throws an error if no matching range found', () => {
+        expect(() => { findWeaknessRange([1, 2, 3, 5, 8, 13], 50) }).to.throw('No range found matching target')
       })
     })
   })
