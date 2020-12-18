@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 const { expect } = require('chai')
-const { isValid } = require('./xmasEncryption')
+const { isValid, findInvalid } = require('./xmasEncryption')
 
 const range = (i) => { return i ? range(i - 1).concat(i) : [] }
 
@@ -23,6 +23,19 @@ describe('--- Day 9: Encoding Error ---', () => {
         expect(isValid(65, preamble), '65 doesnt match any 2 values').to.equal(false)
         expect(isValid(64, preamble), '64 is valid').to.equal(true)
         expect(isValid(66, preamble), '65 is valid').to.equal(true)
+      })
+    })
+    describe('findInvalid()', () => {
+      it('searches a data set for the first invalid data based on the defined preamble size', () => {
+        const data = [35, 20, 15, 25, 47, 40, 62, 55, 65, 95, 102, 117, 150, 182, 127, 219, 299, 277, 309, 576]
+        const preambleSize = 5
+        expect(
+          findInvalid(data, preambleSize),
+          `127 cannot be summed from the previous ${preambleSize} numbers`
+        ).to.equal(127)
+      })
+      it('throws an error if no invalid value is found', () => {
+        expect(() => { findInvalid([1, 2, 3, 5, 8, 13], 2) }).to.throw('No invalid values found')
       })
     })
   })

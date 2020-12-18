@@ -1,3 +1,25 @@
+const findInvalid = (data, preambleSize) => {
+  let match = true
+  let counter = preambleSize
+
+  while (match === true && counter < data.length) {
+    console.debug(`Looking for mismatch ${data[counter]} in:`)
+    console.debug(data.slice(counter - preambleSize, counter))
+    console.debug('-----------------------------------------')
+    match = isValid(
+      data[counter],
+      data.slice(counter - preambleSize, counter)
+    )
+    if (!match) {
+      console.debug(`${data[counter]} doesn't match.`)
+      return data[counter]
+    }
+    counter++
+  }
+
+  throw new Error('No invalid values found')
+}
+
 const isValid = (value, preamble) => {
   let valid = false
 
@@ -16,5 +38,6 @@ const isValid = (value, preamble) => {
 }
 
 module.exports = {
+  findInvalid,
   isValid
 }
