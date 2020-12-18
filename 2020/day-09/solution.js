@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const filePath = path.join(__dirname, 'input.txt')
 const { inputToArray } = require('../../2018/inputParser')
-const { findInvalid } = require('./xmasEncryption')
+const { findInvalid, findWeaknessRange } = require('./xmasEncryption')
 
 fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
   if (err) throw err
@@ -21,9 +21,12 @@ fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
 
   const part2 = () => {
     const data = resetInput()
-    console.debug(data)
-    return 'No answer yet'
+    const weakness = findWeaknessRange(data, answers[0])
+    const arrMax = Math.max(...weakness)
+    const arrMin = Math.min(...weakness)
+    return arrMin + arrMax
   }
+
   const answers = []
   answers.push(part1())
   answers.push(part2())
