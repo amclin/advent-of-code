@@ -18,6 +18,9 @@ describe('--- Day 10: Adapter Array ---', () => {
         expect(result2[1]).to.equal(22)
         expect(result2[3]).to.equal(10)
       })
+      it('throws an error if any joltage differences exceed 3', () => {
+        expect(() => countDifferences([5, 40])).to.throw()
+      })
     })
   })
 })
