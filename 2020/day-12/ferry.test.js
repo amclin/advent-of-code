@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 const { expect } = require('chai')
-const { distance } = require('../../2018/day-06')
+const { distance } = require('../../2018/day-06/coordinates')
 const { move, route } = require('./ferry')
 
 describe('--- Day 11: Seating System ---', () => {
@@ -51,11 +51,29 @@ describe('--- Day 11: Seating System ---', () => {
           move({ position: origin, command })
         ).to.deep.equal({ x: 0, y: 0, d: 180 })
       })
-      it('can move forward', () => {
+      it('can move forward in the direction it is pointing', () => {
         const command = 'F10'
         expect(
           move({ position: origin, command })
         ).to.deep.equal({ x: 10, y: 0, d: 90 })
+        expect(
+          move({ position: { x: 0, y: 0, d: 0 }, command })
+        ).to.deep.equal({ x: 0, y: 10, d: 0 })
+        expect(
+          move({ position: { x: 0, y: 0, d: 270 }, command })
+        ).to.deep.equal({ x: -10, y: 0, d: 270 })
+        expect(
+          move({ position: { x: 0, y: 0, d: 180 }, command })
+        ).to.deep.equal({ x: 0, y: -10, d: 180 })
+      })
+      it('cannot handle non-cardoma; directions', () => {
+        expect(() => {
+          move({ position: { x: 0, y: 0, d: 13 }, command: 'F10' })
+        }).to.throw('Non-cardinal compass direction')
+      })
+      it('defaults to 0,0 facing East', () => {
+        expect(move({ command: 'F10' }))
+          .to.deep.equal({ x: 10, y: 0, d: 90 })
       })
     })
     describe('route()', () => {
@@ -70,7 +88,8 @@ describe('--- Day 11: Seating System ---', () => {
         const result = route({ instructions })
         expect(result)
           .to.deep.equal({ x: 17, y: -8, d: 180 })
-        expect(distance(result.x, result.y)).to.equal(25)
+        // manhattan distance from origin
+        expect(distance({ x: 0, y: 0 }, result)).to.equal(25)
       })
     })
   })
