@@ -30,10 +30,18 @@ const move = ({
     L: (u) => { // Turn Left
       position.d -= u
       position.d = position.d % 360
+      // prevent negative angles
+      if (position.d < 0) {
+        position.d += 360
+      }
     },
     R: (u) => { // Turn Right
       position.d += u
       position.d = position.d % 360
+      // prevent negative angles
+      if (position.d < 0) {
+        position.d += 360
+      }
     },
     F: (u) => { // Forward
       // TODO: replace with vector positioning of arbitrary angles

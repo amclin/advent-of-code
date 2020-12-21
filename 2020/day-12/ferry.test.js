@@ -75,6 +75,12 @@ describe('--- Day 11: Seating System ---', () => {
         expect(move({ command: 'F10' }))
           .to.deep.equal({ x: 10, y: 0, d: 90 })
       })
+      it('can be rotated more than 360 degrees', () => {
+        expect(move({ command: 'L720' }))
+          .to.deep.equal({ x: 0, y: 0, d: 90 })
+        expect(move({ position: { x: 0, y: 0, d: -810 }, command: 'R720' }))
+          .to.deep.equal({ x: 0, y: 0, d: 270 })
+      })
     })
     describe('route()', () => {
       it('can follow a list of instructions', () => {
