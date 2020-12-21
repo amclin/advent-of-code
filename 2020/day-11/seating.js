@@ -10,7 +10,35 @@ const format = (seatMap) => {
 }
 
 const occupiedLineOfSite = ({ x, y, seatMap }) => {
+  let occupied = 0
+  const look = ({ lookX, lookY, dirX, dirY }) => {
+    if (lookY < 0 || lookY >= seatMap.length) {
+      // exceeded rows space
+      return 'x'
+    }
+    if (lookX < 0 || lookX >= seatMap[0].length) {
+      // exceeded column space
+      return 'x'
+    }
+    // Find the first seat in the direction, recursively
+    if (seatMap[lookY][lookX] !== '.') {
+      return seatMap[lookY][lookX]
+    }
 
+    // Recursively look in the next seat in this direction
+    return look({ lookX: lookX + dirX, lookY: lookY + dirY, dirX, dirY })
+  }
+
+  // 8 compass point directions
+  for (let dirX = -1; dirX <= 1; dirX++) {
+    for (let dirY = -1; dirY <= 1; dirY++) {
+      if (look({ lookX: x + dirX, lookY: y + dirY, dirX, dirY }) === '#') {
+        occupied++
+      }
+    }
+  }
+
+  return occupied
 }
 
 const occupiedNearby = ({ x, y, seatMap }) => {
@@ -41,7 +69,7 @@ const advance = (seatMap, rules) => {
   })
 }
 
-const update = ({ x, y, seatMap, rules }) => {
+const update = ({ x, y, seatMap, rules = 'proximity' }) => {
   let leaveThreshold = 4
   let processor = occupiedNearby
   if (rules === 'visibility') {

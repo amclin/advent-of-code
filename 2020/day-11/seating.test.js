@@ -75,7 +75,19 @@ L.#.L..#..
 #.#L#L#.##`
 )
 
-const testDataPart2 = testData.slice(0, 2)
+const testDataPart2 = [testData[0]]
+testDataPart2.push(
+`#.##.##.##
+#######.##
+#.#.#..#..
+####.##.##
+#.##.##.##
+#.#####.##
+..#.#.....
+##########
+#.######.#
+#.#####.##`
+)
 testDataPart2.push(
 `#.LL.LL.L#
 #LLLLLL.LL
@@ -171,14 +183,14 @@ describe('--- Day 11: Seating System ---', () => {
 .........
 #........
 ...#.....`
-        expect(occupiedLineOfSite({ x: 1, y: 1, seatMap: data })).to.equal(8)
+        expect(occupiedLineOfSite({ x: 3, y: 4, seatMap: parse(data) })).to.equal(8)
       })
       it('cannot see occupied seats past an available seat', () => {
         const data =
 `.............
 .L.L.#.#.#.#.
 .............`
-        expect(occupiedLineOfSite({ x: 3, y: 4, seatMap: data })).to.equal(0)
+        expect(occupiedLineOfSite({ x: 1, y: 1, seatMap: parse(data) })).to.equal(0)
       })
       it('can look in all compass directions', () => {
         const data =
@@ -189,7 +201,7 @@ describe('--- Day 11: Seating System ---', () => {
 ##...##
 #.#.#.#
 .##.##.`
-        expect(occupiedLineOfSite({ x: 3, y: 3, seatMap: data })).to.equal(0)
+        expect(occupiedLineOfSite({ x: 3, y: 3, seatMap: parse(data) })).to.equal(0)
       })
     })
     describe('advance()', () => {
@@ -197,13 +209,14 @@ describe('--- Day 11: Seating System ---', () => {
         const results = testDataPart2.map((data) => {
           return format(
             advance(
-              parse(data), 'visible'
+              parse(data), 'visibility'
             )
           )
         })
 
         for (let x = 1; x < testDataPart2.length; x++) {
           console.debug('Step', x)
+          console.debug(results[x - 1])
           expect(results[x - 1]).to.equal(testDataPart2[x])
         }
         const finalOccupancy = (results[results.length - 1].match(/#/g) || []).length
