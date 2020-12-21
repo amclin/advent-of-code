@@ -2,6 +2,8 @@ const fs = require('fs')
 const path = require('path')
 const filePath = path.join(__dirname, 'input.txt')
 const { inputToArray } = require('../../2018/inputParser')
+const { distance } = require('../../2018/day-06/coordinates')
+const { route } = require('./ferry')
 
 fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
   if (err) throw err
@@ -14,9 +16,9 @@ fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
   }
 
   const part1 = () => {
-    const data = resetInput()
-    console.debug(data)
-    return 'No answer yet'
+    const instructions = resetInput()
+    const destination = route({ instructions })
+    return distance({ x: 0, y: 0 }, destination)
   }
 
   const part2 = () => {
