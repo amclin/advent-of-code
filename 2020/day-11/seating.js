@@ -9,6 +9,10 @@ const format = (seatMap) => {
   return seatMap.map((row) => row.join('')).join('\n')
 }
 
+const occupiedLineOfSite = ({ x, y, seatMap }) => {
+
+}
+
 const occupiedNearby = ({ x, y, seatMap }) => {
   let temp = ''
 
@@ -68,5 +72,6 @@ const update = ({ x, y, seatMap }) => {
 module.exports = {
   format,
   parse,
-  advance
+  advance,
+  occupiedLineOfSite
 }
