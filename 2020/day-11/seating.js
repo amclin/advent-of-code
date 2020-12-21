@@ -33,15 +33,22 @@ const occupiedNearby = ({ x, y, seatMap }) => {
   return occupied
 }
 
-const advance = (seatMap) => {
+const advance = (seatMap, rules) => {
   return seatMap.map((row, y) => {
     return row.map((col, x) => {
-      return update({ x, y, seatMap })
+      return update({ x, y, seatMap, rules })
     })
   })
 }
 
-const update = ({ x, y, seatMap }) => {
+const update = ({ x, y, seatMap, rules }) => {
+  let leaveThreshold = 4
+  let processor = occupiedNearby
+  if (rules === 'visibility') {
+    leaveThreshold = 5
+    processor = occupiedLineOfSite
+  }
+
   let next = seatMap[y][x]
   switch (seatMap[y][x]) {
     case '.':
@@ -50,14 +57,14 @@ const update = ({ x, y, seatMap }) => {
       break
     case 'L':
       // If a seat is empty (L) and there are no occupied seats adjacent to it, the seat becomes occupied.
-      if (occupiedNearby({ x, y, seatMap }) === 0) {
+      if (processor({ x, y, seatMap }) === 0) {
         next = '#'
       }
       break
     case '#':
       // If a seat is occupied (#) and four or more seats adjacent to it are also occupied, the seat becomes empty.
       // We subtract 1 so we don't count the target seat
-      if (occupiedNearby({ x, y, seatMap }) - 1 >= 4) {
+      if (processor({ x, y, seatMap }) - 1 >= leaveThreshold) {
         next = 'L'
       }
       break
