@@ -27,9 +27,16 @@ fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
   }
 
   const part2 = () => {
-    const data = resetInput()
-    console.debug(data)
-    return 'No answer yet'
+    let data = resetInput()
+    let last = 0
+    let curr = 1
+    while (curr !== last) {
+      last = curr
+      data = format(advance(parse(data), 'visibility'))
+      // count the current occupied seats
+      curr = (data.match(/#/g) || []).length
+    }
+    return curr
   }
   const answers = []
   answers.push(part1())
