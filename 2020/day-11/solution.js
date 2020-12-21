@@ -1,12 +1,12 @@
 const fs = require('fs')
 const path = require('path')
 const filePath = path.join(__dirname, 'input.txt')
-const { inputToArray } = require('../../2018/inputParser')
+const { parse, advance, format } = require('./seating')
 
 fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
   if (err) throw err
 
-  initData = inputToArray(initData.trim())
+  initData = initData.trim()
 
   const resetInput = () => {
     // Deep copy to ensure we aren't mutating the original data
@@ -14,9 +14,16 @@ fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
   }
 
   const part1 = () => {
-    const data = resetInput()
-    console.debug(data)
-    return 'No answer yet'
+    let data = resetInput()
+    let last = 0
+    let curr = 1
+    while (curr !== last) {
+      last = curr
+      data = format(advance(parse(data)))
+      // count the current occupied seats
+      curr = (data.match(/#/g) || []).length
+    }
+    return curr
   }
 
   const part2 = () => {
