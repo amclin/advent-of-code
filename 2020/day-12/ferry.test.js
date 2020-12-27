@@ -99,4 +99,108 @@ describe('--- Day 11: Seating System ---', () => {
       })
     })
   })
+  describe('Part 2', () => {
+    describe('move()', () => {
+      let origin
+      let waypoint
+      let mode
+
+      beforeEach(() => {
+        mode = 'waypoint'
+        origin = {
+          x: 0,
+          y: 0,
+          d: 90 // Starting direction is east
+        }
+        waypoint = {
+          x: 10,
+          y: 1
+        }
+      })
+      it('waypoint: can move North without turning', () => {
+        const command = 'N5'
+        expect(
+          move({ position: origin, waypoint, command, mode })
+        ).to.deep.equal({
+          position: { x: 0, y: 0, d: 90 },
+          waypoint: { x: 10, y: 6 }
+        })
+      })
+      it('waypoint: can move South without turning', () => {
+        const command = 'S5'
+        expect(
+          move({ position: origin, waypoint, command, mode })
+        ).to.deep.equal({
+          position: { x: 0, y: 0, d: 90 },
+          waypoint: { x: 10, y: -4 }
+        })
+      })
+      it('waypoint: can move East without turning', () => {
+        const command = 'E5'
+        expect(
+          move({ position: origin, waypoint, command, mode })
+        ).to.deep.equal({
+          position: { x: 0, y: 0, d: 90 },
+          waypoint: { x: 15, y: 1 }
+        })
+      })
+      it('waypoint: can move West without turning', () => {
+        const command = 'W5'
+        expect(
+          move({ position: origin, waypoint, command, mode })
+        ).to.deep.equal({
+          position: { x: 0, y: 0, d: 90 },
+          waypoint: { x: 5, y: 1 }
+        })
+      })
+      it('waypoint: can turn left (counterclockwise) without moving', () => {
+        const command = 'L90'
+        expect(
+          move({ position: origin, waypoint, command, mode })
+        ).to.deep.equal({
+          position: { x: 0, y: 0, d: 90 },
+          waypoint: { x: -1, y: 10 }
+        })
+      })
+      it('waypoint: can turn right (clockwise) without moving', () => {
+        const command = 'R90'
+        expect(
+          move({ position: origin, waypoint, command, mode })
+        ).to.deep.equal({
+          position: { x: 0, y: 0, d: 90 },
+          waypoint: { x: 1, y: 10 }
+        })
+      })
+      it('waypoint: can move forward in the direction it is pointing', () => {
+        const command = 'F10'
+        expect(
+          move({ position: origin, waypoint, command, mode })
+        ).to.deep.equal({
+          position: { x: 100, y: 10, d: 90 },
+          waypoint: { x: 110, y: 11 }
+        })
+      })
+    })
+    describe('route()', () => {
+      let mode
+
+      beforeEach(() => {
+        mode = 'waypoint'
+      })
+      it('waypoint: can follow a list of instructions', () => {
+        const instructions = [
+          'F10',
+          'N3',
+          'F7',
+          'R90',
+          'F11'
+        ]
+        const result = route({ instructions, mode })
+        expect(result)
+          .to.deep.equal({ x: 214, y: 72, d: 90 })
+        // manhattan distance from origin
+        expect(distance({ x: 0, y: 0 }, result)).to.equal(72)
+      })
+    })
+  })
 })
