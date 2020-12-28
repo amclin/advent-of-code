@@ -28,10 +28,19 @@ const findSequentialTime = (schedule) => {
   // If we get an array the same length as the routes array, that means all routes matched
   while (result.length < routes.length) {
     x += routes[0]
-    result = routes.filter((route, idx) => {
-      if (route === 'x') { return true } // x doesn't matter
-      return ((x + idx) % route === 0) // Route is sequentially +1 above the previous route
-    })
+    // loop through the list looking for el mod = idx
+    let matches = true
+    let i = 0
+    while (i < routes.length && matches === true) {
+      if (routes[i] === 'x') { // "x" doesn't matter
+        i++
+      } else if ((x + i) % routes[i] === 0) { // Route is sequentially +1 above the previous route
+        i++
+      } else {
+        matches = false
+      }
+    }
+    if (matches) { result = routes }
   }
   console.debug(`Found a match ${x}`)
   return x

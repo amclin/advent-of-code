@@ -30,7 +30,7 @@ describe('--- Day 13: Shuttle Search ---', () => {
   describe('Part 2', () => {
     describe('findSequentialTime', () => {
       it('finds a sequential time where the busses all depart sequentially', () => {
-        // expect(findSequentialTime('7,13,x,x,59,x,31,19')).to.equal(1068781)
+        expect(findSequentialTime('7,13,x,x,59,x,31,19')).to.equal(1068781)
         expect(findSequentialTime('17,x,13,19')).to.equal(3417)
         expect(findSequentialTime('67,7,59,61')).to.equal(754018)
         expect(findSequentialTime('67,x,7,59,61')).to.equal(779210)
