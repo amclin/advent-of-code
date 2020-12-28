@@ -22,5 +22,6 @@ const findNext = ({ time, schedule }) => {
 
 module.exports = {
   parseSchedule,
-  findNext
+  findNext,
+  findSequentialTime: () => {}
 }
