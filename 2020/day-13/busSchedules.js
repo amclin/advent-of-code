@@ -20,8 +20,25 @@ const findNext = ({ time, schedule }) => {
   return result[0]
 }
 
+const findSequentialTime = (schedule) => {
+  const routes = schedule.split(',').map((el) => (el !== 'x') ? Number(el) : el)
+
+  let x = routes[0]
+  let result = []
+  // If we get an array the same length as the routes array, that means all routes matched
+  while (result.length < routes.length) {
+    x += routes[0]
+    result = routes.filter((route, idx) => {
+      if (route === 'x') { return true } // x doesn't matter
+      return ((x + idx) % route === 0) // Route is sequentially +1 above the previous route
+    })
+  }
+  console.debug(`Found a match ${x}`)
+  return x
+}
+
 module.exports = {
   parseSchedule,
   findNext,
-  findSequentialTime: () => {}
+  findSequentialTime
 }
