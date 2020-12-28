@@ -168,7 +168,7 @@ describe('--- Day 11: Seating System ---', () => {
           move({ position: origin, waypoint, command, mode })
         ).to.deep.equal({
           position: { x: 0, y: 0, d: 90 },
-          waypoint: { x: 1, y: 10 }
+          waypoint: { x: 1, y: -10 }
         })
       })
       it('waypoint: can move forward in the direction it is pointing', () => {
@@ -197,9 +197,9 @@ describe('--- Day 11: Seating System ---', () => {
         ]
         const result = route({ instructions, mode })
         expect(result)
-          .to.deep.equal({ x: 214, y: 72, d: 90 })
+          .to.deep.equal({ x: 214, y: -72, d: 90 })
         // manhattan distance from origin
-        expect(distance({ x: 0, y: 0 }, result)).to.equal(72)
+        expect(distance({ x: 0, y: 0 }, result)).to.equal(286)
       })
     })
   })
