@@ -22,9 +22,9 @@ fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
   }
 
   const part2 = () => {
-    const data = resetInput()
-    console.debug(data)
-    return 'No answer yet'
+    const instructions = resetInput()
+    const destination = route({ instructions, mode: 'waypoint' })
+    return distance({ x: 0, y: 0 }, destination)
   }
   const answers = []
   answers.push(part1())
