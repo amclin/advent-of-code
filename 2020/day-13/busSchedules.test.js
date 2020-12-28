@@ -7,7 +7,7 @@ const testData = {
   schedule: '7,13,x,x,59,x,31,19'
 }
 
-describe.only('--- Day 13: Shuttle Search ---', () => {
+describe('--- Day 13: Shuttle Search ---', () => {
   describe('Part 1', () => {
     describe('parseSchedule()', () => {
       it('cleans up the schedule', () => {
