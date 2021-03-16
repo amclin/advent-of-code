@@ -3,7 +3,7 @@ const { expect } = require('chai')
 const { distance } = require('../../2018/day-06/coordinates')
 const { move, route } = require('./ferry')
 
-describe('--- Day 11: Seating System ---', () => {
+describe('--- Day 12: Rain Risk ---', () => {
   describe('Part 1', () => {
     describe('move()', () => {
       let origin
