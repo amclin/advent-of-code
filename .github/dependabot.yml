@@ -1,0 +1,15 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "13:00"
+  open-pull-requests-limit: 10
+  assignees:
+  - amclin
+  ignore:
+  - dependency-name: semantic-release
+    versions:
+    - 17.3.7
+    - 17.3.8
