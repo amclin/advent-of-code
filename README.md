@@ -2,6 +2,13 @@
 [![Build Status](https://github.com/amclin/advent-of-code/actions/workflows/release.yml/badge.svg)](https://github.com/amclin/advent-of-code/actions/workflows/release.yml)
 [![codecov](https://codecov.io/gh/amclin/advent-of-code/branch/master/graph/badge.svg)](https://codecov.io/gh/amclin/advent-of-code)
 
+## Status
+
+### 2020
+![](https://img.shields.io/badge/day%20📅-6-blue)
+![](https://img.shields.io/badge/stars%20⭐-12-yellow)
+![](https://img.shields.io/badge/days%20completed-6-red)
+
 ## Start a boilerplate for a new day
 `npm run new`
 ### Special Instructions
