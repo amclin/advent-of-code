@@ -35,4 +35,5 @@ jobs:
         name: Push changes                       # Step that pushes these local changes back to your github repo
         with:
           commit_message: 'docs: Update badges [skip ci]'
+          push_options: '--force'
           file_pattern: README.md
