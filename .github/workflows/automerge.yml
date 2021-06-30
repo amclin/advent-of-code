@@ -1,0 +1,19 @@
+name: Automerge
+
+on:
+  check_suite:
+    types:
+      - completed
+
+jobs:
+  automerge:
+    runs-on: ubuntu-latest
+    if: |
+      github.actor == 'dependabot[bot]' &&
+      github.event_name == 'pull_request' &&
+      startsWith(github.event.pull_request.title, 'chore(deps')
+    steps:
+      - name: Merge me!
+        uses: ridedott/merge-me-action@v2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
