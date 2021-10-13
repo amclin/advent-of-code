@@ -28,7 +28,7 @@
   "homepage": "https://github.com/amclin/advent-of-code#readme",
   "devDependencies": {
     "@semantic-release/git": "^9.0.1",
-    "@semantic-release/github": "^7.2.3",
+    "@semantic-release/github": "^8.0.1",
     "chai": "^4.3.4",
     "codecov": "^3.8.3",
     "mocha": "^9.1.2",
