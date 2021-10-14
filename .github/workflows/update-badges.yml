@@ -16,6 +16,7 @@ jobs:
       - uses: actions/checkout@v2                # clones your repo, make sure the ssh secret is set!
         with:
           ref: ${{ github.head_ref }}
+          token: ${{ secrets.GH_PAT }}           # token-based checkout is required because of branch protections on master
 
       - uses: joblo2213/aoc-badges-action@v3
         with:
