@@ -14,6 +14,8 @@ jobs:
     steps:
 
       - uses: actions/checkout@v2                # clones your repo, make sure the ssh secret is set!
+        with:
+          ref: ${{ github.head_ref }}
 
       - uses: joblo2213/aoc-badges-action@v3
         with:
