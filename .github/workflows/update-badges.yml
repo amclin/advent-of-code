@@ -13,12 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - uses: actions/checkout@v2                # clones your repo, make sure the ssh secret is set!
-        with:
-          ref: ${{ github.head_ref }}
-          token: ${{ secrets.GH_PAT }}
+      - uses: actions/checkout@v3                # clones your repo, make sure the ssh secret is set!
 
-      - uses: joblo2213/aoc-badges-action@v2.1
+      - uses: joblo2213/aoc-badges-action@v3
         with:
           userid: ${{ secrets.AOC_BOARD_ID }}    # your user id, see setup on how to obtain
           session: ${{ secrets.AOC_SESSION }}    # secret containing session code, see setup on how to obtain
