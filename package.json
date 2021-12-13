@@ -10,7 +10,7 @@
     "posttest": "nyc report --reporter=html --reporter=text-lcov > coverage.lcov",
     "lint": "standard",
     "report-coverage": "codecov",
-    "new": "plop --plopfile ./plop-templates/plopfile.js"
+    "new": "npx plop --plopfile ./plop-templates/plopfile.js"
   },
   "repository": {
     "type": "git",
