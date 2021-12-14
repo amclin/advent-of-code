@@ -22,8 +22,8 @@ fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
 
   const part2 = () => {
     const data = resetInput()
-    console.debug(data)
-    return 'No answer yet'
+    const result = getLeastFuel(data, true)
+    return result
   }
   const answers = []
   answers.push(part1())
