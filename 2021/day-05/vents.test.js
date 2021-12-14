@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 const { expect } = require('chai')
-const { render, chartLine, parseLines } = require('./vents')
+const { render, chartLine, parseLines, countIntersections } = require('./vents')
 
 const testData = `0,9 -> 5,9
 8,0 -> 0,8
@@ -58,17 +58,30 @@ describe('--- Day 5: Hydrothermal Venture ---', () => {
         data = chartLine(data, 3, 4, 1, 4)
         expect(render(data)).to.equal(sampleMap)
       })
+      it('skips diagonal lines', () => {
+        // 10x10 empty grid
+        let data = [...new Array(10)].map(() => {
+          return [...new Array(10)].map(() => 0)
+        })
+        // Map some lines
+        parsedTestData.forEach((row) => {
+          data = chartLine(data, ...row)
+        })
+        expect(render(data)).to.equal(sampleMap)
+      })
     })
-    it('skips diagonal lines', () => {
-      // 10x10 empty grid
-      let data = [...new Array(10)].map(() => {
-        return [...new Array(10)].map(() => 0)
+    describe('countIntersections()', () => {
+      it('counts how many intersections exist of (n) lines or more', () => {
+        // 10x10 empty grid
+        let data = [...new Array(10)].map(() => {
+          return [...new Array(10)].map(() => 0)
+        })
+        // Map some lines
+        parsedTestData.forEach((row) => {
+          data = chartLine(data, ...row)
+        })
+        expect(countIntersections(data, 2)).to.equal(5)
       })
-      // Map some lines
-      parsedTestData.forEach((row) => {
-        data = chartLine(data, ...row)
-      })
-      expect(render(data)).to.equal(sampleMap)
     })
   })
 })

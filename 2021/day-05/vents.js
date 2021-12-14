@@ -35,6 +35,19 @@ const chartLine = (data, x1, y1, x2, y2) => {
 }
 
 /**
+ * Count the number of points with more than [threshold] intersecting lines
+ * @param {*} data
+ * @param {*} threshold
+ * @returns
+ */
+const countIntersections = (data, threshold) => {
+  return data.reduce((total, row) => {
+    total += row.filter((cell) => (cell >= threshold)).length
+    return total
+  }, 0)
+}
+
+/**
  * Creates a visible map from the data
  * @param {*} data
  * @returns string
@@ -63,5 +76,6 @@ const parseLines = (data) => {
 module.exports = {
   render,
   chartLine,
+  countIntersections,
   parseLines
 }
