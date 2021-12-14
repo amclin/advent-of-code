@@ -5,9 +5,9 @@
 ## Status
 
 ### 2020
-![](https://img.shields.io/badge/day%20📅-0-blue)
-![](https://img.shields.io/badge/stars%20⭐-0-yellow)
-![](https://img.shields.io/badge/days%20completed-0-red)
+![](https://img.shields.io/badge/day%20📅-14-blue)
+![](https://img.shields.io/badge/stars%20⭐-6-yellow)
+![](https://img.shields.io/badge/days%20completed-3-red)
 
 ## Start a boilerplate for a new day
 `npm run new`
