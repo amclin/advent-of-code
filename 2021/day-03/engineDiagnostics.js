@@ -7,8 +7,8 @@ const getMostCommon = (data, position) => {
   const offs = data.filter((reading) => {
     return reading[position] === '0'
   }).length
-  // there can only be 2 values, so easy to check which has more as being 50% or above
-  return (offs >= data.length / 2) ? '0' : '1'
+  // there can only be 2 values, so easy to check which has more as being above 50%
+  return (offs > data.length / 2) ? '0' : '1'
 }
 
 /**
@@ -40,6 +40,36 @@ const getEpsilon = (data) => {
   return epsilon
 }
 
+const getO2 = (data) => {
+  return getAir(data, getMostCommon)
+}
+
+const getCO2 = (data) => {
+  return getAir(data, getLeastCommon)
+}
+
+const getAir = (data, filterMethod) => {
+  let dataset = data
+  // Loop through each digit, find the most common bit for that digit, and filter
+  // out any readings that don't share that digit
+  //
+  // TODO: Probably faster with bitmap math, but .... ehh... runs fast enough
+  for (let x = 0; x < data[0].length; x++) {
+    if (dataset.length > 1) {
+      const bit = filterMethod(dataset, x)
+      dataset = dataset.filter((reading) => {
+        return reading[x] === bit
+      })
+    }
+  }
+
+  if (dataset.length > 1) {
+    throw new Error(`Found too many results ${dataset}`)
+  }
+
+  return dataset[0]
+}
+
 const calcPowerConsumption = (gamma, epsilon) => {
   return parseInt(gamma, 2) * parseInt(epsilon, 2)
 }
@@ -49,5 +79,8 @@ module.exports = {
   getEpsilon,
   getMostCommon,
   getLeastCommon,
-  calcPowerConsumption
+  getO2,
+  getCO2,
+  calcPowerConsumption,
+  calcLifeSupport: calcPowerConsumption
 }

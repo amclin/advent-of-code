@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 const { expect } = require('chai')
-const { getMostCommon, getLeastCommon, getEpsilon, getGamma, calcPowerConsumption } = require('./engineDiagnostics')
+const { getMostCommon, getLeastCommon, getEpsilon, getGamma, getO2, getCO2, calcPowerConsumption, calcLifeSupport } = require('./engineDiagnostics')
 
 const testData = [
   '00100',
@@ -50,6 +50,23 @@ describe('--- Day 3: Binary Diagnostic ---', () => {
     describe('calcPowerConsumption', () => {
       it('calculates the power consumption by multiplying the gamma and epsilon rates as decimals', () => {
         expect(calcPowerConsumption('10110', '01001')).to.equal(198)
+      })
+    })
+  })
+  describe('Part 2', () => {
+    describe('getO2()', () => {
+      it('calculates the oxygen generator rating from the provided data', () => {
+        expect(getO2(testData)).to.equal('10111')
+      })
+    })
+    describe('getCO2()', () => {
+      it('calculates the carbon dioxide scrubber rating from the provided data', () => {
+        expect(getCO2(testData)).to.equal('01010')
+      })
+    })
+    describe('calcLifeSupport', () => {
+      it('calculates the life support rating by multiplying the O2 and C02 rates rates as decimals', () => {
+        expect(calcLifeSupport('10110', '01001')).to.equal(198)
       })
     })
   })
