@@ -3,8 +3,8 @@ const { expect } = require('chai')
 const { move, navigate } = require('./navigate')
 
 const TestRoute = [
-  ['down', 5],
   ['forward', 5],
+  ['down', 5],
   ['forward', 8],
   ['up', 3],
   ['down', 8],
@@ -37,12 +37,6 @@ describe('--- Day 2: Dive! ---', () => {
           move({ x: 0, d: 0 }, 'garbage', 5)
         }).to.throw('Direction garbage is unsupported')
       })
-      // it('defaults to 0,0 as the origin when  not provided', () => {
-      //   expect(move({}, 'up', 8)).to.deep.equal({
-      //     x: 0,
-      //     d: -8
-      //   })
-      // })
     })
     describe('navigate()', () => {
       it('takes a series of directions and follows the route', () => {
