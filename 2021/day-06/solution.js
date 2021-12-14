@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const filePath = path.join(__dirname, 'input.txt')
 const { parseData } = require('../../2018/inputParser')
-const { school } = require('./fish')
+const { school, efficientSchool } = require('./fish')
 
 fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
   if (err) throw err
@@ -27,8 +27,14 @@ fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
 
   const part2 = () => {
     const data = resetInput()
-    console.debug(data)
-    return 'No answer yet'
+    efficientSchool.state = data
+    // Advance the designated time
+    for (let x = 0; x < 256; x++) {
+      efficientSchool.advance()
+    }
+    // Count how many fish we have
+    const sum = (x, y) => x + y
+    return efficientSchool.state.reduce(sum)
   }
   const answers = []
   answers.push(part1())
