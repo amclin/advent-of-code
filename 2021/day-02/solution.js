@@ -28,8 +28,8 @@ fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
 
   const part2 = () => {
     const data = resetInput()
-    console.debug(data)
-    return 'No answer yet'
+    const destination = navigate({ x: 0, d: 0, a: 0 }, data, true)
+    return destination.x * destination.d
   }
   const answers = []
   answers.push(part1())
