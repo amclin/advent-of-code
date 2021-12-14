@@ -7,7 +7,7 @@
  * @param {*} y2 end of line vertical point
  * @returns
  */
-const chartLine = (data, x1, y1, x2, y2) => {
+const chartLine = (data, x1, y1, x2, y2, allowDiaganol = false) => {
   let x = x1
   let y = y1
   if (y1 === y2) {
@@ -25,6 +25,17 @@ const chartLine = (data, x1, y1, x2, y2) => {
     const yDir = (y2 > y1) ? 1 : -1
     while (y !== y2) {
       data[y][x]++
+      y += yDir
+    }
+    data[y][x]++ // coordinates are inclusive
+  } else if (allowDiaganol) {
+    // chart diagonal line
+    console.debug(`Drawing diagonal line ${x1},${y1} to ${x2},${y2}`)
+    const xDir = (x2 > x1) ? 1 : -1
+    const yDir = (y2 > y1) ? 1 : -1
+    while (x !== x2 && y !== y2) {
+      data[y][x]++
+      x += xDir
       y += yDir
     }
     data[y][x]++ // coordinates are inclusive

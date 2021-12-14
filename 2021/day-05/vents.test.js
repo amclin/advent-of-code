@@ -24,6 +24,17 @@ const sampleMap = `.......1..
 ..........
 222111....`
 
+const sampleDiagonalMap = `1.1....11.
+.111...2..
+..2.1.111.
+...1.2.2..
+.112313211
+...1.2....
+..1...1...
+.1.....1..
+1.......1.
+222111....`
+
 const parsedTestData = parseLines(testData)
 
 describe('--- Day 5: Hydrothermal Venture ---', () => {
@@ -81,6 +92,21 @@ describe('--- Day 5: Hydrothermal Venture ---', () => {
           data = chartLine(data, ...row)
         })
         expect(countIntersections(data, 2)).to.equal(5)
+      })
+    })
+  })
+  describe('Part 2', () => {
+    describe('chartLine()', () => {
+      it('includes diagonal lines when specified', () => {
+        // 10x10 empty grid
+        let data = [...new Array(10)].map(() => {
+          return [...new Array(10)].map(() => 0)
+        })
+        // Map some lines
+        parsedTestData.forEach((row) => {
+          data = chartLine(data, ...row, true)
+        })
+        expect(render(data)).to.equal(sampleDiagonalMap)
       })
     })
   })
