@@ -59,9 +59,37 @@ fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
   }
 
   const part2 = () => {
-    // const data = resetInput()
-    // console.debug(data)
-    return 'No answer yet'
+    const data = resetInput()
+
+    let draw = -1
+    let lastWin = []
+    let lastDraw = 0
+
+    while (data.boards.length >= 1 && draw < data.draws.length) {
+      // next draw
+      draw++
+
+      // Mark each board that has the number
+      console.debug(`Checking draw ${data.draws[draw]}`)
+      data.boards = data.boards.map((board) => {
+        return markBoard(board, data.draws[draw])
+      })
+
+      // Filter out any winners
+      data.boards = data.boards.filter((board) => {
+        if (checkWinner(board) === 'winner') {
+          lastWin = board
+          lastDraw = data.draws[draw]
+          return false
+        } else {
+          return true
+        }
+      })
+    }
+
+    // last winner found
+    console.debug(`Score is ${scoreBoard(lastWin)} on draw ${lastDraw}`)
+    return scoreBoard(lastWin) * lastDraw
   }
   const answers = []
   answers.push(part1())

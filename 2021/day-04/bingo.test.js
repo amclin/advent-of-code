@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 const { expect } = require('chai')
-const { callNumber, scoreBoard, checkWinner, markBoard } = require('./bingo')
-const { parseData } = require('../../2018/inputParser')
+const { scoreBoard, checkWinner, markBoard } = require('./bingo')
+const { parseData, linesToArray } = require('../../2018/inputParser')
 
 const testData = `
 7,4,9,5,11,17,23,2,0,14,21,24,10,16,13,6,15,25,12,22,18,20,8,19,3,26,1
@@ -25,10 +25,11 @@ const testData = `
  2  0 12  3  7
 `
 // Deep copy to ensure we aren't mutating the original data
-const data = JSON.parse(JSON.stringify(testData))
+const data = JSON.parse(JSON.stringify(linesToArray(testData)))
 
 // split up data
 const testDraws = parseData(data.shift())
+console.debug(testDraws)
 const testBoards = []
 for (let x = 0; x < data.length; x = x + 5) {
   testBoards.push(
@@ -55,34 +56,6 @@ describe('--- Day 4: Giant Squid ---', () => {
           [1, 3, 'x', 7, 9]
         ]
         expect(markBoard(board, 5)).to.deep.equal(expected)
-      })
-      it.skip('can be used in a loop to find', () => {
-        // callNumber(7)
-        // callNumber(4)
-        // callNumber(9)
-        // callNumber(5)
-        // callNumber(11)
-        // for(var x = 0; x < testBoards)
-        // expect(boards[0]).to.deep.equal(board0)
-        // expect(boards[1]).to.deep.equal(board1)
-        // expect(boards[2]).to.deep.equal(board2)
-        // callNumber(17)
-        // callNumber(23)
-        // callNumber(2)
-        // callNumber(0)
-        // callNumber(14)
-        // callNumber(21)
-        // expect(boards[0]).to.deep.equal(board0)
-        // expect(boards[1]).to.deep.equal(board1)
-        // expect(boards[2]).to.deep.equal(board2)
-      })
-      it.skip('identifies the winner', () => {
-        expect(callNumber(24)).to.equal(3)
-      })
-    })
-    describe('findWinner()', () => {
-      it.skip('loops through the boards and checks for a winner', () => {
-
       })
     })
     describe('checkWinner()', () => {

@@ -1,15 +1,3 @@
-const boards = []
-
-const callNumber = (called) => {
-  for (let x = 0; x < boards.length; x++) {
-    markBoard(x, called)
-    if (checkWinner(x) === 'winner') {
-      console.debug(`Board ${x} is the winner`)
-      return x
-    }
-  }
-}
-
 const markBoard = (board, called) => {
   for (let x = 0; x < 5; x++) {
     for (let y = 0; y < 5; y++) {
@@ -69,7 +57,6 @@ const scoreBoard = (board) => {
 }
 
 module.exports = {
-  callNumber,
   scoreBoard,
   checkWinner,
   markBoard
