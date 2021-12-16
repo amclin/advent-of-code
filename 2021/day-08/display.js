@@ -448,7 +448,8 @@ const descrambleSignal = (data) => {
   console.debug(segmentCodes)
 
   return {
-    segmentCodes
+    segmentCodes,
+    charCodes: sortedCodes
   }
 }
 
