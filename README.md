@@ -9,7 +9,12 @@
 ![](https://img.shields.io/badge/stars%20⭐-14-yellow)
 ![](https://img.shields.io/badge/days%20completed-7-red)
 
-## Start a boilerplate for a new day
+## Run the currently configured default day
+`npm start`
+
+### Run in debug mode for extended logging
+`DEBUG=1 npm start`
+## Generate a boilerplate for a new day
 `npm run new`
 ### Special Instructions
 Run by modifying `index.js` to point to the puzzle you want to execute.
