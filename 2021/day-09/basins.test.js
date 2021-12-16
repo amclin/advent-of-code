@@ -8,7 +8,7 @@ const testData = `2199943210
 8767896789
 9899965678`
 
-describe.only('--- Day 9: Smoke Basin ---', () => {
+describe('--- Day 9: Smoke Basin ---', () => {
   describe('Part 1', () => {
     describe('findLocalLows()', () => {
       it('finds the local low points in the terrain', () => {
