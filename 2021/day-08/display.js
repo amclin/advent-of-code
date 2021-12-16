@@ -28,7 +28,6 @@
 //   })
 //   }
 
-const alphabetical = (a, b) => a - b
 
 /**
  * Takes a string of scrambled codes and deduces which codes correspond
@@ -41,7 +40,7 @@ const descrambleSignal = (data) => {
   console.debug('2021-day-08 descrambleSignal()')
 
   const scrambledCodes = data.split(' ')
-    .map((code) => code.split('').sort(alphabetical)) // Convert each code to alphabetized arrays
+    .map((code) => code.split('').sort()) // Convert each code to alphabetized arrays
   const segmentCodes = Array(7) // For caching the identified segment codes as we find them
   const sortedCodes = Array(10) // For caching the identified number codes as we find them
 
