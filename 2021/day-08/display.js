@@ -113,7 +113,7 @@ const descrambleSignal = (data) => {
       .filter((code) => code.length === 5) // Find 5-character codes
       .filter((code) => {
         // Remove codes that don't include both segments of #1
-        return code.filter((letter) => !number1.includes(letter)).length === 0
+        return code.filter((letter) => !number1.includes(letter)).length === 3
       })[0]
 
     console.debug('Found #3')
@@ -354,9 +354,11 @@ const descrambleSignal = (data) => {
   // )
 
   // #4 is the only number we need that doesn't come from identifying segments
+  console.debug('Find #4')
   findNum4()
 
   // Find the codes for each segment
+  console.debug('Find segment 0')
   findSeg0(
     findNum1(),
     findNum7()
@@ -364,6 +366,7 @@ const descrambleSignal = (data) => {
 
   console.debug(segmentCodes)
 
+  console.debug('Find segment 1')
   findSeg1(
     findNum1(),
     findNum6(
@@ -373,6 +376,7 @@ const descrambleSignal = (data) => {
 
   console.debug(segmentCodes)
 
+  console.debug('Find segment 2')
   findSeg2(
     findNum1(),
     findSeg1(
@@ -387,6 +391,7 @@ const descrambleSignal = (data) => {
 
   // findSeg3 is moved to last because it depends on finding all other segments first
 
+  console.debug('Find segment 4')
   findSeg4(
     findNum1(),
     findNum5(
@@ -397,6 +402,7 @@ const descrambleSignal = (data) => {
 
   console.debug(segmentCodes)
 
+  console.debug('Find segment 5')
   findSeg5(
     findNum1(),
     findNum2(
@@ -412,6 +418,7 @@ const descrambleSignal = (data) => {
 
   console.debug(segmentCodes)
 
+  console.debug('Find segment 6')
   findSeg6(
     findNum0(
       findNum6(
@@ -432,6 +439,7 @@ const descrambleSignal = (data) => {
 
   console.debug(segmentCodes)
 
+  console.debug('Find segment 3')
   findSeg3(
     findNum8(),
     segmentCodes
