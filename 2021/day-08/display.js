@@ -28,6 +28,36 @@
 //   })
 //   }
 
+/**
+ * Using a map of character codes, decode a signal
+ * @param {array} charCodes
+ * @param {string} signal
+ */
+const decodeSignal = (charCodes, signal) => {
+  console.debug('2021-day-08 decodeSignal()')
+
+  const digits = signal.split(' ')
+    .map(
+      (code) => {
+        const clean = code.split('').sort() // cleanup format to match expected map of codes
+        const matches = charCodes.filter((c) => {
+          // sort here on the charCode is just in case non-alphabatized data is provided
+          return (JSON.stringify(c.sort()) === JSON.stringify(clean))
+        })
+        if (matches.length < 1) {
+          throw new Error(`No match found for ${code} when cleaned up to ${clean}`)
+        }
+        if (matches.length > 1) {
+          throw new Error(`Too many matches for ${code} when cleaned up to ${clean}. This most likely indicates a bad list of character codes.`)
+        }
+
+        // The key in charCodes for the match is the decoded number we want
+        return charCodes.indexOf(matches[0])
+      }
+    )
+
+  return digits
+}
 
 /**
  * Takes a string of scrambled codes and deduces which codes correspond
@@ -454,5 +484,6 @@ const descrambleSignal = (data) => {
 }
 
 module.exports = {
+  decodeSignal,
   descrambleSignal
 }
