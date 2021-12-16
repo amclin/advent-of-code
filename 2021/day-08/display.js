@@ -1,33 +1,3 @@
-// const renderDigit = (num) => {
-//   const topper = `  ${num}:  `
-//   const patterns = [
-//     'abcefg',
-//     'cf',
-//     'acdeg',
-//     'acdfg',
-//     'bcdf',
-//     'abdfg',
-//     'abdefg',
-//     'acf',
-//     'abcdefg',
-//     'abcdfg'
-//   ]
-//   const template = `
-//  aaaa
-// b    c
-// b    c
-//  dddd
-// e    f
-// e    f
-//  gggg
-// `
-
-//   const out = template
-//   patterns[8].forEach((segment) => {
-//     if(patterns[num].indexOf(segment) >= -1
-//   })
-//   }
-
 /**
  * Using a map of character codes, decode a signal
  * @param {array} charCodes
@@ -483,7 +453,17 @@ const descrambleSignal = (data) => {
   }
 }
 
+const parseEntry = (entry) => {
+  const codes = entry[0]
+  const signal = entry[1]
+  const { charCodes } = descrambleSignal(codes)
+  return parseInt(
+    decodeSignal(charCodes, signal).join('')
+  )
+}
+
 module.exports = {
   decodeSignal,
-  descrambleSignal
+  descrambleSignal,
+  parseEntry
 }

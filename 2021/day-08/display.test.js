@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 const { expect } = require('chai')
-const { descrambleSignal, decodeSignal } = require('./display')
+const { descrambleSignal, decodeSignal, parseEntry } = require('./display')
 
 const testSingle = 'acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab | cdfeb fcadb cdfeb cdbaf'
 
@@ -14,14 +14,6 @@ dbcfg fgd bdegcaf fgec aegbdf ecdfab fbedc dacgb gdcebf gf | cefg dcbef fcge gbc
 bdfegc cbegaf gecbf dfcage bdacg ed bedf ced adcbefg gebcd | ed bcgafe cdgba cbgef
 egadfb cdbfeg cegd fecab cgb gbdefca cg fgcdab egfdb bfceg | gbdfcae bgc cg cgb
 gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc | fgae cfgab fg bagce`.split('\n')
-
-console.debug(
-  testSingle.split('|')[0].trim()
-    .split(' ').map(
-      (code) => code.split('')
-        .sort((a, b) => a - b)
-    ).sort((a, b) => a.length - b.length)
-)
 
 describe('--- Day 8: Seven Segment Search ---', () => {
   describe('Part 1', () => {
@@ -70,6 +62,24 @@ describe('--- Day 8: Seven Segment Search ---', () => {
         ).to.throw(
           'Too many matches for dcb when cleaned up to b,c,d. This most likely indicates a bad list of character codes.'
         )
+      })
+    })
+  })
+  describe('Part 2', () => {
+    describe('parseEntry()', () => {
+      it('parses a set of scrambled codes and signal to produce a number for display', () => {
+        expect(
+          parseEntry(
+            testSingle.split('|').map((x) => x.trim())
+          )
+        ).to.equal(5353)
+
+        const testData = testMultiple.map(
+          (entry) => entry.split('|')
+            .map((x) => x.trim())
+        ).map(parseEntry)
+
+        expect(testData.reduce((a, b) => a + b)).to.equal(61229)
       })
     })
   })

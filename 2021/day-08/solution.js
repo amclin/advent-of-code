@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const filePath = path.join(__dirname, 'input.txt')
 const { linesToArray } = require('../../2018/inputParser')
-const { descrambleSignal, decodeSignal } = require('./display')
+const { descrambleSignal, decodeSignal, parseEntry } = require('./display')
 
 fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
   if (err) throw err
@@ -37,8 +37,9 @@ fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
 
   const part2 = () => {
     const data = resetInput()
-    console.debug(data)
-    return 'No answer yet'
+
+    return data.map(parseEntry)
+      .reduce((a, b) => a + b)
   }
   const answers = []
   answers.push(part1())
