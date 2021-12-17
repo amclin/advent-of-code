@@ -1,1 +1,1 @@
-require('./2021/day-09/solution')
+require('./2021/day-10/solution')
