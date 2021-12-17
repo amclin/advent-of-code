@@ -18,15 +18,16 @@ gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc | fgae cfgab fg bagce
 describe('--- Day 8: Seven Segment Search ---', () => {
   describe('Part 1', () => {
     describe('descrambleSignal()', () => {
-      const testData = testSingle.split('|')[0].trim()
-      const { segmentCodes, charCodes } = descrambleSignal(testData)
-
       it('takes scambled string of 10 codes and identifies the letters matching each seven-digit-display segment', () => {
+        const testData = testSingle.split('|')[0].trim()
+        const { segmentCodes } = descrambleSignal(testData)
         expect(segmentCodes.length).to.equal(7)
         expect(segmentCodes.filter((code) => !['a', 'b', 'c', 'd', 'e', 'f', 'g'].includes(code)).length).to.equal(0)
       })
 
       it('produces a list of character codes for each number that can be displayed', () => {
+        const testData = testSingle.split('|')[0].trim()
+        const { charCodes } = descrambleSignal(testData)
         // There should be exactly 10 numbers
         expect(charCodes.length).to.equal(10)
         // lengths of each code is predictable as each number has a specific count of segments
@@ -35,10 +36,9 @@ describe('--- Day 8: Seven Segment Search ---', () => {
       })
     })
     describe('decodeSignal()', () => {
-      const testData = testMultiple[0].split('|').map((a) => a.trim())
-      const { charCodes } = descrambleSignal(testData[0])
-
       it('decodes a display pattern using the provided map of display codes', () => {
+        const testData = testMultiple[0].split('|').map((a) => a.trim())
+        const { charCodes } = descrambleSignal(testData[0])
         const result = decodeSignal(charCodes, testData[1])
         expect(result[0]).to.equal(8)
         expect(result[3]).to.equal(4)
