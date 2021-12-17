@@ -3,6 +3,7 @@ const path = require('path')
 const filePath = path.join(__dirname, 'input.txt')
 const { linesToArray } = require('../../2018/inputParser')
 const { lintAll } = require('./linting')
+const { scoreAutocomplete, findMiddleScore } = require('./scoring')
 
 fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
   if (err) throw err
@@ -25,13 +26,19 @@ fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
 
     const errors = lintAll(data)
 
-    return errors.reduce((total, error) => total + points[error.found], 0)
+    // Score the premature closure errors
+    return errors.filter((err) => !!err.char)
+      .reduce((total, error) => total + points[error.found], 0)
   }
 
   const part2 = () => {
     const data = resetInput()
-    console.debug(data)
-    return 'No answer yet'
+    // find the incomplete line errors
+    const errors = lintAll(data).filter((err) => !!err.suggestion)
+
+    const scores = errors.map((err) => scoreAutocomplete(err.suggestion))
+
+    return findMiddleScore(scores)
   }
   const answers = []
   answers.push(part1())

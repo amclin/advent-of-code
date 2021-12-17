@@ -20,6 +20,14 @@ const testData = `[({(<(())[]>[[{[]{<()<>>
 <{([([[(<>()){}]>(<<{{
 <{([{{}}[<[[[<>{}]]]>[]]`
 
+const autocomplete = {
+  '[({(<(())[]>[[{[]{<()<>>': '}}]])})]',
+  '[(()[<>])]({[<{<<[]>>(': ')}>]})',
+  '(((({<>}<{<{<>}{[]{[]{}': '}}>}>))))',
+  '{<[[]]>}<{[{[{[]{()[[[]': ']]}}]}]}>',
+  '<{([{{}}[<[[[<>{}]]]>[]]': '])}>'
+}
+
 describe('--- Day 10: Syntax Scoring ---', () => {
   describe('Part 1', () => {
     describe('lintLine()', () => {
@@ -57,6 +65,7 @@ describe('--- Day 10: Syntax Scoring ---', () => {
     describe('lintAll', () => {
       it('finds all lines with linting errors', () => {
         const errors = lintAll(testData.split('\n'))
+          .filter((err) => (err.char))
 
         expect(errors.length).to.equal(5)
         expect(errors[0]).to.deep.equal({
@@ -89,6 +98,25 @@ describe('--- Day 10: Syntax Scoring ---', () => {
           expected: ']',
           found: '>'
         })
+      })
+      it('provides autocomplete suggestions for incomplete lines', () => {
+        const data = testData.split('\n')
+        const errors = lintAll(data)
+          .filter((err) => !!err.suggestion)
+
+        expect(errors.length).to.equal(5)
+        errors.forEach((err) => {
+          expect(err.suggestion).to.equal(
+            autocomplete[data[err.line]]
+          )
+        })
+      })
+      it('skips lines without errors', () => {
+        const errors = lintAll([
+          '[]',
+          '[()]'
+        ])
+        expect(errors.length).to.equal(0)
       })
     })
   })

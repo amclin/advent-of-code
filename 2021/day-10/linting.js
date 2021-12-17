@@ -30,9 +30,13 @@ const lintLine = (line) => {
     pos++
   }
 
-  // if we run out of line, ignore per instructions for Step 1
+  // if we run out of characters in the line, that means it is
+  // incomplete, and we need to provide an autocomplete suggestion
   if (expected.length > 0) {
-    // TODO - add the reporting when we need it in Step 2?
+    // Reversing the 'expected' string gives us the autocomplete suggestion
+    return {
+      suggestion: [...expected].reverse().join('')
+    }
   }
 }
 
@@ -40,11 +44,11 @@ const lintAll = (instructions) => {
   const errors = instructions.map(lintLine) // lint each line
     .map((error, idx) => {
       return { ...error, line: idx }
-    }).filter((report) => !!(report.char)) // remove lines without errors
+    }).filter((report) => !!(report.char) || !!(report.suggestion)) // remove lines without errors
 
   console.log(`Linting found ${errors.length} errors in ${instructions.length} lines.`)
-  console.debug(instructions)
-  console.debug(errors)
+  // console.debug(instructions)
+  // console.debug(errors)
 
   return errors
 }
