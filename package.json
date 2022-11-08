@@ -30,7 +30,7 @@
   "devDependencies": {
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^8.0.6",
-    "chai": "^4.3.6",
+    "chai": "^4.3.7",
     "codecov": "^3.8.3",
     "mocha": "^10.1.0",
     "nyc": "^15.1.0",
