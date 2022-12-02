@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const filePath = path.join(__dirname, 'input.txt')
 const { inputToArray, linesToArray } = require('../../2018/inputParser')
-const { scoreMatch } = require('./rochambeau')
+const { scoreMatch, strategizeMatch } = require('./rochambeau')
 
 fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
   if (err) throw err
@@ -21,8 +21,7 @@ fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
 
   const part2 = () => {
     const data = resetInput()
-    console.debug(data)
-    return 'No answer yet'
+    return strategizeMatch(data)
   }
   const answers = []
   answers.push(part1())
