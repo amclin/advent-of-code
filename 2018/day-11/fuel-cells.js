@@ -95,7 +95,7 @@ class Rack {
   findMaxSquare (size) {
     return this.cells.reduce((acc, cell, idx) => {
       const squarePower = this._tallySquare(idx, size)
-      return (squarePower !== null && squarePower > acc.power) ? { power: squarePower, idx: idx } : acc
+      return (squarePower !== null && squarePower > acc.power) ? { power: squarePower, idx } : acc
     }, { power: -99999, idx: -1 })
   }
 }

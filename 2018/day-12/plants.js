@@ -63,7 +63,7 @@ class Plants {
 
       return {
         position: pot.position,
-        state: state
+        state
       }
     })
 
