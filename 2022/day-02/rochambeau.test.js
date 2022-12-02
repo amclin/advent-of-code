@@ -33,7 +33,7 @@ describe('--- Day 2: Rock Paper Scissors ---', () => {
         expect(strategizeRound('B', 'X')).to.equal(1)
         expect(strategizeRound('C', 'Z')).to.equal(7)
         // data from input
-        expect(scoreRound('A', 'X')).to.equal(3) // Opponent played Rock and self should lose
+        expect(strategizeRound('A', 'X')).to.equal(3) // Opponent played Rock and self should lose
       })
     })
     describe('strategizeMatch', () => {
