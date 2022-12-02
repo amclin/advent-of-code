@@ -17,6 +17,10 @@ const parseCalorieData = (data) => {
 }
 
 const findElfWithMost = (data) => {
+  return sortElvesByCalories(data)[0] // Sort for the elf with the most calories
+}
+
+const sortElvesByCalories = (data) => {
   const sum = (a, b) => { return a + b }
   const compare = (a, b) => {
     // compare sums of array values for sum-based sorting
@@ -27,10 +31,11 @@ const findElfWithMost = (data) => {
     )
   }
   data.sort(compare)
-  return data[0] // Sort for the elf with the most calories
+  return data
 }
 
 module.exports = {
   findElfWithMost,
-  parseCalorieData
+  parseCalorieData,
+  sortElvesByCalories
 }
