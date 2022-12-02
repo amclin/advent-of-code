@@ -1,8 +1,8 @@
 /* eslint-env mocha */
 const { expect } = require('chai')
-const { scoreMatch, scoreRound } = require('./rochambeau')
+const { scoreMatch, scoreRound, strategizeMatch, strategizeRound } = require('./rochambeau')
 
-describe('--- Day 2: Rock Paper Scissors ---', () => {
+describe.only('--- Day 2: Rock Paper Scissors ---', () => {
   describe('Part 1', () => {
     describe('scoreRound', () => {
       it('calculates the score of a round based on what the opponent played and what you played', () => {
@@ -23,6 +23,26 @@ describe('--- Day 2: Rock Paper Scissors ---', () => {
             ['C', 'Z']
           ])
         ).to.equal(15)
+      })
+    })
+  })
+  describe('Part 2', () => {
+    describe('strategizeRound()', () => {
+      it('calculates the score of a round based on what the opponent played and the outcome you should achieve', () => {
+        expect(strategizeRound('A', 'Y')).to.equal(4)
+        expect(strategizeRound('B', 'X')).to.equal(1)
+        expect(strategizeRound('C', 'Z')).to.equal(7)
+      })
+    })
+    describe('strategizeMatch', () => {
+      it('calculates the total score of a strategized match', () => {
+        expect(
+          strategizeMatch([
+            ['A', 'Y'],
+            ['B', 'X'],
+            ['C', 'Z']
+          ])
+        ).to.equal(12)
       })
     })
   })

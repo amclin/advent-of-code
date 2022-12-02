@@ -2,6 +2,7 @@
 // Lookup tables for possible rock / paper / scissor values
 const selfCodes = ['X', 'Y', 'Z']
 const opponentCodes = ['A', 'B', 'C']
+const strategyCodes = selfCodes // Same list, as lose / draw / win
 
 const scoreRound = (opponent, self) => {
   const scoreShape = (self) => {
@@ -36,6 +37,22 @@ const scoreRound = (opponent, self) => {
   return scoreShape(self) + scoreOutcome(opponent, self)
 }
 
+const strategizeRound = (opponent, outcome) => {
+  const scoreOutcome = 3 * strategyCodes.indexOf(outcome)
+  const scoreShape = (shape) => {
+    return opponentCodes.indexOf(shape) + 1
+  }
+
+  const findPlay = (opponent, outcome) => {
+    const offset = strategyCodes.indexOf(outcome) - 1
+    let target = opponentCodes.indexOf(opponent) + offset
+    if (target >= opponentCodes.length) { target = 0 }
+    return opponentCodes[target]
+  }
+  console.debug(scoreShape(findPlay(opponent, outcome)), scoreOutcome)
+  return scoreShape(findPlay(opponent, outcome)) + scoreOutcome
+}
+
 /**
  * Tallies the results of all rounds in a match
  * @param {*} guide
@@ -47,7 +64,15 @@ const scoreMatch = (guide) => {
   }).reduce((sum, value) => sum + value, 0)
 }
 
+const strategizeMatch = (guide) => {
+  return guide.map((match) => {
+    return strategizeRound(...match)
+  }).reduce((sum, value) => sum + value, 0)
+}
+
 module.exports = {
   scoreMatch,
-  scoreRound
+  scoreRound,
+  strategizeMatch,
+  strategizeRound
 }
