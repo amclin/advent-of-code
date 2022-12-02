@@ -47,9 +47,9 @@ const strategizeRound = (opponent, outcome) => {
     const offset = strategyCodes.indexOf(outcome) - 1
     let target = opponentCodes.indexOf(opponent) + offset
     if (target >= opponentCodes.length) { target = 0 }
+    if (target < 0) { target = opponentCodes.length - 1}
     return opponentCodes[target]
   }
-  console.debug(scoreShape(findPlay(opponent, outcome)), scoreOutcome)
   return scoreShape(findPlay(opponent, outcome)) + scoreOutcome
 }
 

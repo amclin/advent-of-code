@@ -2,7 +2,7 @@
 const { expect } = require('chai')
 const { scoreMatch, scoreRound, strategizeMatch, strategizeRound } = require('./rochambeau')
 
-describe.only('--- Day 2: Rock Paper Scissors ---', () => {
+describe('--- Day 2: Rock Paper Scissors ---', () => {
   describe('Part 1', () => {
     describe('scoreRound', () => {
       it('calculates the score of a round based on what the opponent played and what you played', () => {
@@ -32,6 +32,8 @@ describe.only('--- Day 2: Rock Paper Scissors ---', () => {
         expect(strategizeRound('A', 'Y')).to.equal(4)
         expect(strategizeRound('B', 'X')).to.equal(1)
         expect(strategizeRound('C', 'Z')).to.equal(7)
+        // data from input
+        expect(scoreRound('A', 'X')).to.equal(3) // Opponent played Rock and self should lose
       })
     })
     describe('strategizeMatch', () => {
