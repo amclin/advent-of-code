@@ -21,7 +21,7 @@ const init = (data) => {
   const best = beaconTracker.frameMeta.reduce((acc, curr, idx) => {
     return (curr.focus < acc.focus)
       ? {
-          idx: idx,
+          idx,
           focus: curr.focus,
           dims: curr.dims
         }

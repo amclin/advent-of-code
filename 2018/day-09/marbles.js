@@ -160,7 +160,7 @@ const playGame = (playerCount, highMarble, showBoard) => {
 
   // tally the results
   const results = {
-    players: players,
+    players,
     highScore: players.sort((a, b) => b - a)[0]
   }
 

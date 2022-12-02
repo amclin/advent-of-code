@@ -44,7 +44,7 @@ const findSleepiestTimes = (guard, data) => {
   const getTimesAsleep = (activity) => {
     return activity.split('')
       .map((state, idx) => {
-        return { id: idx, state: state } // parse the activity stream into data
+        return { id: idx, state } // parse the activity stream into data
       }).filter((minute) => minute.state === '#') // get only the times the guard is asleep
       .map((minute) => minute.id) // convert into a list of times
   }

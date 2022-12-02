@@ -76,8 +76,8 @@ const blankGrid = () => {
     grid[x] = grid[x] || []
     for (let y = minY; y < maxY; y++) {
       grid[x][y] = grid[x][y] || {
-        x: x,
-        y: y
+        x,
+        y
       }
     }
   }
