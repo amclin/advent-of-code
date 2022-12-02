@@ -14,14 +14,14 @@ const scoreRound = (opponent, self) => {
     // Win
     if (
       (selfScore - 1 === oppScore) ||
-      (selfScore === -1 && oppScore === 2)
+      (selfScore === 0 && oppScore === 2)
     ) {
       return 6
     }
     // Lose
     if (
       (oppScore - 1 === selfScore) ||
-      (oppScore === -1 && selfScore === 2)
+      (oppScore === 0 && selfScore === 2)
     ) {
       return 0
     }
