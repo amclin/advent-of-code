@@ -1,4 +1,3 @@
-
 /**
  * Validates a list of records by comparing every combination
  * to the checksum. Stops when the first match is found

@@ -1,4 +1,3 @@
-
 // Lookup tables for possible rock / paper / scissor values
 const selfCodes = ['X', 'Y', 'Z']
 const opponentCodes = ['A', 'B', 'C']
