@@ -1,4 +1,3 @@
-
 let _fishes = []
 const NewFishAge = 8 // age of newly spawned fish
 const FishSpawnAge = 0 // age when the fish spawns
