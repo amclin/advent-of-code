@@ -1,4 +1,3 @@
-
 const parse = (data) => {
   return data.split('\n').map((row) => {
     return row.split('')

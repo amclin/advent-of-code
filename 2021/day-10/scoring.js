@@ -1,4 +1,3 @@
-
 const findMiddleScore = (scores) => {
   // According to specs, there's always an odd number of items in the list,
   // so we're safe to divide by 2 and round down to get the desired index
