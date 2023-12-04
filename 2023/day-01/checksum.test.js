@@ -1,6 +1,10 @@
 /* eslint-env mocha */
 const { expect } = require('chai')
 const { checksumSet, checksumUnSanitizedSet, checksumLine, sanitizeLine } = require('./checksum')
+const fs = require('fs')
+const path = require('path')
+const filePath = path.join(__dirname, 'input.txt')
+const { inputToArray } = require('../../2018/inputParser')
 
 describe('--- Day 1: Trebuchet?! ---', () => {
   describe('Part 1', () => {
@@ -45,7 +49,7 @@ describe('--- Day 1: Trebuchet?! ---', () => {
         expect(sanitizeLine('eightwothree')).to.equal('8wo3')
       })
     })
-    describe('checksumUnsanitizedSet', () => {
+    describe('checksumUnSanitizedSet', () => {
       it('calculates the checksum for a set of lines by summing the checksum of each sanitized line', () => {
         const set = [
           'two1nine',
@@ -57,6 +61,19 @@ describe('--- Day 1: Trebuchet?! ---', () => {
           '7pqrstsixteen'
         ]
         expect(checksumUnSanitizedSet(set)).to.equal(281)
+      })
+    })
+    describe('integeration', () => {
+      it('53853 is too low for part 2', (done) => {
+        let data
+        fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
+          if (err) throw err
+          initData = inputToArray(initData.trim())
+          // Deep copy to ensure we aren't mutating the original data
+          data = JSON.parse(JSON.stringify(initData))
+          expect(checksumUnSanitizedSet(data)).to.be.greaterThan(53853)
+          done()
+        })
       })
     })
   })
