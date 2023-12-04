@@ -2,6 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const filePath = path.join(__dirname, 'input.txt')
 const { inputToArray } = require('../../2018/inputParser')
+const { checksumSet } = require('./checksum')
 
 fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
   if (err) throw err
@@ -15,8 +16,7 @@ fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
 
   const part1 = () => {
     const data = resetInput()
-    console.debug(data)
-    return 'No answer yet'
+    return checksumSet(data)
   }
 
   const part2 = () => {

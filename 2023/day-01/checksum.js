@@ -4,9 +4,14 @@
  * @param string containing a single line of data
  */
 const checksumLine = (data) => {
-  data.replace(/([^0-9])+/g, '') // trim non-numeric characters
-  const checksumString = `${data[0]}${data[-1]}`
-  return parseInt(checksumString)
+  const parsed = data.replace(/([^0-9])/g, '') // trim non-numeric characters
+  let result = ''
+  if (parsed.length === 1) { // some strings only have a single digit
+    result = `${parsed}${parsed}`
+  } else {
+    result = `${parsed[0]}${parsed[parsed.length - 1]}`
+  }
+  return parseInt(result)
 }
 
 /**

@@ -8,8 +8,11 @@ describe('--- Day 1: Trebuchet?! ---', () => {
       it('calculates the checksum for a string by concatentating the first and last number', () => {
         // provided
         expect(checksumLine('1abc2')).to.equal(12)
-        expect(checksumLine('pqr3stu8vwx')).to.equal(18)
+        expect(checksumLine('pqr3stu8vwx')).to.equal(38)
         expect(checksumLine('a1b2c3d4e5f')).to.equal(15)
+      })
+      it('handles the edge case of a line with only a single digit', () => {
+        // provided
         expect(checksumLine('treb7uchet')).to.equal(77)
       })
     })
