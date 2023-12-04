@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 const { expect } = require('chai')
-const { checksumSet, checksumLine, sanitizeLine } = require('./checksum')
+const { checksumSet, checksumUnSanitizedSet, checksumLine, sanitizeLine } = require('./checksum')
 
 describe('--- Day 1: Trebuchet?! ---', () => {
   describe('Part 1', () => {
@@ -37,15 +37,26 @@ describe('--- Day 1: Trebuchet?! ---', () => {
       ]
       const result = [29, 83, 13, 24, 42, 14, 76]
       it('cleans up a string when digits are spelled out', () => {
-        expect(sanitizeLine('two1nine')).to.equal('219')
-
         for (let x = 0; x < set.length; x++) {
           expect(checksumLine(sanitizeLine(set[x]))).to.equal(result[x])
         }
-        expect(checksumSet(set)).to.equal(281)
       })
       it('handles first matches, and doesn\'t allow for multiple words to share letters', () => {
         expect(sanitizeLine('eightwothree')).to.equal('8wo3')
+      })
+    })
+    describe('checksumUnsanitizedSet', () => {
+      it('calculates the checksum for a set of lines by summing the checksum of each sanitized line', () => {
+        const set = [
+          'two1nine',
+          'eightwothree',
+          'abcone2threexyz',
+          'xtwone3four',
+          '4nineeightseven2',
+          'zoneight234',
+          '7pqrstsixteen'
+        ]
+        expect(checksumUnSanitizedSet(set)).to.equal(281)
       })
     })
   })

@@ -20,6 +20,16 @@ const checksumLine = (data) => {
  */
 const checksumSet = (set) => {
   return set.reduce((total, current) => {
+    return total + checksumLine((current))
+  }, 0)
+}
+
+/**
+ * Generates the checksum for an entire set when data is not sanitized
+ * @param {array} set of lines containing data
+ */
+const checksumUnSanitizedSet = (set) => {
+  return set.reduce((total, current) => {
     return total + checksumLine(sanitizeLine(current))
   }, 0)
 }
@@ -34,4 +44,4 @@ const sanitizeLine = (data) => {
   return data.replaceAll(reg, (matched) => numbers.indexOf(matched))
 }
 
-module.exports = { checksumLine, checksumSet, sanitizeLine }
+module.exports = { checksumLine, checksumSet, checksumUnSanitizedSet, sanitizeLine }
