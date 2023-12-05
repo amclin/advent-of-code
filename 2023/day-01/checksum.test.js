@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 const { expect } = require('chai')
-const { checksumSet, checksumUnSanitizedSet, checksumLine, sanitizeLine } = require('./checksum')
+const { checksumSet, checksumLine, sanitizeLine, lazyChecksumLine } = require('./checksum')
 const fs = require('fs')
 const path = require('path')
 const filePath = path.join(__dirname, 'input.txt')
@@ -30,7 +30,7 @@ describe('--- Day 1: Trebuchet?! ---', () => {
   })
   describe('Part 2', () => {
     describe('sanitizeLine', () => {
-      const set = [
+      const data = [
         'two1nine',
         'eightwothree',
         'abcone2threexyz',
@@ -41,39 +41,118 @@ describe('--- Day 1: Trebuchet?! ---', () => {
       ]
       const result = [29, 83, 13, 24, 42, 14, 76]
       it('cleans up a string when digits are spelled out', () => {
+        const set = JSON.parse(JSON.stringify(data))
         for (let x = 0; x < set.length; x++) {
           expect(checksumLine(sanitizeLine(set[x]))).to.equal(result[x])
+          // expect(checksumLine(sanitizeLine(set[x], 'sanitizeByRegex'))).to.equal(result[x])
+          // expect(checksumLine(sanitizeLine(set[x], 'sanitizeFirstLast'))).to.equal(result[x])
         }
       })
-      it('handles first matches, and doesn\'t allow for multiple words to share letters', () => {
-        expect(sanitizeLine('eightwothree')).to.equal('8wo3')
+      it('allows for skipping sanitation', () => {
+        const set = JSON.parse(JSON.stringify(data))
+        for (let x = 0; x < set.length; x++) {
+          expect(sanitizeLine(set[x], 'none')).to.equal(data[x])
+        }
       })
     })
-    describe('checksumUnSanitizedSet', () => {
-      it('calculates the checksum for a set of lines by summing the checksum of each sanitized line', () => {
-        const set = [
-          'two1nine',
-          'eightwothree',
-          'abcone2threexyz',
-          'xtwone3four',
-          '4nineeightseven2',
-          'zoneight234',
-          '7pqrstsixteen'
-        ]
-        expect(checksumUnSanitizedSet(set)).to.equal(281)
+    describe('checksumSet', () => {
+      const data = [
+        'two1nine',
+        'eightwothree',
+        'abcone2threexyz',
+        'xtwone3four',
+        '4nineeightseven2',
+        'zoneight234',
+        '7pqrstsixteen'
+      ]
+      it('can sanitize', () => {
+        expect(checksumSet(data, true)).to.equal(281)
       })
     })
+    describe('lazyChecksumLine', () => {
+      const data = [
+        'two1nine',
+        'eightwothree',
+        'abcone2threexyz',
+        'xtwone3four',
+        '4nineeightseven2',
+        'zoneight234',
+        '7pqrstsixteen'
+      ]
+      const result = [29, 83, 13, 24, 42, 14, 76]
+      it('can match text or numeric for checksum calcs', () => {
+        const set = JSON.parse(JSON.stringify(data))
+        for (let x = 0; x < set.length; x++) {
+          expect(lazyChecksumLine(set[x])).to.equal(result[x])
+        }
+      })
+    })
+
+    //   it('doesn`t sanitize by default', () => {
+    //     const set = [
+    //       'two1nine',
+    //       'eightwothree',
+    //       'abcone2threexyz',
+    //       'xtwone3four',
+    //       '4nineeightseven2',
+    //       'zoneight234',
+    //       '7pqrstsixteen'
+    //     ]
+    //     expect(checksumSet(set)).to.be.NaN
+    //   })
+    //   it('allows for sanitizing to be explicitly disabled', () => {
+    //     const set = [
+    //       'two1nine',
+    //       'eightwothree',
+    //       'abcone2threexyz',
+    //       'xtwone3four',
+    //       '4nineeightseven2',
+    //       'zoneight234',
+    //       '7pqrstsixteen'
+    //     ]
+    //     expect(checksumSet(set, 'none')).to.be.NaN
+    //   })
+    //   // it('calculates the checksum for a set of lines by summing the checksum of each line', () => {
+    //   //   const set = [
+    //   //     'two1nine',
+    //   //     'eightwothree',
+    //   //     'abcone2threexyz',
+    //   //     'xtwone3four',
+    //   //     '4nineeightseven2',
+    //   //     'zoneight234',
+    //   //     '7pqrstsixteen'
+    //   //   ]
+    //   //   expect(checksumSet(set)).to.equal(281)
+    //   // })
+    // })
     describe('integeration', () => {
-      it('53853 is too low for part 2', (done) => {
-        let data
-        fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
+      let initData
+      before((done) => {
+        fs.readFile(filePath, { encoding: 'utf8' }, (err, rawData) => {
           if (err) throw err
-          initData = inputToArray(initData.trim())
+          initData = inputToArray(rawData.trim())
           // Deep copy to ensure we aren't mutating the original data
-          data = JSON.parse(JSON.stringify(initData))
-          expect(checksumUnSanitizedSet(data)).to.be.greaterThan(53853)
+          // data = JSON.parse(JSON.stringify(initData))
           done()
         })
+      })
+
+      it('is not done without sanitation, since that matches part 1', () => {
+        const data = JSON.parse(JSON.stringify(initData))
+        const result = checksumSet(data, true)
+        expect(result).to.not.equal(54953)
+      })
+
+      it('is not done with a one-time regex', () => {
+        const data = JSON.parse(JSON.stringify(initData))
+        const result = checksumSet(data, true)
+        expect(result).to.not.equal(53885) // result of one-time regex
+      })
+
+      it('is not done by sanitizing just the first and last strings', () => {
+        const data = JSON.parse(JSON.stringify(initData))
+        const result = checksumSet(data, true)
+        expect(result).to.not.equal(53853) // result of first/last substitution onlye
       })
     })
   })

@@ -21,8 +21,7 @@ fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
 
   const part2 = () => {
     const data = resetInput()
-    console.debug(data)
-    return 'No answer yet'
+    return checksumSet(data, false, true)
   }
   const answers = []
   answers.push(part1())
