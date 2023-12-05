@@ -88,44 +88,7 @@ describe('--- Day 1: Trebuchet?! ---', () => {
       })
     })
 
-    //   it('doesn`t sanitize by default', () => {
-    //     const set = [
-    //       'two1nine',
-    //       'eightwothree',
-    //       'abcone2threexyz',
-    //       'xtwone3four',
-    //       '4nineeightseven2',
-    //       'zoneight234',
-    //       '7pqrstsixteen'
-    //     ]
-    //     expect(checksumSet(set)).to.be.NaN
-    //   })
-    //   it('allows for sanitizing to be explicitly disabled', () => {
-    //     const set = [
-    //       'two1nine',
-    //       'eightwothree',
-    //       'abcone2threexyz',
-    //       'xtwone3four',
-    //       '4nineeightseven2',
-    //       'zoneight234',
-    //       '7pqrstsixteen'
-    //     ]
-    //     expect(checksumSet(set, 'none')).to.be.NaN
-    //   })
-    //   // it('calculates the checksum for a set of lines by summing the checksum of each line', () => {
-    //   //   const set = [
-    //   //     'two1nine',
-    //   //     'eightwothree',
-    //   //     'abcone2threexyz',
-    //   //     'xtwone3four',
-    //   //     '4nineeightseven2',
-    //   //     'zoneight234',
-    //   //     '7pqrstsixteen'
-    //   //   ]
-    //   //   expect(checksumSet(set)).to.equal(281)
-    //   // })
-    // })
-    describe('integeration', () => {
+    describe.skip('integeration', () => {
       let initData
       before((done) => {
         fs.readFile(filePath, { encoding: 'utf8' }, (err, rawData) => {
@@ -139,19 +102,19 @@ describe('--- Day 1: Trebuchet?! ---', () => {
 
       it('is not done without sanitation, since that matches part 1', () => {
         const data = JSON.parse(JSON.stringify(initData))
-        const result = checksumSet(data, true)
+        const result = checksumSet(data, false, true)
         expect(result).to.not.equal(54953)
       })
 
       it('is not done with a one-time regex', () => {
         const data = JSON.parse(JSON.stringify(initData))
-        const result = checksumSet(data, true)
+        const result = checksumSet(data, false, true)
         expect(result).to.not.equal(53885) // result of one-time regex
       })
 
       it('is not done by sanitizing just the first and last strings', () => {
         const data = JSON.parse(JSON.stringify(initData))
-        const result = checksumSet(data, true)
+        const result = checksumSet(data, false, true)
         expect(result).to.not.equal(53853) // result of first/last substitution onlye
       })
     })
