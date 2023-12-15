@@ -23,8 +23,27 @@ const parseGame = (gameString) => {
   }
 }
 
-const validateGame = () => {
+const parseHex = (hex) => {
+  return {
+    r: parseInt(hex.substring(0, 2), 16),
+    g: parseInt(hex.substring(2, 4), 16),
+    b: parseInt(hex.substring(4, 6), 16)
+  }
+}
 
+const validateGame = (game, limit) => {
+  const lim = parseHex(limit)
+
+  const tally = game.draws.reduce((acc, draw) => {
+    const drawData = parseHex(draw)
+    return {
+      r: acc.r + drawData.r,
+      g: acc.g + drawData.g,
+      b: acc.b + drawData.b
+    }
+  }, { r: 0, g: 0, b: 0 })
+
+  return (tally.r <= lim.r && tally.g <= lim.g && tally.b <= lim.b)
 }
 
 module.exports = {
