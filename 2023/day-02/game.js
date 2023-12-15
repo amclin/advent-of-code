@@ -46,7 +46,15 @@ const validateGame = (game, limit) => {
   return (tally.r <= lim.r && tally.g <= lim.g && tally.b <= lim.b)
 }
 
+const checksumGameSet = (games, limit) => {
+  // tally the IDs of valid games
+  return games.reduce((acc, game) => {
+    return validateGame(game, limit) ? acc + game.id : acc
+  }, 0)
+}
+
 module.exports = {
   parseGame,
-  validateGame
+  validateGame,
+  checksumGameSet
 }
