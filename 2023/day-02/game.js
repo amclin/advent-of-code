@@ -68,9 +68,29 @@ const checksumGameSet = (games, limit) => {
   }, 0)
 }
 
+const countCubesNeeded = (game) => {
+  const max = game.draws.reduce((acc, draw) => {
+    const drawData = parseHex(draw)
+    return {
+      r: Math.max(acc.r, drawData.r),
+      g: Math.max(acc.g, drawData.g),
+      b: Math.max(acc.b, drawData.b)
+    }
+  }, { r: 0, g: 0, b: 0 })
+
+  return max
+}
+
+const power = (game) => {
+  const needed = countCubesNeeded(game)
+  return needed.r * needed.g * needed.b
+}
+
 module.exports = {
   parseGame,
   validateGame,
   checksumGameSet,
-  validateDraw
+  validateDraw,
+  countCubesNeeded,
+  power
 }

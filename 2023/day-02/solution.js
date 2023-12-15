@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const filePath = path.join(__dirname, 'input.txt')
 const { linesToArray } = require('../../2018/inputParser')
-const { parseGame, checksumGameSet } = require('./game')
+const { parseGame, checksumGameSet, power } = require('./game')
 
 fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
   if (err) throw err
@@ -27,8 +27,11 @@ fs.readFile(filePath, { encoding: 'utf8' }, (err, initData) => {
 
   const part2 = () => {
     const data = resetInput()
-    console.debug(data)
-    return 'No answer yet'
+      .map(parseGame)
+
+    return data.reduce((acc, game) => {
+      return acc + power(game)
+    }, 0)
   }
   const answers = []
   answers.push(part1())

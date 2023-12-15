@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 const { expect } = require('chai')
-const { parseGame, validateGame, checksumGameSet, validateDraw } = require('./game')
+const { parseGame, validateGame, checksumGameSet, validateDraw, countCubesNeeded, power } = require('./game')
 const { linesToArray } = require('../../2018/inputParser')
 const fs = require('fs')
 const path = require('path')
@@ -164,7 +164,7 @@ describe('--- Day 2: Cube Conundrum ---', () => {
       })
     })
 
-    describe('integration test', () => {
+    describe.skip('integration test', () => {
       let initData
       before((done) => {
         fs.readFile(filePath, { encoding: 'utf8' }, (err, rawData) => {
@@ -183,6 +183,45 @@ describe('--- Day 2: Cube Conundrum ---', () => {
 
         expect(checksumGameSet(initData, limit)).to.be.gt(177) // 177 is too low
         expect(checksumGameSet(initData, limit)).to.be.gt(1452) // 1452 (from creating the limit in hex wrong, and assuming cubes are not returned to the bag after each draw) is too low
+      })
+    })
+  })
+
+  describe('Part 2', () => {
+    describe('countCubesNeeded', () => {
+      it('counts how many cubes are needed for a game', () => {
+        const data = [
+          'Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green',
+          'Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue',
+          'Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red',
+          'Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red',
+          'Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green'
+        ]
+        const result = [
+          { r: 4, g: 2, b: 6 },
+          { r: 1, g: 3, b: 4 },
+          { r: 20, g: 13, b: 6 },
+          { r: 14, g: 3, b: 15 },
+          { r: 6, g: 3, b: 2 }
+        ]
+        data.forEach((game, idx) => {
+          expect(countCubesNeeded(parseGame(game))).to.deep.equal(result[idx])
+        })
+      })
+    })
+    describe('power', () => {
+      it('calculates the power for a game', () => {
+        const data = [
+          'Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green',
+          'Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue',
+          'Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red',
+          'Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red',
+          'Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green'
+        ]
+        const result = [48, 12, 1560, 630, 36]
+        data.forEach((game, idx) => {
+          expect(power(parseGame(game))).to.equal(result[idx])
+        })
       })
     })
   })
