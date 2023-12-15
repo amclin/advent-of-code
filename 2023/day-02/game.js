@@ -23,6 +23,11 @@ const parseGame = (gameString) => {
   }
 }
 
+const validateGame = () => {
+
+}
+
 module.exports = {
-  parseGame
+  parseGame,
+  validateGame
 }

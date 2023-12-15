@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 const { expect } = require('chai')
-const { parseGame } = require('./game')
+const { parseGame, validateGame } = require('./game')
 
 describe('--- Day 2: Cube Conundrum ---', () => {
   describe('Part 1', () => {
@@ -53,6 +53,53 @@ describe('--- Day 2: Cube Conundrum ---', () => {
 
         data.forEach((game, idx) => {
           expect(parseGame(game)).to.deep.equal(result[idx])
+        })
+      })
+    })
+
+    describe('validateGame', () => {
+      it.only('checks if the game is valid given the limits', () => {
+        const limits = '0c0d0e' // 12 red cubes, 13 green cubes, and 14 blue cubes
+        const data = [
+          {
+            id: 1,
+            draws: [
+              '040003',
+              '010206',
+              '000200'
+            ]
+          }, {
+            id: 2,
+            draws: [
+              '000201',
+              '010304',
+              '000101'
+            ]
+          }, {
+            id: 3,
+            draws: [
+              '140806',
+              '040d05',
+              '010500'
+            ]
+          }, {
+            id: 4,
+            draws: [
+              '030106',
+              '060300',
+              '0e030f'
+            ]
+          }, {
+            id: 5,
+            draws: [
+              '060301',
+              '010202'
+            ]
+          }
+        ]
+        const result = [true, true, false, false, true]
+        data.forEach((game, idx) => {
+          expect(validateGame(game, limits)).to.equal(result[idx])
         })
       })
     })
