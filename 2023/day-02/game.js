@@ -31,19 +31,34 @@ const parseHex = (hex) => {
   }
 }
 
-const validateGame = (game, limit) => {
+const validateDraw = (draw, limit) => {
+  const data = parseHex(draw)
   const lim = parseHex(limit)
+  return (data.r <= lim.r && data.g <= lim.g && data.b <= lim.b)
+}
 
-  const tally = game.draws.reduce((acc, draw) => {
-    const drawData = parseHex(draw)
-    return {
-      r: acc.r + drawData.r,
-      g: acc.g + drawData.g,
-      b: acc.b + drawData.b
-    }
-  }, { r: 0, g: 0, b: 0 })
+const validateGame = (game, limit) => {
+  // const lim = parseHex(limit)
+  // const tally = game.draws.reduce((acc, draw) => {
+  //   const drawData = parseHex(draw)
+  //   return {
+  //     r: acc.r + drawData.r,
+  //     g: acc.g + drawData.g,
+  //     b: acc.b + drawData.b
+  //   }
+  // }, { r: 0, g: 0, b: 0 })
 
-  return (tally.r <= lim.r && tally.g <= lim.g && tally.b <= lim.b)
+  // const result = (tally.r <= lim.r && tally.g <= lim.g && tally.b <= lim.b)
+  // console.debug(`Game ${game.id} ${(result) ? 'passes' : 'fails'}`)
+  // if (!result) {
+  //   console.debug(tally)
+  // }
+
+  // If any draw fails, the full game fails
+  const result = game.draws.reduce((res, draw) => {
+    return (res && validateDraw(draw, limit))
+  }, true)
+  return result
 }
 
 const checksumGameSet = (games, limit) => {
@@ -56,5 +71,6 @@ const checksumGameSet = (games, limit) => {
 module.exports = {
   parseGame,
   validateGame,
-  checksumGameSet
+  checksumGameSet,
+  validateDraw
 }

@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 const { expect } = require('chai')
-const { parseGame, validateGame, checksumGameSet } = require('./game')
+const { parseGame, validateGame, checksumGameSet, validateDraw } = require('./game')
 const { linesToArray } = require('../../2018/inputParser')
 const fs = require('fs')
 const path = require('path')
@@ -153,6 +153,17 @@ describe('--- Day 2: Cube Conundrum ---', () => {
       })
     })
 
+    describe('validateDraw', () => {
+      it('validates an individual draw is within limits', () => {
+        const limit = '0c0d0e'
+        expect(validateDraw('010206', limit)).to.equal(true)
+        expect(validateDraw('060301', limit)).to.equal(true)
+        expect(validateDraw('040d05', limit)).to.equal(true)
+        expect(validateDraw('140806', limit)).to.equal(false) // game 3 draw 1 has 20 reds
+        expect(validateDraw('0e030f', limit)).to.equal(false) // game 4 draw 3 has 15 blues
+      })
+    })
+
     describe('integration test', () => {
       let initData
       before((done) => {
@@ -165,13 +176,13 @@ describe('--- Day 2: Cube Conundrum ---', () => {
         })
       })
 
-      it('result is larger than 1452', () => {
+      it('result matches what we know about the answer', () => {
         const limit = [12, 13, 14] // 12 red, 13 green, 14 blue
-          .map((num) => parseInt(num, 16))
+          .map((num) => num.toString(16).padStart(2, '0'))
           .join('')
 
-        // Solution set for
-        expect(checksumGameSet(initData, limit)).to.be.gt(1452)
+        expect(checksumGameSet(initData, limit)).to.be.gt(177) // 177 is too low
+        expect(checksumGameSet(initData, limit)).to.be.gt(1452) // 1452 (from creating the limit in hex wrong, and assuming cubes are not returned to the bag after each draw) is too low
       })
     })
   })
