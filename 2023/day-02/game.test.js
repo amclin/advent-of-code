@@ -1,6 +1,10 @@
 /* eslint-env mocha */
 const { expect } = require('chai')
 const { parseGame, validateGame, checksumGameSet } = require('./game')
+const { linesToArray } = require('../../2018/inputParser')
+const fs = require('fs')
+const path = require('path')
+const filePath = path.join(__dirname, 'input.txt')
 
 describe('--- Day 2: Cube Conundrum ---', () => {
   describe('Part 1', () => {
@@ -146,6 +150,28 @@ describe('--- Day 2: Cube Conundrum ---', () => {
         ]
 
         expect(checksumGameSet(data, limits)).to.equal(8)
+      })
+    })
+
+    describe('integration test', () => {
+      let initData
+      before((done) => {
+        fs.readFile(filePath, { encoding: 'utf8' }, (err, rawData) => {
+          if (err) throw err
+          initData = linesToArray(rawData.trim()).map(parseGame)
+          // Deep copy to ensure we aren't mutating the original data
+          // data = JSON.parse(JSON.stringify(initData))
+          done()
+        })
+      })
+
+      it('result is larger than 1452', () => {
+        const limit = [12, 13, 14] // 12 red, 13 green, 14 blue
+          .map((num) => parseInt(num, 16))
+          .join('')
+
+        // Solution set for
+        expect(checksumGameSet(initData, limit)).to.be.gt(1452)
       })
     })
   })
