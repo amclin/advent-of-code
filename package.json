@@ -36,7 +36,7 @@
     "@semantic-release/github": "^9.2.4",
     "chai": "^4.3.7",
     "codecov": "^3.8.3",
-    "mocha": "^10.2.0",
+    "mocha": "^10.3.0",
     "nyc": "^15.1.0",
     "standard": "^17.1.0"
   },
